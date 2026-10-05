@@ -1,0 +1,250 @@
+/* ── the index: titles in a dark room, the film projected behind them ── */
+
+.index {
+  position: relative;
+  overflow: clip;
+  min-height: 72svh;
+  padding-bottom: clamp(48px, 6vw, 96px);
+}
+
+/* the screen stays put while the list scrolls over it */
+.projection {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  margin-bottom: -100svh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 700ms var(--ease-film);
+}
+
+.index[data-lit] .screen {
+  opacity: 1;
+}
+
+/* the house lights stay down over the titles, above whichever film is lit */
+.screen::after {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgb(10 10 9 / 0.9) 0%, rgb(10 10 9 / 0.62) 46%, rgb(10 10 9 / 0.3) 100%),
+    linear-gradient(to top, rgb(10 10 9 / 0.75), transparent 38%),
+    linear-gradient(to bottom, rgb(10 10 9 / 0.6), transparent 22%);
+}
+
+.projected {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 500ms var(--ease-film);
+}
+
+.projected[data-on] {
+  opacity: 1;
+  z-index: 1;
+}
+
+.still {
+  object-fit: cover;
+}
+
+/* the lamp strikes: a few uneven frames, then it holds and slowly pushes in */
+.projected[data-on] .still {
+  animation:
+    strike 560ms steps(1, end) both,
+    drift 16s linear both;
+}
+
+@keyframes strike {
+  0% { opacity: 0; }
+  14% { opacity: 0.55; }
+  28% { opacity: 0.15; }
+  42% { opacity: 0.85; }
+  57% { opacity: 0.6; }
+  71%, 100% { opacity: 1; }
+}
+
+@keyframes drift {
+  from { transform: scale(1.03); }
+  to { transform: scale(1.12); }
+}
+
+/* projector flutter over the lit screen */
+.beam {
+  position: absolute;
+  inset: 0;
+  background: rgb(255 240 220);
+  mix-blend-mode: overlay;
+  opacity: 0;
+}
+
+.index[data-lit] .beam {
+  animation: flutter 0.5s steps(1) infinite;
+}
+
+@keyframes flutter {
+  0% { opacity: 0.03; }
+  25% { opacity: 0.055; }
+  50% { opacity: 0.02; }
+  75% { opacity: 0.045; }
+}
+
+
+/* ── the rows ─────────────────────────────────────────────────────────── */
+
+.rows {
+  position: relative;
+  z-index: 1;
+  padding-inline: var(--gutter);
+}
+
+.row {
+  border-top: 1px solid var(--rule);
+}
+
+.row:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(9rem, 13rem) 3.5rem 6.5rem;
+  align-items: baseline;
+  column-gap: clamp(14px, 2vw, 32px);
+  padding: clamp(12px, 1.5vw, 22px) 0;
+  color: var(--white);
+  transition: color 450ms var(--ease-out);
+}
+
+.link:focus-visible {
+  outline-offset: -2px;
+}
+
+.title {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  font-size: clamp(1.9rem, 4.4vw, 4.1rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  font-weight: 520;
+  transition: transform 600ms var(--ease-out);
+}
+
+.lamp {
+  font-size: 0.5em;
+  width: 0;
+  margin-right: 0;
+  opacity: 0;
+  transform: scale(0.4);
+  transition:
+    width 500ms var(--ease-out),
+    margin 500ms var(--ease-out),
+    opacity 300ms steps(3, end),
+    transform 300ms steps(3, end);
+}
+
+.sample {
+  align-self: flex-start;
+  margin-left: 0.9rem;
+  padding-top: 0.5em;
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0;
+  font-weight: 500;
+  color: var(--grey-2);
+}
+
+.format,
+.year,
+.runtime {
+  font-size: 0.9375rem;
+  font-weight: 460;
+  color: var(--grey-3);
+  transition: color 450ms var(--ease-out);
+}
+
+.runtime {
+  text-align: right;
+}
+
+/* reaching for one film turns the house down on the rest */
+.index[data-lit] .row:not([data-lit]) .link,
+.index[data-lit] .row:not([data-lit]) .format,
+.index[data-lit] .row:not([data-lit]) .year,
+.index[data-lit] .row:not([data-lit]) .runtime {
+  color: rgb(238 237 232 / 0.32);
+}
+
+.row[data-lit] .lamp {
+  width: 0.3em;
+  margin-right: 0.55em;
+  opacity: 1;
+  transform: none;
+}
+
+.row[data-lit] .format,
+.row[data-lit] .year,
+.row[data-lit] .runtime {
+  color: var(--white-2);
+}
+
+/* ── phones and narrow tablets ────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .link {
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: 6px;
+    padding: 16px 0;
+  }
+
+  .title {
+    grid-column: 1;
+    font-size: clamp(1.75rem, 8.4vw, 2.6rem);
+  }
+
+  .year {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+  }
+
+  .format {
+    grid-column: 1 / -1;
+    font-size: 0.875rem;
+  }
+
+  .runtime {
+    display: none;
+  }
+
+  .screen::after {
+    background:
+      linear-gradient(rgb(10 10 9 / 0.7), rgb(10 10 9 / 0.7)),
+      linear-gradient(to top, rgb(10 10 9 / 0.7), transparent 40%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projected[data-on] .still {
+    animation: none;
+  }
+
+  .index[data-lit] .beam {
+    animation: none;
+  }
+
+  .title {
+    transition: none;
+    transform: none;
+  }
+}

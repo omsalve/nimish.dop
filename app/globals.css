@@ -1,26 +1,436 @@
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   The black studio. A black seamless, soft greys, print-white type, and one
+   tungsten light reserved for whatever is live.
+   ───────────────────────────────────────────────────────────────────────────── */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* the black cyc */
+  --black: #0a0a09;
+  --black-lift: #121211;
+  --black-shade: #191917;
+  --rule: #2a2926;
+
+  /* greys: decorative → readable */
+  --grey-1: #3b3a36;
+  --grey-2: #75746e; /* large text only, 4.2:1 on --black */
+  --grey-3: #a6a59f; /* body-size secondary text, 8:1 on --black */
+
+  /* print white */
+  --white: #eeede8;
+  --white-2: #c9c8c1;
+
+  /* the projection: frames, letterbox bars, the screen behind a film */
+  --screen: #000;
+
+  /* 3200K. Reserved for what is live: the key light, a playing film, focus. */
+  --tungsten: #ffb46b;
+  --tungsten-hot: #ffdcae;
+  --tungsten-deep: #b4581a;
+
+  --font-sans: var(--font-switzer), "Helvetica Neue", Arial, sans-serif;
+
+  --gutter: clamp(16px, 4.2vw, 72px);
+  --nav-h: 64px;
+  --section: clamp(112px, 15vw, 224px);
+
+  --ease-film: cubic-bezier(0.45, 0, 0.55, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-shutter: cubic-bezier(0.7, 0, 0.2, 1);
+  --dissolve: 900ms;
+
+  color-scheme: dark;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-black: var(--black);
+  --color-white: var(--white);
+  --color-screen: var(--screen);
+  --color-tungsten: var(--tungsten);
+  --font-sans: var(--font-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── base ─────────────────────────────────────────────────────────────────── */
+
+html {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-sans);
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-kerning: normal;
+  scrollbar-color: var(--grey-1) var(--black);
+  scrollbar-width: thin;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  min-height: 100svh;
+  background: var(--black);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums lining-nums;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--tungsten);
+  color: var(--black);
+}
+
+:where(a) {
+  color: inherit;
+  text-decoration: none;
+}
+
+:where(button) {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+:where(h1, h2, h3, h4, p, ol, ul, dl, dd, figure) {
+  margin: 0;
+}
+
+:where(ol, ul) {
+  padding: 0;
+  list-style: none;
+}
+
+:where(h1, h2, h3) {
+  font-weight: 500;
+  text-wrap: balance;
+}
+
+:where(p) {
+  text-wrap: pretty;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: 2px solid var(--tungsten);
+  outline-offset: 4px;
+  border-radius: 1px;
+}
+
+main:focus {
+  outline: none;
+}
+
+:where(input, textarea, [contenteditable]) {
+  caret-color: var(--tungsten);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip {
+  position: fixed;
+  left: var(--gutter);
+  top: 12px;
+  z-index: 90;
+  padding: 10px 14px;
+  background: var(--white);
+  color: var(--black);
+  font-size: 0.875rem;
+  transform: translateY(-160%);
+  transition: transform 300ms var(--ease-out);
+}
+
+.skip:focus-visible {
+  transform: none;
+}
+
+/* A text link that underlines on intent. */
+.link {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: color-mix(in oklab, currentColor 35%, transparent);
+  transition: text-decoration-color 300ms var(--ease-out);
+}
+
+.link:hover {
+  text-decoration-color: currentColor;
+}
+
+/* ── film grain ────────────────────────────────────────────────────────────
+   Fine silver on the black, stepping at 10 fps, the cadence of the hero. */
+
+.grain {
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  z-index: 60;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2.4' intercept='-.62'/%3E%3CfeFuncG type='linear' slope='2.4' intercept='-.62'/%3E%3CfeFuncB type='linear' slope='2.4' intercept='-.62'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+  mix-blend-mode: screen;
+  opacity: 0.075;
+  animation: grain 1s steps(1) infinite;
+}
+
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  10% { transform: translate(-3%, -7%); }
+  20% { transform: translate(-11%, 3%); }
+  30% { transform: translate(5%, -12%); }
+  40% { transform: translate(-6%, 15%); }
+  50% { transform: translate(-13%, 6%); }
+  60% { transform: translate(11%, 0); }
+  70% { transform: translate(0, 10%); }
+  80% { transform: translate(2%, 21%); }
+  90% { transform: translate(-7%, 6%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain {
+    animation: none;
+  }
+}
+
+/* ── page transitions ──────────────────────────────────────────────────────
+   Moving between pages closes the projector's shutter: the letterbox bars
+   meet, the page dips to black, and they open on the new one. Opening a film
+   is a cut instead: the frame you chose grows into the screen, with one
+   overexposed tungsten frame at the splice. */
+
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--dissolve);
+  animation-timing-function: var(--ease-film);
+}
+
+::view-transition-old(.page-out) {
+  animation: vt-dip-out var(--dissolve) var(--ease-film) both;
+}
+
+::view-transition-new(.page-in) {
+  animation: vt-dip-in var(--dissolve) var(--ease-film) both;
+}
+
+@keyframes vt-dip-out {
+  0% { opacity: 1; filter: brightness(1); }
+  45%, 100% { opacity: 0; filter: brightness(0.4); }
+}
+
+@keyframes vt-dip-in {
+  0%, 52% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* the frame you clicked becomes the screen; the old frame holds for the whole
+   move and the new one takes over only as it lands, so the flight never
+   shows a frame that has not finished decoding */
+::view-transition-group(.morph) {
+  animation-duration: var(--dissolve);
+  animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  z-index: 50;
+}
+
+::view-transition-image-pair(.morph) {
+  animation: vt-soften var(--dissolve) var(--ease-film);
+}
+
+::view-transition-old(.morph),
+::view-transition-new(.morph) {
+  height: 100%;
+  object-fit: cover;
+  overflow: clip;
+}
+
+::view-transition-old(.morph) {
+  animation: none;
+  opacity: 1;
+}
+
+::view-transition-new(.morph) {
+  animation: vt-late var(--dissolve) linear both;
+}
+
+@keyframes vt-soften {
+  40% { filter: blur(1.5px) brightness(1.08); }
+}
+
+@keyframes vt-late {
+  0%, 78% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* the gate: a fixed, empty layer that only ever paints inside a transition */
+.film-gate {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  view-transition-name: film-gate;
+}
+
+::view-transition-group(film-gate) {
+  z-index: 100;
+  animation: none;
+}
+
+::view-transition-old(film-gate),
+::view-transition-new(film-gate) {
+  animation: none;
+  display: none;
+}
+
+/* the splice: one overexposed frame when a film opens */
+html:active-view-transition-type(cut)::view-transition-group(film-gate) {
+  background: radial-gradient(120% 95% at 42% 46%, rgb(255 247 236 / 0.92) 0%, rgb(255 205 150 / 0.72) 46%, rgb(255 152 72 / 0.6) 100%);
+  animation: film-cut var(--dissolve) steps(1, end) both;
+}
+
+@keyframes film-cut {
+  0% { opacity: 0; }
+  3% { opacity: 1; }
+  8% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* the shutter: bars meet in the middle and part again */
+html:active-view-transition-type(page)::view-transition-group(film-gate) {
+  background:
+    linear-gradient(var(--screen), var(--screen)) top / 100% 0 no-repeat,
+    linear-gradient(var(--screen), var(--screen)) bottom / 100% 0 no-repeat;
+  animation: film-shutter var(--dissolve) var(--ease-shutter) both;
+}
+
+@keyframes film-shutter {
+  0% { background-size: 100% 0, 100% 0; }
+  44%, 56% { background-size: 100% 50.5%, 100% 50.5%; }
+  100% { background-size: 100% 0, 100% 0; }
+}
+
+/* re-cutting the program by category: the films slide to their new places */
+html:active-view-transition-type(filter)::view-transition-old(root),
+html:active-view-transition-type(filter)::view-transition-new(root) {
+  animation: none;
+}
+
+html:active-view-transition-type(filter)::view-transition-group(*) {
+  animation-duration: 620ms;
+  animation-timing-function: var(--ease-out);
+}
+
+::view-transition-old(.row-out) {
+  animation: row-out 260ms var(--ease-film) both;
+}
+
+::view-transition-new(.row-in) {
+  animation: row-in 520ms var(--ease-out) 140ms both;
+}
+
+@keyframes row-out {
+  to { opacity: 0; filter: blur(6px); }
+}
+
+@keyframes row-in {
+  from { opacity: 0; filter: blur(6px); transform: translateY(12px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-image-pair(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
+/* ── layout primitives ─────────────────────────────────────────────────── */
+
+.wrap {
+  padding-inline: var(--gutter);
+}
+
+.grid12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(12px, 1.6vw, 28px);
+}
+
+/* ── type ──────────────────────────────────────────────────────────────── */
+
+.t-display {
+  font-size: clamp(3.1rem, 7.4vw, 6rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  font-weight: 540;
+}
+
+.t-section {
+  font-size: clamp(2.1rem, 4.4vw, 3.6rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+}
+
+.t-title {
+  font-size: clamp(1.55rem, 2.3vw, 2.05rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  font-weight: 520;
+}
+
+.t-lede {
+  font-size: clamp(1.35rem, 2.35vw, 2.05rem);
+  line-height: 1.22;
+  letter-spacing: -0.022em;
+  font-weight: 420;
+}
+
+.t-meta {
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  letter-spacing: 0.005em;
+  font-weight: 460;
+  color: var(--grey-3);
+}
+
+.t-small {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+/* a tally lamp: lit only while a film is playing */
+.tally {
+  display: inline-block;
+  flex: none;
+  width: 0.3em;
+  height: 0.3em;
+  border-radius: 50%;
+  background: var(--tungsten);
+  box-shadow: 0 0 0.55em 0.12em rgb(255 180 107 / 0.75);
 }

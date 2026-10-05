@@ -1,0 +1,162 @@
+/* ── the end card ─────────────────────────────────────────────────────── */
+
+.contact {
+  position: relative;
+  overflow: hidden;
+  min-height: min(100svh, 920px);
+  display: grid;
+  align-content: center;
+  margin-top: var(--section);
+  padding: clamp(96px, 12vw, 176px) var(--gutter);
+  scroll-margin-top: calc(var(--nav-h) * -1);
+  background: var(--screen);
+}
+
+/* the projector beam, raking in from the booth at top right */
+.beam {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(200deg, rgb(255 226 186 / 0.13) 0%, rgb(255 200 140 / 0.05) 34%, transparent 62%),
+    radial-gradient(40% 30% at 96% 0%, rgb(255 230 196 / 0.22), transparent 70%);
+  clip-path: polygon(78% 0, 100% 0, 100% 16%, 18% 100%, 0 100%, 0 82%);
+}
+
+.mote {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--s);
+  height: var(--s);
+  border-radius: 50%;
+  background: #fff1dc;
+  opacity: var(--o);
+  animation: float var(--d) linear infinite alternate;
+}
+
+@keyframes float {
+  from { transform: translate(0, 0); }
+  to { transform: translate(-28px, -42px); }
+}
+
+.card {
+  position: relative;
+}
+
+.title {
+  grid-column: 1 / span 7;
+  margin-bottom: clamp(40px, 5vw, 72px);
+}
+
+.channels {
+  grid-column: 1 / -1;
+  display: grid;
+  justify-items: start;
+  gap: 6px;
+}
+
+/* the address is the call to action, set at display size */
+.channel {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.25em;
+  font-size: clamp(2.2rem, 7vw, 6rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-weight: 520;
+  padding-bottom: 0.08em;
+  background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat;
+  transition: background-size 700ms var(--ease-out);
+  overflow-wrap: anywhere;
+}
+
+.channel:hover {
+  background-size: 100% 1px;
+}
+
+.arrow {
+  align-self: center;
+  flex: none;
+  width: 0.34em;
+  height: 0.34em;
+  margin-left: 0.06em;
+  color: var(--grey-3);
+  transition:
+    transform 600ms var(--ease-out),
+    color 300ms linear;
+}
+
+.channel:hover .arrow {
+  transform: translate(3px, -3px);
+  color: var(--tungsten);
+}
+
+.takes {
+  grid-column: 1 / span 6;
+  margin-top: clamp(28px, 3vw, 44px);
+  color: var(--grey-3);
+}
+
+/* ── end credits ──────────────────────────────────────────────────────── */
+
+.credits {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
+  gap: 24px;
+  padding: 28px var(--gutter) 32px;
+  border-top: 1px solid var(--rule);
+  font-size: 0.875rem;
+  background: var(--screen);
+}
+
+.sign {
+  display: grid;
+  gap: 2px;
+  font-weight: 520;
+}
+
+.sign span {
+  font-weight: 450;
+  color: var(--grey-3);
+}
+
+.small {
+  color: var(--grey-3);
+}
+
+.top {
+  justify-self: end;
+  color: var(--grey-3);
+  transition: color 300ms linear;
+}
+
+.top:hover {
+  color: var(--white);
+}
+
+@media (max-width: 767px) {
+  .title,
+  .takes {
+    grid-column: 1 / -1;
+  }
+
+  .credits {
+    grid-template-columns: 1fr auto;
+  }
+
+  .small {
+    grid-row: 2;
+  }
+
+  .top {
+    grid-row: 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mote {
+    animation: none;
+  }
+}

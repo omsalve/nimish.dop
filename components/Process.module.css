@@ -1,0 +1,152 @@
+.process {
+  padding-top: var(--section);
+  padding-inline: var(--gutter);
+  scroll-margin-top: calc(var(--nav-h) * -1);
+}
+
+.head {
+  row-gap: 28px;
+  margin-bottom: clamp(56px, 7vw, 112px);
+}
+
+.head > h2 {
+  grid-column: 1 / span 5;
+}
+
+.lede {
+  grid-column: 6 / -1;
+  max-width: 30ch;
+  padding-top: 0.35rem;
+  color: var(--white-2);
+}
+
+.beats {
+  row-gap: 56px;
+}
+
+.beat {
+  grid-column: span 4;
+  display: grid;
+  view-timeline: --beat block;
+  align-content: start;
+  gap: 10px;
+}
+
+/* a window onto one third of the hero photograph */
+.crop {
+  position: relative;
+  aspect-ratio: 5 / 4;
+  overflow: clip;
+  margin-bottom: 14px;
+  background: var(--black-lift);
+}
+
+.window {
+  position: absolute;
+  left: calc(var(--i) * -100%);
+  width: 300%;
+  aspect-ratio: 3 / 1;
+  top: var(--fy);
+  translate: 0 calc(var(--fy) * -1);
+}
+
+.img {
+  object-fit: cover;
+}
+
+.head2 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  width: 2px;
+  margin-left: -1px;
+  opacity: 0;
+  background: var(--tungsten);
+  box-shadow: 0 0 16px 2px rgb(255 180 107 / 0.55);
+}
+
+.word {
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-weight: 520;
+}
+
+.line {
+  max-width: 32ch;
+  color: var(--white-2);
+}
+
+/* each beat arrives in its own grammar, scrubbed by the scroll */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .beat .window {
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: --beat;
+      animation-range: entry 10% cover 45%;
+    }
+
+    .beat[data-beat='light'] .window {
+      animation-name: lamp-up;
+    }
+
+    .beat[data-beat='frame'] .window {
+      animation-name: rack;
+    }
+
+    .beat[data-beat='cut'] .crop {
+      animation: wipe linear both;
+      animation-timeline: --beat;
+      animation-range: entry 10% cover 45%;
+    }
+
+    .beat[data-beat='cut'] .head2 {
+      animation: playhead linear both;
+      animation-timeline: --beat;
+      animation-range: entry 10% cover 45%;
+    }
+  }
+}
+
+@keyframes lamp-up {
+  from { filter: brightness(0.08) sepia(0.4); }
+  35% { filter: brightness(0.3) sepia(0.3); }
+  to { filter: none; }
+}
+
+@keyframes rack {
+  from { filter: blur(14px); transform: scale(1.06); }
+  60% { filter: blur(3px); }
+  80% { filter: blur(0.6px); }
+  to { filter: none; transform: none; }
+}
+
+@keyframes wipe {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes playhead {
+  from { left: 0; opacity: 1; }
+  92% { opacity: 1; }
+  to { left: 100%; opacity: 0; }
+}
+
+@media (max-width: 1023px) {
+  .head > h2,
+  .lede {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 767px) {
+  .beat {
+    grid-column: 1 / -1;
+  }
+
+  .crop {
+    aspect-ratio: 16 / 10;
+  }
+}

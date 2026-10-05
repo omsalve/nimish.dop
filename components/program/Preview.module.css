@@ -1,0 +1,47 @@
+/* ── preview: cuts between key shots, or a real loop ──────────────────── */
+
+.preview {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.cut {
+  object-fit: cover;
+  opacity: 0;
+}
+
+.cut[data-shown] {
+  opacity: 1;
+  animation: push var(--hold, 900ms) linear both;
+}
+
+@keyframes push {
+  from {
+    transform: scale(1.02);
+  }
+  to {
+    transform: scale(1.065);
+  }
+}
+
+.loop {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 400ms steps(4, end);
+}
+
+.loop[data-playing] {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cut[data-shown] {
+    animation: none;
+  }
+}

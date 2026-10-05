@@ -1,0 +1,428 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-03T11:55:53.217Z",
+  "title": "Design System: Nimish Kandalkar",
+  "extensions": {
+    "colorMeta": {
+      "black": {
+        "role": "neutral",
+        "displayName": "Black Seamless",
+        "canonical": "#0a0a09",
+        "tonalRamp": [
+          "oklch(15.0% 0.002 106.7)",
+          "oklch(26.0% 0.002 106.7)",
+          "oklch(37.0% 0.002 106.7)",
+          "oklch(48.0% 0.002 106.7)",
+          "oklch(59.0% 0.002 106.7)",
+          "oklch(70.0% 0.002 106.7)",
+          "oklch(82.0% 0.002 106.7)",
+          "oklch(95.0% 0.002 106.7)"
+        ]
+      },
+      "black-lift": {
+        "role": "neutral",
+        "displayName": "Black Lift",
+        "canonical": "#121211",
+        "tonalRamp": [
+          "oklch(15.0% 0.002 106.6)",
+          "oklch(26.0% 0.002 106.6)",
+          "oklch(37.0% 0.002 106.6)",
+          "oklch(48.0% 0.002 106.6)",
+          "oklch(59.0% 0.002 106.6)",
+          "oklch(70.0% 0.002 106.6)",
+          "oklch(82.0% 0.002 106.6)",
+          "oklch(95.0% 0.002 106.6)"
+        ]
+      },
+      "black-shade": {
+        "role": "neutral",
+        "displayName": "Black Shade",
+        "canonical": "#191917",
+        "tonalRamp": [
+          "oklch(15.0% 0.004 106.7)",
+          "oklch(26.0% 0.004 106.7)",
+          "oklch(37.0% 0.004 106.7)",
+          "oklch(48.0% 0.004 106.7)",
+          "oklch(59.0% 0.004 106.7)",
+          "oklch(70.0% 0.004 106.7)",
+          "oklch(82.0% 0.004 106.7)",
+          "oklch(95.0% 0.004 106.7)"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Rule",
+        "canonical": "#2a2926",
+        "tonalRamp": [
+          "oklch(15.0% 0.006 91.6)",
+          "oklch(26.0% 0.006 91.6)",
+          "oklch(37.0% 0.006 91.6)",
+          "oklch(48.0% 0.006 91.6)",
+          "oklch(59.0% 0.006 91.6)",
+          "oklch(70.0% 0.006 91.6)",
+          "oklch(82.0% 0.006 91.6)",
+          "oklch(95.0% 0.006 91.6)"
+        ]
+      },
+      "grey-1": {
+        "role": "neutral",
+        "displayName": "Grey 1",
+        "canonical": "#3b3a36",
+        "tonalRamp": [
+          "oklch(15.0% 0.007 95.3)",
+          "oklch(26.0% 0.007 95.3)",
+          "oklch(37.0% 0.007 95.3)",
+          "oklch(48.0% 0.007 95.3)",
+          "oklch(59.0% 0.007 95.3)",
+          "oklch(70.0% 0.007 95.3)",
+          "oklch(82.0% 0.007 95.3)",
+          "oklch(95.0% 0.007 95.3)"
+        ]
+      },
+      "grey-2": {
+        "role": "neutral",
+        "displayName": "Grey 2",
+        "canonical": "#75746e",
+        "tonalRamp": [
+          "oklch(15.0% 0.009 99.0)",
+          "oklch(26.0% 0.009 99.0)",
+          "oklch(37.0% 0.009 99.0)",
+          "oklch(48.0% 0.009 99.0)",
+          "oklch(59.0% 0.009 99.0)",
+          "oklch(70.0% 0.009 99.0)",
+          "oklch(82.0% 0.009 99.0)",
+          "oklch(95.0% 0.009 99.0)"
+        ]
+      },
+      "grey-3": {
+        "role": "neutral",
+        "displayName": "Grey 3",
+        "canonical": "#a6a59f",
+        "tonalRamp": [
+          "oklch(15.0% 0.009 98.9)",
+          "oklch(26.0% 0.009 98.9)",
+          "oklch(37.0% 0.009 98.9)",
+          "oklch(48.0% 0.009 98.9)",
+          "oklch(59.0% 0.009 98.9)",
+          "oklch(70.0% 0.009 98.9)",
+          "oklch(82.0% 0.009 98.9)",
+          "oklch(95.0% 0.009 98.9)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "Print White",
+        "canonical": "#eeede8",
+        "tonalRamp": [
+          "oklch(15.0% 0.007 97.4)",
+          "oklch(26.0% 0.007 97.4)",
+          "oklch(37.0% 0.007 97.4)",
+          "oklch(48.0% 0.007 97.4)",
+          "oklch(59.0% 0.007 97.4)",
+          "oklch(70.0% 0.007 97.4)",
+          "oklch(82.0% 0.007 97.4)",
+          "oklch(95.0% 0.007 97.4)"
+        ]
+      },
+      "white-2": {
+        "role": "neutral",
+        "displayName": "Print White 2",
+        "canonical": "#c9c8c1",
+        "tonalRamp": [
+          "oklch(15.0% 0.010 100.0)",
+          "oklch(26.0% 0.010 100.0)",
+          "oklch(37.0% 0.010 100.0)",
+          "oklch(48.0% 0.010 100.0)",
+          "oklch(59.0% 0.010 100.0)",
+          "oklch(70.0% 0.010 100.0)",
+          "oklch(82.0% 0.010 100.0)",
+          "oklch(95.0% 0.010 100.0)"
+        ]
+      },
+      "screen": {
+        "role": "neutral",
+        "displayName": "Screen Black",
+        "canonical": "#000000",
+        "tonalRamp": [
+          "oklch(15.0% 0.000 0.0)",
+          "oklch(26.0% 0.000 0.0)",
+          "oklch(37.0% 0.000 0.0)",
+          "oklch(48.0% 0.000 0.0)",
+          "oklch(59.0% 0.000 0.0)",
+          "oklch(70.0% 0.000 0.0)",
+          "oklch(82.0% 0.000 0.0)",
+          "oklch(95.0% 0.000 0.0)"
+        ]
+      },
+      "tungsten": {
+        "role": "primary",
+        "displayName": "Tungsten",
+        "canonical": "#ffb46b",
+        "tonalRamp": [
+          "oklch(15.0% 0.125 63.8)",
+          "oklch(26.0% 0.125 63.8)",
+          "oklch(37.0% 0.125 63.8)",
+          "oklch(48.0% 0.125 63.8)",
+          "oklch(59.0% 0.125 63.8)",
+          "oklch(70.0% 0.125 63.8)",
+          "oklch(82.0% 0.125 63.8)",
+          "oklch(95.0% 0.125 63.8)"
+        ]
+      },
+      "tungsten-hot": {
+        "role": "primary",
+        "displayName": "Tungsten Hot",
+        "canonical": "#ffdcae",
+        "tonalRamp": [
+          "oklch(15.0% 0.071 74.3)",
+          "oklch(26.0% 0.071 74.3)",
+          "oklch(37.0% 0.071 74.3)",
+          "oklch(48.0% 0.071 74.3)",
+          "oklch(59.0% 0.071 74.3)",
+          "oklch(70.0% 0.071 74.3)",
+          "oklch(82.0% 0.071 74.3)",
+          "oklch(95.0% 0.071 74.3)"
+        ]
+      },
+      "tungsten-deep": {
+        "role": "primary",
+        "displayName": "Tungsten Deep",
+        "canonical": "#b4581a",
+        "tonalRamp": [
+          "oklch(15.0% 0.138 49.2)",
+          "oklch(26.0% 0.138 49.2)",
+          "oklch(37.0% 0.138 49.2)",
+          "oklch(48.0% 0.138 49.2)",
+          "oklch(59.0% 0.138 49.2)",
+          "oklch(70.0% 0.138 49.2)",
+          "oklch(82.0% 0.138 49.2)",
+          "oklch(95.0% 0.138 49.2)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The name in the hero, film titles on their pages and title cards."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section headings."
+      },
+      "index": {
+        "displayName": "Index",
+        "purpose": "Titles in the program index; the list is the display."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Sub-headings such as Concept and Role; contact-sheet titles."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "Loglines, the about paragraph, calls to action."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running copy and bullet points, max 46ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Meta lines, timecodes, captions, filter counts."
+      }
+    },
+    "shadows": [
+      {
+        "name": "lamp-glow",
+        "value": "0 0 0.55em 0.12em rgb(255 180 107 / 0.75)",
+        "purpose": "Light emitted by a tally lamp. Only on light sources."
+      },
+      {
+        "name": "playhead-glow",
+        "value": "0 0 16px 2px rgb(255 180 107 / 0.55)",
+        "purpose": "The playhead in the hero and process cut beats."
+      },
+      {
+        "name": "wipe-light",
+        "value": "0 0 24px 6px rgb(255 220 174 / 0.5), 0 0 90px 24px rgb(255 180 107 / 0.18)",
+        "purpose": "The bar of light on the reel wipe edge."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-film",
+        "value": "cubic-bezier(0.45, 0, 0.55, 1)",
+        "purpose": "Dissolves, dips to black, exits."
+      },
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Arrivals: title cards, hovers, the morph landing."
+      },
+      {
+        "name": "ease-shutter",
+        "value": "cubic-bezier(0.7, 0, 0.2, 1)",
+        "purpose": "Projector bars and the page shutter."
+      },
+      {
+        "name": "dissolve",
+        "value": "900ms",
+        "purpose": "Every route transition: shutter, dip, morph."
+      },
+      {
+        "name": "reveal-cadence",
+        "value": "10fps steps",
+        "purpose": "The hero reveal and the grain step at ten frames a second."
+      },
+      {
+        "name": "projector",
+        "value": "1500ms",
+        "purpose": "Gate light and bars opening before the reveal, once per session."
+      },
+      {
+        "name": "reel-budget",
+        "value": "hold 0.45 screen, join 0.9 screen",
+        "purpose": "Scroll distance each reel film holds, and each join is scrubbed over."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone",
+        "value": "599px"
+      },
+      {
+        "name": "tablet-narrow",
+        "value": "767px"
+      },
+      {
+        "name": "tablet",
+        "value": "1023px"
+      },
+      {
+        "name": "portrait",
+        "value": "max-aspect-ratio: 4/5"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one solid action: Watch the film / Request a screener.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Request a screener <svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"square\" aria-hidden=\"true\"><path d=\"M4.5 11.5l7-7M5.5 4.5h6v6\"/></svg></a>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:12px;padding:16px 22px;background:var(--white,#eeede8);color:var(--black,#0a0a09);font-family:Switzer,\"Helvetica Neue\",Arial,sans-serif;font-weight:520;text-decoration:none;border-radius:0;transition:background-color 300ms linear,transform 500ms cubic-bezier(.16,1,.3,1)}.ds-btn-primary svg{transition:transform 500ms cubic-bezier(.16,1,.3,1)}.ds-btn-primary:hover{background:var(--tungsten-hot,#ffdcae)}.ds-btn-primary:hover svg{transform:translate(2px,-2px)}.ds-btn-primary:active{transform:scale(.985)}.ds-btn-primary:focus-visible{outline:2px solid var(--tungsten,#ffb46b);outline-offset:4px}"
+    },
+    {
+      "name": "Category Filter",
+      "kind": "chip",
+      "refersTo": "filter",
+      "description": "Text-only filters for the program; the pressed one is white and underlined, its count warm.",
+      "html": "<div class=\"ds-filters\"><button class=\"ds-filter\" aria-pressed=\"true\">All<span>15</span></button><button class=\"ds-filter\" aria-pressed=\"false\">Music videos<span>3</span></button></div>",
+      "css": ".ds-filters{display:flex;gap:24px;background:#0a0a09;padding:12px}.ds-filter{position:relative;display:inline-flex;align-items:baseline;gap:6px;padding:10px 0;background:none;border:0;font-family:Switzer,\"Helvetica Neue\",Arial,sans-serif;font-size:.9375rem;font-weight:500;color:#a6a59f;cursor:pointer;transition:color 300ms}.ds-filter span{font-size:.6875rem;color:#75746e;transform:translateY(-.45em)}.ds-filter::after{content:\"\";position:absolute;left:0;right:0;bottom:4px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform 500ms cubic-bezier(.16,1,.3,1)}.ds-filter:hover,.ds-filter[aria-pressed=\"true\"]{color:#eeede8}.ds-filter[aria-pressed=\"true\"]::after{transform:scaleX(1);transform-origin:left}.ds-filter[aria-pressed=\"true\"] span{color:#ffb46b}.ds-filter:focus-visible{outline:2px solid #ffb46b;outline-offset:4px}"
+    },
+    {
+      "name": "View Toggle",
+      "kind": "custom",
+      "refersTo": "view-toggle",
+      "description": "Index or contact sheet: a pill switch, the only rounded control besides the next-film button.",
+      "html": "<div class=\"ds-views\"><button class=\"ds-view\" aria-pressed=\"true\">Index</button><button class=\"ds-view\" aria-pressed=\"false\">Contact sheet</button></div>",
+      "css": ".ds-views{display:inline-flex;padding:3px;border-radius:999px;box-shadow:inset 0 0 0 1px #2a2926;background:#0a0a09}.ds-view{padding:8px 14px;border:0;border-radius:999px;background:none;font-family:Switzer,\"Helvetica Neue\",Arial,sans-serif;font-size:.8125rem;font-weight:500;color:#a6a59f;cursor:pointer;transition:color 300ms,background-color 300ms}.ds-view:hover{color:#eeede8}.ds-view[aria-pressed=\"true\"]{background:#eeede8;color:#0a0a09}.ds-view:focus-visible{outline:2px solid #ffb46b;outline-offset:3px}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "nav",
+      "description": "Name left, three sections right; transparent over the hero, screen black once scrolled.",
+      "html": "<header class=\"ds-nav\"><a href=\"#\">Nimish Kandalkar</a><nav><a href=\"#\">Films</a><a href=\"#\">About</a><a href=\"#\">Contact</a></nav></header>",
+      "css": ".ds-nav{display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 32px;background:rgb(10 10 9 / .92);color:#eeede8;font-family:Switzer,\"Helvetica Neue\",Arial,sans-serif;font-size:.9375rem;font-weight:500;letter-spacing:-.012em}.ds-nav a{color:inherit;text-decoration:none}.ds-nav nav{display:flex;gap:32px}.ds-nav nav a{position:relative;padding:10px 0}.ds-nav nav a::after{content:\"\";position:absolute;left:0;right:0;bottom:6px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform 500ms cubic-bezier(.16,1,.3,1)}.ds-nav nav a:hover::after{transform:scaleX(1);transform-origin:left}.ds-nav a:focus-visible{outline:2px solid #ffb46b;outline-offset:4px}"
+    },
+    {
+      "name": "Index Row",
+      "kind": "custom",
+      "refersTo": "index",
+      "description": "A program row: the title at index size, its facts in columns; the lit row grows a tally lamp while the rest dim.",
+      "html": "<ol class=\"ds-rows\"><li class=\"ds-row\" data-lit><a href=\"#\"><span class=\"ds-title\"><span class=\"ds-lamp\"></span>Neon Dhaba</span><span class=\"ds-cell\">Music video</span><span class=\"ds-cell\">2026</span></a></li><li class=\"ds-row\"><a href=\"#\"><span class=\"ds-title\"><span class=\"ds-lamp\"></span>Last Local</span><span class=\"ds-cell\">Music video</span><span class=\"ds-cell\">2025</span></a></li></ol>",
+      "css": ".ds-rows{list-style:none;margin:0;padding:0 24px;background:#0a0a09}.ds-row{border-top:1px solid #2a2926}.ds-row a{display:grid;grid-template-columns:1fr 10rem 4rem;align-items:baseline;gap:24px;padding:16px 0;color:rgb(238 237 232 / .32);text-decoration:none;font-family:Switzer,\"Helvetica Neue\",Arial,sans-serif;transition:color 450ms cubic-bezier(.16,1,.3,1)}.ds-row[data-lit] a,.ds-row a:hover{color:#eeede8}.ds-title{display:inline-flex;align-items:center;font-size:clamp(1.9rem,4.4vw,4.1rem);line-height:1.02;letter-spacing:-.04em;font-weight:520}.ds-lamp{font-size:.5em;width:0;height:.3em;margin-right:0;border-radius:50%;background:#ffb46b;box-shadow:0 0 .55em .12em rgb(255 180 107 / .75);opacity:0;transition:width 500ms,margin 500ms,opacity 300ms steps(3,end)}.ds-row[data-lit] .ds-lamp{width:.3em;margin-right:.55em;opacity:1}.ds-cell{font-size:.9375rem;font-weight:460}.ds-row a:focus-visible{outline:2px solid #ffb46b;outline-offset:-2px}"
+    },
+    {
+      "name": "Contact Sheet Cell",
+      "kind": "card",
+      "refersTo": "black-lift",
+      "description": "A cell of film base holding the frame at its true ratio, edge-printed with frame number and ratio.",
+      "html": "<article class=\"ds-cell-card\"><div class=\"ds-base\"><div class=\"ds-frame\"></div><span class=\"ds-edge\">7&nbsp;&nbsp;7A</span><span class=\"ds-ratio\">4:3</span></div><h3>Static</h3><p>Experimental short · 2025 · 7 min · Sample entry</p></article>",
+      "css": ".ds-cell-card{width:300px;display:grid;gap:12px;font-family:Switzer,\"Helvetica Neue\",Arial,sans-serif;color:#eeede8;background:#0a0a09;padding:12px}.ds-base{position:relative;aspect-ratio:16/10;container-type:size;background:#121211;box-shadow:inset 0 0 0 1px #2a2926;transition:background-color 500ms}.ds-cell-card:hover .ds-base{background:#191917}.ds-frame{position:absolute;inset:0;margin:auto;width:min(86cqw,calc(74cqh * 1.333));aspect-ratio:4/3;background:linear-gradient(160deg,#9fc4ff,#1b2a4a)}.ds-edge,.ds-ratio{position:absolute;font-size:.625rem;font-weight:500;letter-spacing:.04em;color:#75746e}.ds-edge{top:5cqh;left:7cqw}.ds-ratio{bottom:5cqh;right:7cqw}.ds-cell-card h3{margin:0;font-size:1.25rem;font-weight:520;letter-spacing:-.022em}.ds-cell-card p{margin:0;font-size:.8125rem;color:#a6a59f}"
+    },
+    {
+      "name": "Tally Lamp",
+      "kind": "custom",
+      "refersTo": "tungsten",
+      "description": "The live indicator: lit beside whatever is playing or current.",
+      "html": "<span class=\"ds-tally-demo\"><span class=\"ds-tally\"></span>Salt</span>",
+      "css": ".ds-tally-demo{display:inline-flex;align-items:center;gap:14px;padding:16px;background:#0a0a09;color:#eeede8;font-family:Switzer,\"Helvetica Neue\",Arial,sans-serif;font-size:2rem;font-weight:520;letter-spacing:-.025em}.ds-tally{width:.3em;height:.3em;border-radius:50%;background:#ffb46b;box-shadow:0 0 .55em .12em rgb(255 180 107 / .75)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Black-Box Screening Room",
+    "overview": "The site is a dark projection room for one filmmaker who lights the set, shoots the frame and cuts the film. The page is the black seamless; the work is the only light in it. Everything the visitor sees arrives the way film arrives: a projector warms up, bars part, frames are joined by wipes, irises and dissolves, a shutter closes between pages, and a single warm lamp marks whatever is live.\n\nDensity changes with the passage. The hero and the reel are spare and full-screen, one image at a time; the program is dense, fifteen titles set large in rows, with the chosen film projected behind them; the closing is an end card in a beam of light. One sans family carries every voice, set tight, with tabular numerals so runtimes and timecodes align.\n\nThis system replaced a white-cyclorama world (white seamless, soft greys, black accents) at the owner's direction: the inversion is confirmed, and the old light palette is not a fallback.",
+    "keyCharacteristics": [
+      "Black ground, print-white type, one tungsten accent used only for live things.",
+      "Frames keep the aspect ratio they were shot in; letterbox and pillarbox bars are data, not decoration.",
+      "Motion is film grammar with a job: reveal, join, cut, focus pull. Never a generic fade-and-rise.",
+      "Square corners everywhere except the two pill controls and the round next-film button.",
+      "Fine silver grain over the whole page, stepping at 10 fps."
+    ],
+    "rules": [
+      {
+        "name": "The One Lamp Rule",
+        "body": "Tungsten appears only where something is live: playing, current, focused or selected. If nothing is happening, nothing is warm.",
+        "section": "colors"
+      },
+      {
+        "name": "The Projection Rule",
+        "body": "Pure black (#000000) belongs to the screen, the bars and the shutter; the page is a breath lighter (#0a0a09) so the projection reads as a surface in the room.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tight Display Rule",
+        "body": "Anything at display or index size tracks at -0.04em; nothing tracks tighter.",
+        "section": "typography"
+      },
+      {
+        "name": "The Title-First Rule",
+        "body": "A title is never preceded by a label line. Position, format and ratio follow the title in a meta line beneath it.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Rule",
+        "body": "Numerals are tabular and lining everywhere, so timecodes, years and runtimes align in columns.",
+        "section": "typography"
+      },
+      {
+        "name": "The Light-Not-Shadow Rule",
+        "body": "Nothing casts a shadow; only lamps glow. A glow on an object that is not a light source is a defect.",
+        "section": "elevation"
+      },
+      {
+        "name": "The House Lights Rule",
+        "body": "Any text over a projected frame sits under a scrim (up to rgb(0 0 0 / 0.92) at the base, or 0.9 to 0.3 across the index), and the scrim always paints above the frame, including frames that are mid-transition.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep every frame at its shot aspect ratio wherever it is shown whole; let bars absorb the difference.",
+      "Do join frames with film grammar (cut, wipe, iris, dissolve, shutter, focus pull) and give each section its own gesture rather than one shared entrance.",
+      "Do put tungsten (#ffb46b) only on live state: playing, current, focused, selected.",
+      "Do give the frame a visitor clicks the film's shared name, so it grows into the page; only one element may wear it at a time.",
+      "Do mark every placeholder film as a sample entry wherever it appears.",
+      "Do provide a reduced-motion path: joins become cuts, pushes stop, grain freezes, the projector is skipped."
+    ],
+    "donts": [
+      "Don't set a label or eyebrow line above a title; meta follows the title.",
+      "Don't use drop shadows or glows on anything that is not a light source.",
+      "Don't introduce a second typeface, italics for emphasis, or gradient text.",
+      "Don't round frames, cells or buttons; the pill toggle and the round next-film button are the only curves.",
+      "Don't return to the white-cyc palette or use pure white (#ffffff) for type.",
+      "Don't let text sit on a projected frame without a scrim above it."
+    ]
+  }
+}

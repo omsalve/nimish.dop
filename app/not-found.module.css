@@ -1,0 +1,42 @@
+.page {
+  min-height: 100svh;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 18px;
+  padding: var(--nav-h) var(--gutter) 64px;
+}
+
+.code {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--grey-3);
+}
+
+.title {
+  max-width: 16ch;
+}
+
+.body {
+  max-width: 44ch;
+  color: var(--white-2);
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 14px 20px;
+  background: var(--white);
+  color: var(--black);
+  font-weight: 520;
+}
+
+.back svg {
+  transition: transform 500ms var(--ease-out);
+}
+
+.back:hover svg {
+  transform: translateX(3px);
+}

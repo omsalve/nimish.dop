@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# design QA captures (regenerated, not source)
+/.impeccable/review/
+/.impeccable/config.local.json

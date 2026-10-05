@@ -1,0 +1,281 @@
+/* ── photographs: one long strip, pinned, carried left to right by scroll ── */
+
+.photographs {
+  /* screen heights held still at each end; matches HOLD in the component */
+  --hold: 0.2;
+  /* how far the strip travels, measured on the client; a fair guess until then */
+  --travel: 400vw;
+  /* the height every print is set to, unless the screen is too narrow for it */
+  --h: min(52svh, 620px);
+  position: relative;
+  height: calc(100svh * (1 + var(--hold) * 2) + var(--travel));
+  background: var(--black);
+}
+
+.pin {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  row-gap: clamp(16px, 3svh, 32px);
+  padding-top: calc(var(--nav-h) + clamp(8px, 3svh, 32px));
+  padding-bottom: clamp(20px, 4svh, 36px);
+}
+
+.head {
+  padding-inline: var(--gutter);
+  align-items: end;
+  row-gap: 12px;
+}
+
+.heading {
+  grid-column: 1 / span 5;
+}
+
+.intro {
+  grid-column: 7 / -1;
+  max-width: 46ch;
+  font-size: 0.9375rem;
+  color: var(--grey-3);
+}
+
+/* ── the strip ────────────────────────────────────────────────────────── */
+
+.port {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* laid out last to first: the first print waits at the right end of the strip */
+.track {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-end;
+  gap: clamp(18px, 2.6vw, 44px);
+  width: max-content;
+  padding-inline: var(--gutter);
+  will-change: transform;
+}
+
+.print {
+  flex: none;
+}
+
+/* each print at the shape it was made in: one height, widths follow the ratio */
+.figure {
+  display: grid;
+  gap: 12px;
+  width: min(calc(var(--h) * var(--ratio)), 84vw);
+}
+
+.frame {
+  position: relative;
+  aspect-ratio: var(--ratio);
+  overflow: hidden;
+  background: var(--black-lift);
+}
+
+.picture {
+  position: absolute;
+  inset: 0;
+  transform: scale(1.08);
+}
+
+.image {
+  object-fit: cover;
+}
+
+/* the dark the print comes up out of */
+.shade {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: var(--screen);
+}
+
+/* ── the caption: edge print, title, where and when ───────────────────── */
+
+.caption {
+  display: grid;
+  gap: 4px;
+}
+
+.edge {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 6px;
+  font-size: 0.625rem;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--grey-2);
+}
+
+.title {
+  font-size: clamp(1rem, 1.25vw, 1.2rem);
+  line-height: 1.15;
+  letter-spacing: -0.018em;
+  font-weight: 520;
+  color: var(--white-2);
+  transition: color 400ms var(--ease-out);
+}
+
+.print[data-on] .title {
+  color: var(--white);
+}
+
+.lamp {
+  margin-right: 0.45em;
+  vertical-align: 0.2em;
+  opacity: 0;
+  transform: scale(0.4);
+  transition:
+    opacity 300ms steps(3, end),
+    transform 300ms steps(3, end);
+}
+
+.print[data-on] .lamp {
+  opacity: 1;
+  transform: none;
+}
+
+.meta {
+  font-size: 0.8125rem;
+  font-weight: 460;
+  color: var(--grey-3);
+}
+
+.sample {
+  white-space: nowrap;
+}
+
+/* ── where you are on the strip ───────────────────────────────────────── */
+
+.chrome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-inline: var(--gutter);
+}
+
+.progress {
+  display: flex;
+  gap: 4px;
+}
+
+.seg {
+  position: relative;
+  width: clamp(12px, 1.8vw, 28px);
+  height: 2px;
+  background: rgb(238 237 232 / 0.22);
+  overflow: hidden;
+}
+
+.seg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--white);
+  transform: scaleX(var(--fill, 0));
+  transform-origin: left;
+}
+
+.seg[data-on]::after {
+  background: var(--tungsten);
+}
+
+.count {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--white);
+}
+
+.of {
+  color: var(--grey-3);
+}
+
+@media (max-width: 1023px) {
+  .heading,
+  .intro {
+    grid-column: 1 / -1;
+  }
+}
+
+/* phones held upright: a shorter strip, the head stacked above it */
+@media (max-aspect-ratio: 4 / 5) {
+  .photographs {
+    --h: 44svh;
+  }
+
+  .intro {
+    font-size: 0.875rem;
+  }
+
+  .figure {
+    gap: 10px;
+  }
+}
+
+/* short landscape screens: keep the prints, drop the extras */
+@media (max-height: 520px) {
+  .photographs {
+    --h: 46svh;
+  }
+
+  .intro,
+  .edge {
+    display: none;
+  }
+}
+
+/* no scroll-driven travel: the strip is an ordinary sideways scroller */
+@media (prefers-reduced-motion: reduce) {
+  .photographs {
+    height: auto;
+  }
+
+  .pin {
+    position: relative;
+    height: auto;
+    overflow: visible;
+    padding-top: var(--section);
+    padding-bottom: 0;
+  }
+
+  .port {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: var(--gutter);
+    padding-bottom: 14px;
+  }
+
+  .print {
+    scroll-snap-align: start;
+  }
+
+  .track {
+    flex-direction: row;
+    will-change: auto;
+  }
+
+  .picture {
+    transform: none;
+  }
+
+  .title,
+  .lamp {
+    transition: none;
+  }
+
+  .chrome {
+    display: none;
+  }
+}

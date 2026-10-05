@@ -1,0 +1,614 @@
+/* ── the screening room: the still at its true ratio, titles in the bar ── */
+
+.screen {
+  --titles-h: clamp(150px, 22svh, 210px);
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: var(--nav-h) minmax(0, 1fr) auto;
+  background: var(--screen);
+}
+
+.stage {
+  grid-row: 2;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+}
+
+.frame {
+  position: relative;
+  width: min(100vw, calc((100svh - var(--nav-h) - var(--titles-h)) * var(--ratio)));
+  aspect-ratio: var(--ratio);
+  overflow: hidden;
+  background: var(--black-lift);
+}
+
+.still {
+  object-fit: cover;
+  animation: breathe 24s var(--ease-film) both;
+}
+
+/* the still holds, and very slowly pushes in, like a locked-off shot */
+@keyframes breathe {
+  from { transform: scale(1); }
+  to { transform: scale(1.035); }
+}
+
+.titles {
+  grid-row: 3;
+  min-height: var(--titles-h);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px 40px;
+  flex-wrap: wrap;
+  padding: 24px var(--gutter) clamp(26px, 4svh, 44px);
+}
+
+.titleBlock {
+  display: grid;
+  gap: 12px;
+}
+
+.screenMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 0;
+  font-size: 0.8125rem;
+  font-weight: 460;
+  color: var(--grey-3);
+}
+
+.reelNo {
+  margin-right: 14px;
+  padding-right: 14px;
+  border-right: 1px solid var(--grey-1);
+  color: var(--white-2);
+}
+
+.sampleMark {
+  white-space: pre;
+}
+
+/* the title lands like a title card once the screen has come up */
+.title {
+  font-size: clamp(2.6rem, 6.4vw, 5.5rem);
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+  font-weight: 540;
+  padding-bottom: 0.04em;
+  animation: title-card 1100ms var(--ease-out) 520ms both;
+}
+
+.screenMeta,
+.watch {
+  animation: title-meta 900ms var(--ease-out) 720ms both;
+}
+
+@keyframes title-card {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(0.3em);
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+    clip-path: inset(0 0 -20% 0);
+  }
+}
+
+@keyframes title-meta {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.watch {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 0 10px;
+  font-size: 0.9375rem;
+  font-weight: 520;
+  background: linear-gradient(currentColor, currentColor) left bottom / 100% 1px no-repeat;
+  transition: background-size 600ms var(--ease-out), color 300ms linear;
+}
+
+.watch:hover {
+  background-size: 0 1px;
+  background-position: right bottom;
+}
+
+.watch svg {
+  transition: transform 500ms var(--ease-out);
+}
+
+.watch:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* ── the brief ────────────────────────────────────────────────────────── */
+
+.brief {
+  padding: clamp(80px, 10vw, 152px) var(--gutter) 0;
+  row-gap: 48px;
+}
+
+.logline {
+  grid-column: 1 / span 7;
+  max-width: 26ch;
+}
+
+.facts {
+  grid-column: 9 / -1;
+  display: grid;
+  align-content: start;
+  border-top: 1px solid var(--rule);
+}
+
+.fact {
+  display: grid;
+  grid-template-columns: minmax(96px, 0.8fr) 1.2fr;
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.875rem;
+}
+
+.fact dt {
+  color: var(--grey-3);
+}
+
+.fact dd {
+  margin: 0;
+  font-weight: 500;
+}
+
+.notes {
+  padding: clamp(80px, 9vw, 136px) var(--gutter) 0;
+  row-gap: 56px;
+}
+
+.note {
+  grid-column: 1 / span 5;
+}
+
+.noteRole {
+  grid-column: 7 / span 5;
+}
+
+.noteTitle {
+  font-size: clamp(1.4rem, 2vw, 1.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.028em;
+  font-weight: 520;
+  margin-bottom: 22px;
+}
+
+.points {
+  display: grid;
+  gap: 14px;
+}
+
+.points li {
+  position: relative;
+  padding-left: 1.4em;
+  max-width: 46ch;
+  color: var(--white-2);
+}
+
+.points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.78em;
+  width: 0.7em;
+  height: 1px;
+  background: var(--grey-2);
+}
+
+/* ── key shots: the first full-bleed, the rest laid out like a shot list ─ */
+
+.shots,
+.bts {
+  padding: var(--section) var(--gutter) 0;
+}
+
+.sectionTitle {
+  margin-bottom: clamp(40px, 5vw, 80px);
+}
+
+.shotList {
+  row-gap: clamp(64px, 8vw, 128px);
+}
+
+.shot {
+  grid-column: 1 / span 9;
+  view-timeline: --shot block;
+}
+
+.shot:first-child {
+  grid-column: 1 / -1;
+  margin-inline: calc(var(--gutter) * -1);
+}
+
+.shot:first-child .shotCaption {
+  padding-inline: var(--gutter);
+}
+
+.shot:nth-child(3n + 2) {
+  grid-column: 5 / -1;
+}
+
+.shot:nth-child(3n + 3) {
+  grid-column: 2 / span 7;
+}
+
+.shotFrame {
+  position: relative;
+  aspect-ratio: var(--ratio);
+  overflow: clip;
+  background: var(--black-lift);
+}
+
+.cover {
+  object-fit: cover;
+}
+
+/* each shot opens out from a smaller frame as it arrives */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .shotFrame {
+      animation: frame-open linear both;
+      animation-timeline: --shot;
+      animation-range: entry 10% cover 42%;
+    }
+
+    .shotFrame .cover {
+      animation: frame-settle linear both;
+      animation-timeline: --shot;
+      animation-range: entry 10% cover 55%;
+    }
+  }
+}
+
+@keyframes frame-open {
+  from { clip-path: inset(9% 12%); }
+  to { clip-path: inset(0); }
+}
+
+@keyframes frame-settle {
+  from { transform: scale(1.14); filter: brightness(0.55); }
+  to { transform: scale(1); filter: none; }
+}
+
+.shotCaption {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  margin-top: 16px;
+  font-size: 0.9375rem;
+  color: var(--white-2);
+}
+
+.timecode {
+  color: var(--grey-3);
+  font-weight: 500;
+}
+
+/* ── behind the scenes: a contact sheet ───────────────────────────────── */
+
+.sheet {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 28px);
+}
+
+.btsFrame {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: var(--black-lift);
+}
+
+.btsFrame img {
+  transition: transform 1400ms var(--ease-out), filter 600ms var(--ease-out);
+  filter: brightness(0.86);
+}
+
+.sheet li:hover .btsFrame img {
+  transform: scale(1.03);
+  filter: none;
+}
+
+.btsCaption {
+  margin-top: 12px;
+  max-width: 36ch;
+  font-size: 0.875rem;
+  color: var(--grey-3);
+}
+
+/* ── credits: the end roll, on the screen itself ──────────────────────── */
+
+.credits {
+  margin-top: var(--section);
+  padding: clamp(96px, 12vw, 176px) var(--gutter);
+  background: var(--screen);
+}
+
+.creditsTitle {
+  text-align: center;
+}
+
+.roll {
+  display: grid;
+  gap: 14px;
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+.credit {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: baseline;
+}
+
+.credit dt {
+  text-align: right;
+  font-size: 0.875rem;
+  color: var(--grey-3);
+}
+
+.credit dd {
+  margin: 0;
+  font-weight: 500;
+}
+
+/* ── call to action ───────────────────────────────────────────────────── */
+
+.cta {
+  padding: var(--section) var(--gutter) 0;
+  row-gap: 36px;
+  align-items: end;
+}
+
+.ctaLine {
+  grid-column: 1 / span 7;
+  max-width: 30ch;
+}
+
+.actions {
+  grid-column: 9 / -1;
+  display: grid;
+  justify-items: start;
+  gap: 14px;
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 520;
+  transition:
+    background-color 300ms linear,
+    color 300ms linear,
+    transform 500ms var(--ease-out);
+}
+
+.primary {
+  padding: 16px 22px;
+  background: var(--white);
+  color: var(--black);
+}
+
+.primary:hover {
+  background: var(--tungsten-hot);
+}
+
+.primary:active,
+.secondary:active {
+  transform: scale(0.985);
+}
+
+.secondary {
+  padding: 8px 0;
+  color: var(--white);
+}
+
+.secondary svg,
+.primary svg {
+  transition: transform 500ms var(--ease-out);
+}
+
+.secondary:hover svg {
+  transform: translateX(3px);
+}
+
+.primary:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* ── next film: its frame fills the screen, and grows into its page ───── */
+
+.next {
+  padding-top: var(--section);
+}
+
+.nextLink {
+  position: relative;
+  display: grid;
+  min-height: clamp(420px, 78svh, 820px);
+  align-items: end;
+  overflow: hidden;
+  background: var(--screen);
+}
+
+.nextFrame {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+}
+
+.nextStill {
+  object-fit: cover;
+  filter: brightness(0.62);
+  transition:
+    transform 1600ms var(--ease-out),
+    filter 900ms var(--ease-out);
+}
+
+.nextLink:hover .nextStill,
+.nextLink:focus-visible .nextStill {
+  transform: scale(1.04);
+  filter: brightness(0.85);
+}
+
+.nextLink::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(0 0 0 / 0.78), transparent 55%);
+  pointer-events: none;
+}
+
+.nextText {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 10px;
+  padding: 0 var(--gutter) clamp(36px, 6svh, 64px);
+}
+
+.nextLabel {
+  margin-right: 12px;
+  padding-right: 12px;
+  border-right: 1px solid rgb(238 237 232 / 0.3);
+  font-weight: 520;
+  color: var(--white);
+}
+
+.nextLamp {
+  font-size: 1.4rem;
+  margin-right: 10px;
+  opacity: 0;
+  transform: scale(0.4);
+  transition:
+    opacity 300ms steps(3, end),
+    transform 300ms steps(3, end);
+}
+
+.nextLink:hover .nextLamp,
+.nextLink:focus-visible .nextLamp {
+  opacity: 1;
+  transform: none;
+}
+
+.nextTitle {
+  font-size: clamp(2.6rem, 7vw, 6rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  font-weight: 540;
+}
+
+.nextMeta {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--white-2);
+}
+
+.nextArrow {
+  position: absolute;
+  z-index: 1;
+  right: var(--gutter);
+  bottom: clamp(36px, 6svh, 64px);
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgb(238 237 232 / 0.4);
+  transition:
+    background-color 400ms var(--ease-out),
+    color 400ms var(--ease-out),
+    transform 600ms var(--ease-out);
+}
+
+.nextLink:hover .nextArrow {
+  background: var(--white);
+  color: var(--black);
+  transform: translateX(4px);
+}
+
+/* ── narrower screens ─────────────────────────────────────────────────── */
+
+@media (max-width: 1023px) {
+  .logline,
+  .facts,
+  .note,
+  .noteRole,
+  .ctaLine,
+  .actions {
+    grid-column: 1 / -1;
+  }
+
+  .shot,
+  .shot:nth-child(n) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 767px) {
+  .sheet {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .credit {
+    grid-template-columns: 1fr;
+    gap: 2px;
+    text-align: center;
+  }
+
+  .credit dt {
+    text-align: center;
+  }
+
+  .roll {
+    gap: 18px;
+  }
+
+  .nextArrow {
+    display: none;
+  }
+}
+
+/* phones held upright: fill the screen with the frame instead of a sliver */
+@media (max-aspect-ratio: 4 / 5) {
+  .frame {
+    width: 100vw;
+    height: 56svh;
+    aspect-ratio: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .still {
+    animation: none;
+  }
+
+  .title,
+  .screenMeta,
+  .watch {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+}

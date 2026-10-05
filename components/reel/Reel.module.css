@@ -1,0 +1,336 @@
+/* ── the reel: four films pinned to one screen, joined by scroll ──────── */
+
+.reel {
+  position: relative;
+  height: calc(100svh * (1 + var(--total)));
+  background: var(--screen);
+  scroll-margin-top: 0;
+}
+
+.pin {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--screen);
+  isolation: isolate;
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--screen);
+}
+
+.scene:not([data-active]) {
+  pointer-events: none;
+}
+
+/* the film's own frame: the bars around it are the film's aspect ratio */
+.frame {
+  position: relative;
+  width: min(100vw, calc(100svh * var(--ratio)));
+  aspect-ratio: var(--ratio);
+  overflow: hidden;
+  background: var(--black-lift);
+  transform-origin: 50% 50%;
+}
+
+.picture {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 55%;
+}
+
+.still {
+  object-fit: cover;
+}
+
+/* the iris closing on the frame that is leaving */
+.shade {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: var(--screen);
+  -webkit-mask-image: radial-gradient(circle farthest-corner at 50% 50%, transparent var(--r, 100%), #000 calc(var(--r, 100%) + 0.6%));
+  mask-image: radial-gradient(circle farthest-corner at 50% 50%, transparent var(--r, 100%), #000 calc(var(--r, 100%) + 0.6%));
+}
+
+.scrim {
+  position: absolute;
+  inset: auto 0 0;
+  height: 72%;
+  pointer-events: none;
+  background: linear-gradient(to top, rgb(0 0 0 / 0.92), rgb(0 0 0 / 0.66) 38%, rgb(0 0 0 / 0.2) 72%, transparent);
+}
+
+.hit {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* ── the title card ───────────────────────────────────────────────────── */
+
+.card {
+  position: absolute;
+  z-index: 2;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: clamp(84px, 12svh, 132px);
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+  max-width: 50rem;
+  pointer-events: none;
+}
+
+.card a {
+  pointer-events: auto;
+}
+
+.lamp {
+  font-size: 1.5rem;
+  margin-right: 10px;
+  vertical-align: 0.1em;
+}
+
+.title {
+  font-size: clamp(2.6rem, 7vw, 6rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  font-weight: 540;
+  padding-bottom: 0.06em;
+}
+
+.titleLink:focus-visible {
+  outline-offset: 6px;
+}
+
+.meta {
+  font-size: 0.875rem;
+  font-weight: 480;
+  color: var(--white-2);
+}
+
+.sample {
+  white-space: nowrap;
+}
+
+.logline {
+  max-width: 44ch;
+  font-size: clamp(1rem, 1.3vw, 1.125rem);
+  line-height: 1.45;
+  color: var(--white);
+}
+
+.roles {
+  font-size: 0.875rem;
+  color: var(--grey-3);
+}
+
+.open {
+  margin-top: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 6px;
+  font-size: 0.9375rem;
+  font-weight: 520;
+  background: linear-gradient(currentColor, currentColor) left bottom / 100% 1px no-repeat;
+}
+
+.open svg {
+  transition: transform 600ms var(--ease-out);
+}
+
+.scene:hover .open svg {
+  transform: translateX(4px);
+}
+
+/* the card lands like a title card: out of focus, then racked sharp */
+.card > * {
+  --d: 0;
+  opacity: 0;
+  transform: translateY(14px);
+  filter: blur(8px);
+  transition:
+    opacity 240ms var(--ease-film),
+    transform 240ms var(--ease-film),
+    filter 240ms var(--ease-film);
+}
+
+.card > :nth-child(2) { --d: 2; }
+.card > :nth-child(3) { --d: 3; }
+.card > :nth-child(4) { --d: 4; }
+.card > :nth-child(5) { --d: 5; }
+
+.card > .title {
+  transform: translateY(0.25em);
+  clip-path: inset(0 0 100% 0);
+  transition:
+    opacity 240ms var(--ease-film),
+    transform 240ms var(--ease-film),
+    filter 240ms var(--ease-film),
+    clip-path 240ms var(--ease-film);
+}
+
+.scene[data-active] .card > * {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  clip-path: inset(0 0 -20% 0);
+  transition:
+    opacity 900ms var(--ease-out),
+    transform 1100ms var(--ease-out),
+    filter 1000ms var(--ease-out),
+    clip-path 1000ms var(--ease-out);
+  transition-delay: calc(var(--d) * 90ms + 160ms);
+}
+
+/* ── the join: a bar of light on the wipe, the screenplay slug ────────── */
+
+.edge {
+  position: absolute;
+  z-index: 9;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  width: 2px;
+  margin-left: -1px;
+  opacity: 0;
+  pointer-events: none;
+  background: #fff6e8;
+  box-shadow:
+    0 0 24px 6px rgb(255 220 174 / 0.5),
+    0 0 90px 24px rgb(255 180 107 / 0.18);
+}
+
+.joinLabel {
+  position: absolute;
+  z-index: 10;
+  top: calc(var(--nav-h) + 20px);
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.8125rem;
+  font-weight: 520;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--white);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.joinLabel::after {
+  content: ':';
+}
+
+/* ── the reel's own controls ──────────────────────────────────────────── */
+
+.chrome {
+  position: absolute;
+  z-index: 10;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: clamp(22px, 4svh, 36px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.progress {
+  display: flex;
+  gap: 6px;
+}
+
+.seg {
+  position: relative;
+  width: clamp(28px, 4vw, 56px);
+  height: 2px;
+  background: rgb(238 237 232 / 0.22);
+  overflow: hidden;
+}
+
+.seg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--white);
+  transform: scaleX(var(--fill, 0));
+  transform-origin: left;
+}
+
+.seg[data-on]::after {
+  background: var(--tungsten);
+}
+
+.skip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--white-2);
+  transition: color 300ms var(--ease-out);
+}
+
+.skip:hover {
+  color: var(--white);
+}
+
+/* ── phones held upright: the frame tops the screen, the card below it ── */
+
+@media (max-aspect-ratio: 4 / 5) {
+  .scene {
+    place-items: start center;
+  }
+
+  .frame {
+    width: 100vw;
+    height: max(calc(100vw / var(--ratio)), 44svh);
+    aspect-ratio: auto;
+    margin-top: calc(var(--nav-h) + 28px);
+  }
+
+  .scrim {
+    height: 46%;
+  }
+
+  .card {
+    bottom: 72px;
+    gap: 8px;
+  }
+
+  .title {
+    font-size: clamp(2.4rem, 11vw, 3.4rem);
+  }
+
+  .logline {
+    font-size: 0.9375rem;
+  }
+
+  .roles {
+    display: none;
+  }
+
+  .joinLabel {
+    top: auto;
+    bottom: calc(56svh - 12px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card > *,
+  .scene[data-active] .card > * {
+    transform: none;
+    filter: none;
+    clip-path: none;
+    transition: opacity 300ms linear;
+    transition-delay: 0ms;
+  }
+}

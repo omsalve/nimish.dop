@@ -1,0 +1,496 @@
+/* ── hero: one 3:1 photograph in three beats, the name below ───────────── */
+
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
+  display: grid;
+  grid-template-rows: var(--nav-h) minmax(0, 1fr) auto;
+  padding-bottom: clamp(26px, 5vh, 56px);
+}
+
+.defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.stage {
+  grid-row: 2;
+  align-self: center;
+  position: relative;
+  width: 100%;
+  /* leave room under the plate for the captions */
+  height: min(calc(100% - 64px), 33.333vw);
+}
+
+/* as the hero leaves, the plate sinks back into the black */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .stage {
+      animation: sink linear both;
+      animation-timeline: view();
+      animation-range: exit 0% exit 100%;
+    }
+  }
+}
+
+@keyframes sink {
+  to {
+    opacity: 0.15;
+    transform: scale(0.94);
+    filter: brightness(0.6);
+  }
+}
+
+.plate {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  /* the seamless melts into the page on every side */
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent 0, #000 3.5%, #000 96.5%, transparent 100%),
+    linear-gradient(180deg, transparent 0, #000 8%, #000 91%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(90deg, transparent 0, #000 3.5%, #000 96.5%, transparent 100%),
+    linear-gradient(180deg, transparent 0, #000 8%, #000 91%, transparent 100%);
+  mask-composite: intersect;
+}
+
+.beat {
+  --pad: 40px;
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* layers overhang their third, so blur and colour split never show a hard edge */
+.layer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--pad) * -1);
+  right: calc(var(--pad) * -1);
+  overflow: hidden;
+}
+
+/* each third looks through to its own part of the single wide frame */
+.window {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc((100% - 2 * var(--pad)) * var(--i) * -1 + var(--pad));
+  width: calc((100% - 2 * var(--pad)) * 3);
+}
+
+.img {
+  object-fit: cover;
+  object-position: 50% var(--fy);
+}
+
+/* timeline bands for the edit beat; the reveal shimmers them */
+.ghost {
+  opacity: 0;
+  -webkit-mask-image: repeating-linear-gradient(to bottom, #000 0 8.3333%, transparent 8.3333% 16.6667%);
+  mask-image: repeating-linear-gradient(to bottom, #000 0 8.3333%, transparent 8.3333% 16.6667%);
+}
+
+.beatGrain {
+  position: absolute;
+  inset: -20%;
+  opacity: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2.6' intercept='-.95'/%3E%3CfeFuncG type='linear' slope='2.6' intercept='-.95'/%3E%3CfeFuncB type='linear' slope='2.6' intercept='-.95'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  mix-blend-mode: screen;
+  animation: shiver 0.6s steps(1) infinite;
+}
+
+@keyframes shiver {
+  0% { transform: translate(0, 0); }
+  17% { transform: translate(-6%, 4%); }
+  33% { transform: translate(5%, -7%); }
+  50% { transform: translate(-3%, -2%); }
+  67% { transform: translate(7%, 5%); }
+  83% { transform: translate(-8%, -5%); }
+}
+
+.playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  margin-left: -1px;
+  opacity: 0;
+  background: var(--tungsten);
+  box-shadow: 0 0 16px 2px rgb(255 180 107 / 0.55);
+}
+
+.captions {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  pointer-events: none;
+}
+
+.caption {
+  justify-self: center;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--grey-3);
+  transition: opacity 300ms steps(3, end);
+}
+
+/* ── the monitor readout and frame lines ──────────────────────────────── */
+
+.hud {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: calc(100% + 12px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--grey-3);
+  pointer-events: none;
+}
+
+.rec {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.recLamp {
+  font-size: 1.6rem;
+  animation: blink 2s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0.2; box-shadow: none; }
+}
+
+.tc {
+  margin-left: 6px;
+  color: var(--white-2);
+  min-width: 11ch;
+}
+
+.readout {
+  white-space: nowrap;
+}
+
+/* viewfinder corner marks, just outside the plate */
+.corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 0 solid var(--grey-1);
+  pointer-events: none;
+}
+
+.tl { top: 0; left: var(--gutter); border-top-width: 1px; border-left-width: 1px; }
+.tr { top: 0; right: var(--gutter); border-top-width: 1px; border-right-width: 1px; }
+.bl { bottom: 0; left: var(--gutter); border-bottom-width: 1px; border-left-width: 1px; }
+.br { bottom: 0; right: var(--gutter); border-bottom-width: 1px; border-right-width: 1px; }
+
+/* ── the name ─────────────────────────────────────────────────────────── */
+
+.titles {
+  grid-row: 3;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(12px, 1.6vw, 28px);
+  align-items: end;
+  padding-inline: var(--gutter);
+  padding-top: clamp(18px, 3vh, 36px);
+}
+
+.name {
+  grid-column: 1 / span 8;
+}
+
+.aside {
+  grid-column: 9 / -1;
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+  padding-bottom: 0.45rem;
+}
+
+.roles {
+  font-size: 0.9375rem;
+  font-weight: 520;
+  letter-spacing: -0.005em;
+}
+
+.tagline {
+  max-width: 22ch;
+  font-size: clamp(1.15rem, 1.65vw, 1.5rem);
+  line-height: 1.18;
+  letter-spacing: -0.032em;
+  font-weight: 420;
+  color: var(--white-2);
+  transition: opacity 400ms steps(4, end);
+}
+
+.toFilms {
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--grey-3);
+  transition: color 300ms var(--ease-out);
+}
+
+.toFilms svg {
+  transition: transform 500ms var(--ease-out);
+}
+
+.toFilms:hover {
+  color: var(--white);
+}
+
+.toFilms:hover svg {
+  transform: translateY(3px);
+}
+
+/* ── the projector warming up (html[data-reveal]) ─────────────────────── */
+
+.projector {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  pointer-events: none;
+  display: none;
+}
+
+:global(html[data-reveal='pending']) .projector,
+:global(html[data-reveal='intro']) .projector {
+  display: block;
+}
+
+.barTop,
+.barBottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50.5%;
+  background: var(--screen);
+}
+
+.barTop {
+  top: 0;
+}
+
+.barBottom {
+  bottom: 0;
+}
+
+/* the gate light, seen first through the slit between the bars */
+.seam {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  margin-top: -1px;
+  background: var(--tungsten-hot);
+  box-shadow:
+    0 0 12px 2px rgb(255 220 174 / 0.8),
+    0 0 60px 10px rgb(255 180 107 / 0.35);
+  opacity: 0;
+}
+
+.lamp {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 45% at 50% 50%, rgb(255 236 210 / 0.5), rgb(255 180 107 / 0.12) 55%, transparent 80%);
+  opacity: 0;
+}
+
+:global(html[data-reveal='intro']) .seam {
+  animation: seam 1500ms steps(1, end) both;
+}
+
+:global(html[data-reveal='intro']) .lamp {
+  animation: lamp 1500ms steps(1, end) both;
+}
+
+:global(html[data-reveal='intro']) .barTop {
+  animation: bar-up 1500ms var(--ease-shutter) both;
+}
+
+:global(html[data-reveal='intro']) .barBottom {
+  animation: bar-down 1500ms var(--ease-shutter) both;
+}
+
+/* a carbon arc catching: it sputters at about 12 frames a second, then holds */
+@keyframes seam {
+  0% { opacity: 0; }
+  6% { opacity: 0.5; }
+  11% { opacity: 0; }
+  17% { opacity: 0.85; }
+  22% { opacity: 0.3; }
+  28% { opacity: 1; }
+  33% { opacity: 0.6; }
+  38% { opacity: 1; }
+  70% { opacity: 0.4; }
+  78% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes lamp {
+  0%, 16% { opacity: 0; }
+  17% { opacity: 0.3; }
+  22% { opacity: 0.1; }
+  28% { opacity: 0.6; }
+  33% { opacity: 0.35; }
+  38% { opacity: 0.9; }
+  50% { opacity: 0.7; }
+  62% { opacity: 0.4; }
+  72% { opacity: 0.15; }
+  80%, 100% { opacity: 0; }
+}
+
+@keyframes bar-up {
+  0%, 40% { transform: translateY(0); }
+  86%, 100% { transform: translateY(-100%); }
+}
+
+@keyframes bar-down {
+  0%, 40% { transform: translateY(0); }
+  86%, 100% { transform: translateY(100%); }
+}
+
+/* ── reveal states (html[data-reveal]) ────────────────────────────────── */
+
+:global(html[data-reveal='pending']) .layer,
+:global(html[data-reveal='pending']) .beatGrain,
+:global(html[data-reveal='pending']) .caption,
+:global(html[data-reveal='pending']) .tagline,
+:global(html[data-reveal='intro']) .layer,
+:global(html[data-reveal='intro']) .beatGrain,
+:global(html[data-reveal='intro']) .caption,
+:global(html[data-reveal='intro']) .tagline,
+:global(html[data-reveal='playing']) .caption:not(.on),
+:global(html[data-reveal='playing']) .tagline:not(.on) {
+  opacity: 0;
+}
+
+/* settled on wide screens: the middle window opens to the full frame, one image */
+@media (min-width: 600px) {
+  :global(html:not([data-reveal='pending'], [data-reveal='intro'], [data-reveal='playing'])) .beat,
+  :global(html:not([data-reveal='pending'], [data-reveal='intro'], [data-reveal='playing'])) .layer {
+    overflow: visible;
+  }
+
+  :global(html:not([data-reveal='pending'], [data-reveal='intro'], [data-reveal='playing'])) .light,
+  :global(html:not([data-reveal='pending'], [data-reveal='intro'], [data-reveal='playing'])) .cut {
+    visibility: hidden;
+  }
+}
+
+.on {
+  opacity: 1;
+}
+
+/* ── phones: the three beats stack into a strip of frames ─────────────── */
+
+@media (max-width: 599px) {
+  .hero {
+    --band-h: clamp(108px, calc((100svh - var(--nav-h) - 320px) / 3), 224px);
+    height: auto;
+    min-height: 100svh;
+    grid-template-rows: var(--nav-h) auto 1fr;
+  }
+
+  .stage {
+    align-self: start;
+    height: auto;
+    margin-top: 34px;
+  }
+
+  .hud {
+    left: var(--gutter);
+    right: var(--gutter);
+  }
+
+  .readout {
+    display: none;
+  }
+
+  .corner {
+    display: none;
+  }
+
+  .plate {
+    position: relative;
+    flex-direction: column;
+    gap: 5px;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .beat {
+    --pad: 0px;
+    flex: none;
+    height: var(--band-h);
+  }
+
+  .window {
+    top: var(--band-fy);
+    bottom: auto;
+    aspect-ratio: 3 / 1;
+    translate: 0 calc(var(--band-fy) * -1);
+  }
+
+  .captions {
+    top: 0;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, var(--band-h));
+    row-gap: 5px;
+  }
+
+  /* over the photograph, so each label sits on a chip of the black */
+  .caption {
+    justify-self: start;
+    align-self: end;
+    margin: 0 0 10px var(--gutter);
+    padding: 3px 8px 4px;
+    background: var(--black);
+    color: var(--white-2);
+  }
+
+  .titles {
+    grid-template-columns: 1fr;
+    row-gap: 18px;
+    align-items: end;
+    padding-top: 26px;
+  }
+
+  .name,
+  .aside {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .recLamp {
+    animation: none;
+  }
+}

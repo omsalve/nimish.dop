@@ -1,0 +1,157 @@
+/* ── the contact sheet: every frame at once, on film base ─────────────── */
+
+.sheet {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr));
+  gap: clamp(30px, 3vw, 52px) clamp(12px, 1.4vw, 22px);
+  padding: 8px var(--gutter) clamp(64px, 8vw, 128px);
+}
+
+.item {
+  min-width: 0;
+}
+
+.cell {
+  position: relative;
+  display: grid;
+  gap: 14px;
+}
+
+/* a cell of film base; the frame sits inside it at its own ratio */
+.base {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  container-type: size;
+  background: var(--black-lift);
+  box-shadow: inset 0 0 0 1px var(--rule);
+  transition: background-color 500ms var(--ease-out);
+}
+
+.cell[data-active] .base {
+  background: var(--black-shade);
+}
+
+.frame {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: min(86cqw, calc(74cqh * var(--ratio)));
+  aspect-ratio: var(--ratio);
+  overflow: hidden;
+  background: var(--screen);
+}
+
+.still {
+  object-fit: cover;
+  transition: transform 1400ms var(--ease-out);
+}
+
+.cell[data-active] .still {
+  transform: scale(1.03);
+}
+
+/* edge print, as it comes off the negative */
+.edgeTop,
+.edgeBottom {
+  position: absolute;
+  font-size: 0.625rem;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--grey-2);
+  pointer-events: none;
+}
+
+.edgeTop {
+  top: 5cqh;
+  left: 7cqw;
+  display: flex;
+  gap: 1.4em;
+}
+
+.edgeBottom {
+  bottom: 5cqh;
+  right: 7cqw;
+}
+
+.caption {
+  display: grid;
+  gap: 4px;
+}
+
+.title {
+  font-size: clamp(1.15rem, 1.5vw, 1.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+  font-weight: 520;
+}
+
+/* the whole cell is one link, reached through its title */
+.link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.link:focus-visible {
+  outline: none;
+}
+
+.link:focus-visible::after {
+  outline: 2px solid var(--tungsten);
+  outline-offset: 6px;
+}
+
+.lamp {
+  margin-right: 0.45em;
+  vertical-align: 0.2em;
+  opacity: 0;
+  transform: scale(0.4);
+  transition:
+    opacity 300ms steps(3, end),
+    transform 300ms steps(3, end);
+}
+
+.cell[data-active] .lamp {
+  opacity: 1;
+  transform: none;
+}
+
+.meta {
+  font-size: 0.8125rem;
+  font-weight: 460;
+  color: var(--grey-3);
+}
+
+.sample {
+  white-space: nowrap;
+}
+
+@media (max-width: 599px) {
+  .sheet {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 26px 10px;
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+
+  .meta {
+    font-size: 0.75rem;
+  }
+
+  .edgeTop,
+  .edgeBottom {
+    font-size: 0.5625rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .still,
+  .cell[data-active] .still {
+    transition: none;
+    transform: none;
+  }
+}
