@@ -3,12 +3,14 @@
 .photographs {
   /* screen heights held still at each end; matches HOLD in the component */
   --hold: 0.2;
+  /* screen heights the opening takes, set by the component when it plays */
+  --open: 0;
   /* how far the strip travels, measured on the client; a fair guess until then */
   --travel: 400vw;
   /* the height every print is set to, unless the screen is too narrow for it */
   --h: min(52svh, 620px);
   position: relative;
-  height: calc(100svh * (1 + var(--hold) * 2) + var(--travel));
+  height: calc(100svh * (1 + var(--hold) * 2 + var(--open)) + var(--travel));
   background: var(--black);
 }
 
@@ -23,12 +25,17 @@
   row-gap: clamp(16px, 3svh, 32px);
   padding-top: calc(var(--nav-h) + clamp(8px, 3svh, 32px));
   padding-bottom: clamp(20px, 4svh, 36px);
+  /* the opening plays on the screen itself; the room comes back as the print settles */
+  background: color-mix(in srgb, var(--black) calc(var(--settle, 1) * 100%), var(--screen));
 }
 
 .head {
   padding-inline: var(--gutter);
   align-items: end;
   row-gap: 12px;
+  /* racks in behind the settling print */
+  opacity: var(--settle, 1);
+  filter: blur(calc((1 - var(--settle, 1)) * 10px));
 }
 
 .heading {
@@ -90,6 +97,39 @@
   object-fit: cover;
 }
 
+/* ── the opening: the first print, made in front of the visitor ───────── */
+
+/* while it fills the screen it passes over its neighbours */
+.print[data-lead] .frame {
+  z-index: 2;
+}
+
+.print[data-lead] .picture {
+  isolation: isolate;
+}
+
+/* the picture without its lettering, and the lettering alone; the finished
+   print sits over both and covers them until the opening hands over to it */
+.plate,
+.type {
+  visibility: hidden;
+}
+
+/* as in the source file: white lettering in exclusion, so it reads white on
+   the dark and turns dark wherever the light behind it is bright */
+.type {
+  mix-blend-mode: exclusion;
+}
+
+/* the shutter's one overexposed frame */
+.flash {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: var(--white);
+}
+
 /* the dark the print comes up out of */
 .shade {
   position: absolute;
@@ -104,6 +144,7 @@
 .caption {
   display: grid;
   gap: 4px;
+  opacity: clamp(0, calc(var(--settle, 1) * 2 - 1), 1);
 }
 
 .edge {
@@ -163,6 +204,7 @@
   justify-content: space-between;
   gap: 24px;
   padding-inline: var(--gutter);
+  opacity: clamp(0, calc(var(--settle, 1) * 2 - 1), 1);
 }
 
 .progress {

@@ -59,8 +59,8 @@ export function Program({ projects }: { projects: Project[] }) {
           The program
         </h2>
         <p className={styles.intro}>
-          {WORDS[projects.length] ?? projects.length} films, {span}: brand films and commercials, music videos, short
-          fiction, documentary and experiments, each lit, shot or cut by Nimish.
+          {WORDS[projects.length] ?? projects.length} films, {span}: concert photography and films, brand films and reels,
+          short-form videos, music videos, aerial filming and passion projects, each lit, shot or cut by Nimish.
         </p>
 
         <div className={styles.controls}>
