@@ -1,0 +1,934 @@
+@import "tailwindcss";
+
+:root {
+  --charcoal: #191a18;
+  --pink: #e8afbf;
+  --pink-dark: #c8889c;
+  --paper: #dbd4c8;
+  --muted: #a9a59c;
+  --rule: #ffffff25;
+  /* Stage red is light, never ink: haze, glow, beams. */
+  --stage-red: #ff3b2a;
+  --gutter: clamp(22px, 3.8vw, 76px);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-rip: cubic-bezier(0.65, 0, 0.2, 1);
+  --tear-w: 1000px;
+  --tear-h: 88px;
+}
+
+@theme inline {
+  --color-background: var(--charcoal);
+  --color-foreground: var(--pink);
+  --font-sans: var(--font-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: auto;
+  scroll-padding-top: 24px;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  scrollbar-color: #e8afbf66 #0e0d0c;
+  scrollbar-gutter: stable;
+  caret-color: var(--pink);
+}
+body {
+  margin: 0;
+  background-color: var(--charcoal);
+  color: var(--pink);
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  line-height: 1.6;
+}
+/* One ground for the whole site: charcoal under a single, living layer of film
+   grain. Sections stay transparent so it runs unbroken from top to bottom;
+   photographs are opaque and sit above it, untouched. */
+body::before {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  inset: -128px;
+  background: url("/film-grain.webp") 0 0 / 256px 256px;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  animation: film-grain 0.42s steps(1) infinite;
+}
+@keyframes film-grain {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  17% {
+    transform: translate3d(-61px, 37px, 0);
+  }
+  33% {
+    transform: translate3d(43px, -88px, 0);
+  }
+  50% {
+    transform: translate3d(-97px, -19px, 0);
+  }
+  67% {
+    transform: translate3d(76px, 102px, 0);
+  }
+  83% {
+    transform: translate3d(-23px, 71px, 0);
+  }
+}
+::selection {
+  background: var(--pink);
+  color: var(--charcoal);
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--charcoal);
+}
+::-webkit-scrollbar-thumb {
+  background: #e8afbf55;
+  border: 3px solid var(--charcoal);
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+}
+button {
+  font: inherit;
+  cursor: pointer;
+  color: inherit;
+  border: 0;
+  border-radius: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 5px;
+}
+button:active {
+  transform: scale(0.985);
+}
+figure,
+p,
+h1,
+h2,
+dl,
+dd {
+  margin: 0;
+}
+h1,
+h2 {
+  text-wrap: balance;
+}
+svg {
+  display: block;
+}
+.page-gutter {
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.flap {
+  font-variant-numeric: tabular-nums;
+  white-space: pre;
+}
+.arrow {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+.arrow-down {
+  transform: rotate(135deg);
+}
+.arrow-left {
+  transform: rotate(-135deg);
+}
+.arrow-right {
+  transform: rotate(45deg);
+}
+.asterisk {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+}
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  padding: 14px 20px;
+  z-index: 400;
+  background: var(--pink);
+  color: var(--charcoal);
+  transform: translateY(-160%);
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+.status-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--pink);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.handwritten {
+  font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+  font-size: 27px;
+  line-height: 1.1;
+  letter-spacing: -1.3px;
+  transform: rotate(-10deg);
+}
+.tape {
+  position: absolute;
+  z-index: 4;
+  width: 110px;
+  height: 35px;
+  background-color: #d3c8b3b5;
+  box-shadow: inset 0 0 1px #a59d8e;
+  background-image: url("/film-grain.webp");
+  background-size: 256px 256px;
+  background-blend-mode: soft-light;
+  mix-blend-mode: screen;
+  clip-path: polygon(
+    0 7%,
+    5% 10%,
+    5% 0,
+    94% 4%,
+    98% 0,
+    96% 20%,
+    100% 23%,
+    97% 94%,
+    91% 91%,
+    89% 100%,
+    3% 96%
+  );
+  pointer-events: none;
+}
+.tape-top {
+  top: -15px;
+  left: calc(50% - 55px);
+  transform: rotate(-9deg);
+}
+
+/* A tear-off ticket. The archive is the last stop before the photographs. */
+.archive-section {
+  padding-top: 76px;
+  padding-bottom: 0;
+}
+.section-eyebrow {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  font-size: 9px;
+  letter-spacing: 0.6px;
+  margin-bottom: 23px;
+}
+.section-eyebrow > span:last-child {
+  color: var(--muted);
+}
+.ticket {
+  position: relative;
+  background-color: var(--pink);
+  background-image: url("/film-grain.webp");
+  background-size: 256px 256px;
+  background-blend-mode: soft-light;
+  color: var(--charcoal);
+  display: grid;
+  grid-template-columns: 27% 73%;
+}
+.ticket::before,
+.ticket::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 7px;
+  background-size: 14px 14px;
+  pointer-events: none;
+}
+.ticket::before {
+  top: -6px;
+  background-image:
+    linear-gradient(135deg, transparent 50%, var(--pink) 50%),
+    linear-gradient(225deg, transparent 50%, var(--pink) 50%);
+}
+.ticket::after {
+  bottom: -6px;
+  transform: rotate(180deg);
+  background-image:
+    linear-gradient(135deg, transparent 50%, var(--pink) 50%),
+    linear-gradient(225deg, transparent 50%, var(--pink) 50%);
+}
+.ticket-stub {
+  position: relative;
+  padding: 34px 30px 28px;
+  border-right: 2px dashed #20211f66;
+}
+.ticket-stub-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  font-size: 8px;
+  line-height: 1.4;
+  letter-spacing: 0.6px;
+}
+.ticket-stub-top .asterisk {
+  width: 31px;
+  height: 31px;
+}
+.ticket-stub h2 {
+  font-family: var(--font-display), Impact, sans-serif;
+  font-size: clamp(44px, 5.9vw, 104px);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  margin-top: 36px;
+  position: relative;
+}
+.ticket-stub h2 span {
+  position: absolute;
+  font-family: Arial, sans-serif;
+  font-size: 60px;
+  transform: rotate(-12deg);
+  top: 12px;
+  right: 3px;
+}
+.ticket-stub p {
+  font-size: 9px;
+  line-height: 1.7;
+  margin-top: 17px;
+}
+.ticket-barcode {
+  height: 43px;
+  width: 100%;
+  margin-top: 35px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--charcoal) 0px,
+    var(--charcoal) 2px,
+    transparent 2px,
+    transparent 4px,
+    var(--charcoal) 4px,
+    var(--charcoal) 5px,
+    transparent 5px,
+    transparent 8px,
+    var(--charcoal) 8px,
+    var(--charcoal) 12px,
+    transparent 12px,
+    transparent 15px,
+    var(--charcoal) 15px,
+    var(--charcoal) 16px,
+    transparent 16px,
+    transparent 19px,
+    var(--charcoal) 19px,
+    var(--charcoal) 22px,
+    transparent 22px,
+    transparent 24px,
+    var(--charcoal) 24px,
+    var(--charcoal) 25px,
+    transparent 25px,
+    transparent 28px,
+    var(--charcoal) 28px,
+    var(--charcoal) 31px,
+    transparent 31px,
+    transparent 35px
+  );
+  opacity: 0.9;
+}
+.stub-serial {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 9px;
+  font-size: 8px;
+  letter-spacing: 1px;
+}
+.ticket-notch {
+  width: 22px;
+  height: 22px;
+  background: var(--charcoal);
+  border-radius: 50%;
+  position: absolute;
+  right: -12px;
+  z-index: 2;
+}
+.notch-top {
+  top: -13px;
+}
+.notch-bottom {
+  bottom: -13px;
+}
+.ticket-main {
+  padding: 26px 33px 24px;
+  display: flex;
+  flex-direction: column;
+}
+.archive-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 23px;
+  font-size: 8px;
+  letter-spacing: 0.4px;
+}
+.archive-column-labels {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  font-size: 7px;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #20211f;
+}
+.concert-row {
+  display: grid;
+  align-items: center;
+  gap: 16px;
+  min-height: 58px;
+  border-bottom: 1px dashed #20211f66;
+  padding: 8px 0;
+  transition: background 160ms ease;
+}
+.concert-title {
+  font-family: var(--font-display), Impact, sans-serif;
+  font-size: clamp(16px, 1.75vw, 30px);
+  font-weight: 400;
+  letter-spacing: 0.1px;
+  line-height: 1.1;
+}
+.ticket-bottom {
+  margin-top: auto;
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 6px;
+  letter-spacing: 0.5px;
+}
+.contact-strip {
+  margin-top: 37px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  padding-bottom: 31px;
+  border-bottom: 1px solid var(--rule);
+}
+.contact-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.contact-note .status-dot {
+  margin-top: 5px;
+}
+.contact-note p {
+  font-size: 9px;
+  line-height: 1.8;
+  letter-spacing: 0.3px;
+}
+.contact-note p span {
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 0;
+}
+.contact-link {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  min-height: 44px;
+  font-size: 10px;
+  font-weight: 500;
+}
+.contact-link .arrow {
+  width: 24px;
+  height: 24px;
+}
+.journey-intro {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  padding-top: 64px;
+  padding-bottom: 72px;
+  font-size: 9px;
+  letter-spacing: 0.5px;
+}
+.journey-intro > span:last-child {
+  color: var(--muted);
+}
+.journey-intro svg {
+  position: absolute;
+  width: 125px;
+  height: 75px;
+  left: 45%;
+  top: 24px;
+  transform: rotate(4deg);
+}
+.reveal-ready {
+  opacity: 0.08;
+  clip-path: inset(0 0 12% 0);
+  transition:
+    opacity 600ms var(--ease-out),
+    clip-path 600ms var(--ease-in-out);
+}
+.reveal-ready.is-visible {
+  opacity: 1;
+  clip-path: inset(-12% -10% -12% -10%);
+}
+
+/* Every photograph is a button that opens the viewer. Its preview sits beneath. */
+.photo-button {
+  display: block;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  padding: 0;
+  text-align: left;
+  cursor: zoom-in;
+  background-color: #151413;
+  background-size: cover;
+  background-position: var(--focus, 50% 50%);
+  background-repeat: no-repeat;
+}
+.photo-button img {
+  object-fit: cover;
+  object-position: var(--focus, 50% 50%);
+}
+.photo-expand {
+  position: absolute;
+  z-index: 2;
+  right: 18px;
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 9px 12px;
+  font-size: 9px;
+  letter-spacing: 0.6px;
+  background: var(--paper);
+  color: var(--charcoal);
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 180ms ease,
+    transform 180ms var(--ease-out);
+}
+.photo-expand .arrow {
+  width: 16px;
+  height: 16px;
+}
+.photo-button:focus-visible {
+  outline-offset: -7px;
+  outline-color: var(--pink);
+}
+.photo-button:focus-visible .photo-expand {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Native dialog preserves keyboard focus and lets each frame fill the room. */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  border: none;
+  margin: 0;
+  padding: 22px 36px;
+  padding-top: max(22px, env(safe-area-inset-top));
+  padding-bottom: max(22px, env(safe-area-inset-bottom));
+  background-color: var(--charcoal);
+  background-image: url("/film-grain.webp");
+  background-size: 256px 256px;
+  background-blend-mode: overlay;
+  color: var(--pink);
+}
+.lightbox::backdrop {
+  background: var(--charcoal);
+}
+.lightbox[open] {
+  display: grid;
+  grid-template-rows: 44px minmax(0, 1fr) 76px;
+  gap: 14px;
+  opacity: 1;
+  transition: opacity 220ms ease;
+}
+@starting-style {
+  .lightbox[open] {
+    opacity: 0;
+  }
+}
+.lightbox-topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+.lightbox-brand > span {
+  color: var(--paper);
+}
+.lightbox-close {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  background: transparent;
+  padding: 0 4px 0 14px;
+  height: 44px;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+.lightbox-close svg {
+  width: 26px;
+  height: 26px;
+}
+.lightbox-stage {
+  position: relative;
+  min-height: 0;
+  touch-action: pan-y pinch-zoom;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.lightbox-image {
+  object-fit: contain;
+}
+.lightbox-flight {
+  position: fixed;
+  z-index: 5;
+  transform-origin: 0 0;
+  object-fit: fill;
+  pointer-events: none;
+  will-change: transform, clip-path;
+}
+.lightbox-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-top: 1px solid #e8afbf2e;
+}
+.lightbox-artist {
+  display: block;
+  font:
+    400 clamp(24px, 2.4vw, 38px) / 1 var(--font-display),
+    Impact,
+    sans-serif;
+  text-transform: uppercase;
+  color: var(--pink);
+}
+.lightbox-title small {
+  display: block;
+  font-size: 9px;
+  color: var(--muted);
+  margin-top: 6px;
+  letter-spacing: 0.6px;
+}
+.lightbox-controls {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.lightbox-count {
+  font-size: 11px;
+  letter-spacing: 1px;
+  font-variant-numeric: tabular-nums;
+}
+.lightbox-controls button {
+  display: grid;
+  place-items: center;
+  background: transparent;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #e8afbf55;
+}
+.lightbox-controls .arrow {
+  width: 20px;
+  height: 20px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .contact-link:hover {
+    color: var(--paper);
+  }
+  .concert-row:hover {
+    background: #20211f0d;
+  }
+  .photo-button:hover .photo-expand {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .lightbox-controls button,
+  .lightbox-close {
+    transition:
+      color 160ms ease,
+      background 160ms ease;
+  }
+  .lightbox-controls button:hover {
+    background: var(--pink);
+    color: var(--charcoal);
+  }
+  .lightbox-close:hover {
+    color: var(--paper);
+  }
+}
+
+@media (max-width: 1100px) {
+  .ticket-stub {
+    padding: 27px 20px;
+  }
+  .ticket-stub h2 span {
+    font-size: 45px;
+    right: 0;
+  }
+  .ticket-main {
+    padding: 23px 24px;
+  }
+  .archive-topline {
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .archive-topline > span {
+    max-width: 130px;
+  }
+  .ticket-bottom > span:last-child {
+    display: none;
+  }
+  .ticket-barcode {
+    margin-top: 48px;
+  }
+}
+
+@media (max-width: 700px) {
+  :root {
+    --gutter: 22px;
+    --tear-w: 620px;
+    --tear-h: 55px;
+  }
+  html {
+    scroll-padding-top: 15px;
+  }
+  .archive-section {
+    padding-top: 56px;
+  }
+  .section-eyebrow {
+    font-size: 7px;
+    letter-spacing: 0.1px;
+    margin-bottom: 19px;
+  }
+  .section-eyebrow > span:last-child {
+    display: none;
+  }
+  .ticket {
+    grid-template-columns: 1fr;
+  }
+  .ticket-stub {
+    padding: 25px 23px 22px;
+    border-right: 0;
+    border-bottom: 2px dashed #20211f66;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 18px;
+  }
+  .ticket-stub-top {
+    grid-column: 2;
+    justify-content: flex-end;
+    align-items: flex-start;
+    font-size: 6px;
+    gap: 18px;
+  }
+  .ticket-stub-top .asterisk {
+    width: 24px;
+    height: 24px;
+  }
+  .ticket-stub h2 {
+    grid-row: 1 / 4;
+    grid-column: 1;
+    margin-top: -2px;
+    font-size: 16vw;
+    line-height: 1;
+  }
+  .ticket-stub h2 span {
+    font-size: 35px;
+    right: -10px;
+    top: 5px;
+  }
+  .ticket-stub p {
+    grid-column: 2;
+    font-size: 7px;
+    margin-top: 13px;
+    align-self: end;
+  }
+  .ticket-barcode {
+    grid-column: 2;
+    height: 28px;
+    margin-top: 16px;
+  }
+  .stub-serial {
+    grid-column: 1 / 3;
+    font-size: 7px;
+    margin-top: 19px;
+  }
+  .ticket-notch {
+    width: 18px;
+    height: 18px;
+    top: auto;
+    bottom: -10px;
+  }
+  .notch-top {
+    left: -10px;
+    right: auto;
+  }
+  .notch-bottom {
+    right: -10px;
+  }
+  .ticket-main {
+    padding: 18px 20px 22px;
+  }
+  .archive-topline {
+    display: block;
+    padding-bottom: 16px;
+    font-size: 7px;
+  }
+  .archive-topline > span {
+    max-width: none;
+  }
+  .archive-column-labels {
+    font-size: 6px;
+    letter-spacing: 0.3px;
+  }
+  .concert-row {
+    column-gap: 9px;
+    row-gap: 3px;
+    min-height: 70px;
+    padding: 12px 0;
+  }
+  .concert-title {
+    font-size: clamp(16px, 4.55vw, 26px);
+    line-height: 1.1;
+  }
+  .ticket-bottom {
+    font-size: 6px;
+    letter-spacing: 0.15px;
+    line-height: 1.7;
+    padding-top: 15px;
+  }
+  .contact-strip {
+    display: block;
+    margin-top: 30px;
+    padding-bottom: 21px;
+  }
+  .contact-note {
+    gap: 9px;
+  }
+  .contact-note p,
+  .contact-note p span {
+    font-size: 8px;
+  }
+  .contact-link {
+    justify-content: space-between;
+    font-size: 9px;
+    margin-top: 19px;
+  }
+  .journey-intro {
+    padding-top: 43px;
+    padding-bottom: 74px;
+    font-size: 7px;
+    letter-spacing: 0.2px;
+  }
+  .journey-intro > span:last-child {
+    max-width: 120px;
+    text-align: right;
+  }
+  .journey-intro > span:first-child {
+    max-width: 135px;
+  }
+  .journey-intro svg {
+    top: 62px;
+    width: 85px;
+    height: 50px;
+    left: 39%;
+  }
+  .photo-expand {
+    right: 12px;
+    bottom: 12px;
+    font-size: 7px;
+    gap: 12px;
+    padding: 7px 10px;
+  }
+  .lightbox {
+    padding: 12px 16px;
+    padding-top: max(12px, env(safe-area-inset-top));
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+  .lightbox[open] {
+    grid-template-rows: 44px minmax(0, 1fr) 112px;
+    gap: 10px;
+  }
+  .lightbox-topline {
+    font-size: 7px;
+    letter-spacing: 0.5px;
+  }
+  .lightbox-bottom {
+    display: block;
+    padding-top: 12px;
+  }
+  .lightbox-title small {
+    font-size: 8px;
+  }
+  .lightbox-controls {
+    margin-top: 10px;
+    justify-content: space-between;
+    gap: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  body::before {
+    animation: none;
+  }
+  .reveal-ready {
+    clip-path: none;
+    opacity: 1;
+    transition: opacity 180ms ease;
+  }
+  .photo-expand,
+  .concert-row {
+    transition:
+      opacity 180ms ease,
+      background 160ms ease;
+  }
+  .photo-expand {
+    transform: none;
+  }
+  button:active {
+    transform: none;
+  }
+}

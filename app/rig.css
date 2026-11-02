@@ -1,0 +1,215 @@
+/* The encore: the whole archive on one turning truss, in the dark. */
+.rig-section {
+  position: relative;
+  height: 250svh;
+}
+.rig-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+}
+.rig-stage::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: clamp(200px, 34svh, 340px);
+  background: linear-gradient(180deg, #191a18f0 0%, #191a18b3 45%, transparent 100%);
+  pointer-events: none;
+}
+.rig-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: pan-y;
+}
+.rig-crowd {
+  position: absolute;
+  z-index: 1;
+  left: -2%;
+  right: -2%;
+  bottom: -2px;
+  height: clamp(110px, 21svh, 230px);
+  background: url("/crowd.svg") 50% 100% / auto 100% repeat-x;
+  pointer-events: none;
+}
+.rig-head {
+  position: absolute;
+  z-index: 2;
+  top: clamp(26px, 5.5svh, 60px);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+  pointer-events: none;
+}
+.rig-head h2 {
+  font:
+    400 clamp(46px, 6.6vw, 118px) / 0.86 var(--font-display),
+    Impact,
+    sans-serif;
+  text-transform: uppercase;
+  color: var(--pink);
+  letter-spacing: -0.01em;
+}
+.rig-head p {
+  max-width: 32ch;
+  padding-top: 8px;
+  font-size: 11px;
+  line-height: 1.8;
+  color: #e3d6d0;
+  text-shadow: 0 2px 16px #000;
+}
+.rig-bar {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding-top: 16px;
+  padding-bottom: max(18px, env(safe-area-inset-bottom));
+  background: linear-gradient(0deg, #191a18f2, #191a18b3 60%, transparent);
+}
+.rig-caption {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #b3a29d;
+}
+.rig-caption-title {
+  font:
+    400 clamp(20px, 2.1vw, 32px) / 1.05 var(--font-display),
+    Impact,
+    sans-serif;
+  letter-spacing: 0.02em;
+  color: var(--pink);
+  white-space: pre;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rig-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.rig-controls button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-width: 48px;
+  height: 48px;
+  padding: 0 14px;
+  border: 1px solid #e8afbf59;
+  background: #191a18cc;
+  color: var(--pink);
+  font-size: 10px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+.rig-controls .arrow {
+  width: 18px;
+  height: 18px;
+}
+.rig-controls .rig-open {
+  background-color: var(--pink);
+  background-image: url("/film-grain.webp");
+  background-size: 256px 256px;
+  background-blend-mode: soft-light;
+  color: var(--charcoal);
+  border-color: var(--pink);
+}
+.rig-fallback {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  top: 50%;
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 0 var(--gutter);
+  list-style: none;
+  overflow-x: auto;
+  transform: translateY(-50%);
+}
+.rig-fallback button {
+  width: 150px;
+  height: 200px;
+  background: center / cover no-repeat #151413;
+}
+.rig-fallback ~ .rig-crowd {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .rig-controls button {
+    transition:
+      background 160ms ease,
+      color 160ms ease;
+  }
+  .rig-controls button:hover {
+    background: var(--pink);
+    color: var(--charcoal);
+  }
+  .rig-controls .rig-open:hover {
+    background-color: var(--paper);
+  }
+}
+
+@media (max-width: 900px) {
+  .rig-head {
+    display: block;
+  }
+  .rig-head p {
+    max-width: 36ch;
+    font-size: 10px;
+  }
+  .rig-bar {
+    display: block;
+  }
+  .rig-controls {
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .rig-controls .rig-open {
+    flex: 1;
+  }
+}
+
+@media (max-width: 700px) {
+  .rig-section {
+    height: 210svh;
+  }
+  .rig-head h2 {
+    font-size: clamp(42px, 13vw, 64px);
+  }
+  .rig-head p {
+    font-size: 9px;
+    margin-top: 6px;
+  }
+  .rig-controls button {
+    height: 44px;
+    min-width: 44px;
+    font-size: 8px;
+    padding: 0 10px;
+  }
+  .rig-toggle {
+    order: 5;
+    flex-basis: 100%;
+  }
+}

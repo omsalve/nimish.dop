@@ -1,0 +1,131 @@
+{
+  "images": [
+    {
+      "file": "blue-guitar.jpg",
+      "alt": "A guitarist singing under brilliant blue stage lights.",
+      "width": 1800,
+      "height": 2700,
+      "source": "https://unsplash.com/photos/rtEX0NURTIc",
+      "download": "https://images.unsplash.com/photo-1578559117711-f80f34af785f?auto=format&fit=crop&w=1800&q=85&fm=jpg",
+      "photographer": "A J.",
+      "license": "Unsplash License",
+      "role": "Demonstration photography; replace with portfolio owner originals."
+    },
+    {
+      "file": "blue-guitar-close.jpg",
+      "alt": "A guitarist in a plaid shirt performing under dark teal stage lights.",
+      "width": 1800,
+      "height": 2929,
+      "source": "https://unsplash.com/photos/O6vstmt3g9s",
+      "download": "https://images.unsplash.com/photo-1761144837816-3b34fe2f1c32?auto=format&fit=crop&w=1800&q=85&fm=jpg",
+      "photographer": "Les Taylor",
+      "license": "Unsplash License",
+      "role": "Demonstration photography; replace with portfolio owner originals."
+    },
+    {
+      "file": "red-vocalist.jpg",
+      "alt": "A singer in a bright red jacket crouching at the front of the stage.",
+      "width": 1800,
+      "height": 2700,
+      "source": "https://unsplash.com/photos/5IHBoUfwzjo",
+      "download": "https://images.unsplash.com/photo-1767755254725-5d6be8749f4d?auto=format&fit=crop&w=1800&q=85&fm=jpg",
+      "photographer": "Win Min Aung",
+      "license": "Unsplash License",
+      "role": "Demonstration photography; replace with portfolio owner originals."
+    },
+    {
+      "file": "festival-crowd.jpg",
+      "alt": "A cheering audience close to a festival stage.",
+      "width": 1800,
+      "height": 1200,
+      "source": "https://images.unsplash.com/photo-1501386761578-eac5c94b800a",
+      "download": "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=1800&q=85&fm=jpg",
+      "license": "Unsplash License",
+      "role": "Demonstration photography; replace with portfolio owner originals."
+    },
+    {
+      "file": "crowd-lights.jpg",
+      "alt": "Confetti falling above a concert audience beneath colorful stage lights.",
+      "width": 1800,
+      "height": 1201,
+      "source": "https://images.unsplash.com/photo-1492684223066-81342ee5ff30",
+      "download": "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1800&q=85&fm=jpg",
+      "license": "Unsplash License",
+      "role": "Demonstration photography; replace with portfolio owner originals."
+    },
+    {
+      "file": "festival-stage.jpg",
+      "alt": "An immense purple-lit festival stage with raised hands in the crowd.",
+      "width": 1800,
+      "height": 1200,
+      "source": "https://images.unsplash.com/photo-1506157786151-b8491531f063",
+      "download": "https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1800&q=85&fm=jpg",
+      "license": "Unsplash License",
+      "role": "Demonstration photography; replace with portfolio owner originals."
+    },
+    {
+      "file": "live-lights.jpg",
+      "alt": "A concert crowd silhouetted against bright pastel stage lighting.",
+      "width": 1800,
+      "height": 1350,
+      "source": "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14",
+      "download": "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?auto=format&fit=crop&w=1800&q=85&fm=jpg",
+      "license": "Unsplash License",
+      "role": "Demonstration photography; replace with portfolio owner originals."
+    },
+    {
+      "file": "crowd-hands.jpg",
+      "alt": "Hands raised against a warm orange concert stage.",
+      "width": 1800,
+      "height": 1200,
+      "source": "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b",
+      "download": "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&w=1800&q=85&fm=jpg",
+      "license": "Unsplash License",
+      "role": "Demonstration photography; replace with portfolio owner originals."
+    },
+    {
+      "file": "red-stage-singer.jpg",
+      "alt": "A tattooed singer and guitarist performing in saturated red stage light.",
+      "width": 1800,
+      "height": 1200,
+      "source": "https://unsplash.com/photos/lrHdCaDzquc",
+      "download": "https://images.unsplash.com/photo-1656354857065-3a64f0a494f9?auto=format&fit=crop&w=1800&q=85&fm=jpg",
+      "photographer": "Frankie Cordoba",
+      "license": "Unsplash License",
+      "role": "Demonstration photography; replace with portfolio owner originals."
+    },
+    {
+      "file": "pink-drummer.jpg",
+      "alt": "A drummer and guitarist playing beneath radiant pink and white stage lights.",
+      "width": 1800,
+      "height": 1192,
+      "source": "https://unsplash.com/photos/wzj86-5JVcM",
+      "download": "https://images.unsplash.com/photo-1423110041833-0d5dfcc552e1?auto=format&fit=crop&w=1800&q=85&fm=jpg",
+      "photographer": "Michael Mongin",
+      "license": "Unsplash License",
+      "role": "Demonstration photography; replace with portfolio owner originals."
+    },
+    {
+      "file": "blue-drummer.jpg",
+      "alt": "A drummer raising drumsticks beneath dramatic blue stage lighting.",
+      "width": 1800,
+      "height": 3196,
+      "source": "https://unsplash.com/photos/2_Cd38NYXwE",
+      "download": "https://images.unsplash.com/photo-1549223565-49541e8416dc?auto=format&fit=crop&w=1800&q=85&fm=jpg",
+      "photographer": "Madhu Balakrishna",
+      "license": "Unsplash License",
+      "role": "Demonstration photography; replace with portfolio owner originals."
+    },
+    {
+      "file": "orange-guitar.jpg",
+      "alt": "The silhouette of a guitarist beneath a warm orange spotlight.",
+      "width": 1800,
+      "height": 2400,
+      "source": "https://unsplash.com/photos/ZWftSHfRsdA",
+      "download": "https://images.unsplash.com/photo-1765224747159-6a6417cd208c?auto=format&fit=crop&w=1800&q=85&fm=jpg",
+      "photographer": "Rafael Garcin",
+      "license": "Unsplash License",
+      "role": "Demonstration photography; replace with portfolio owner originals."
+    }
+  ]
+}

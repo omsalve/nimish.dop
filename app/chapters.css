@@ -1,0 +1,333 @@
+/* The set: nine artists, each a title card, a three-shot exposure, and the whole night. */
+.photo-journey {
+  position: relative;
+  /* Clip, not hide: the shot stages stay sticky against the viewport. */
+  overflow: clip;
+}
+.chapter {
+  position: relative;
+}
+
+/* Title card. Red stage light belongs only to the chapter that has the stage. */
+.chapter-card {
+  position: relative;
+  isolation: isolate;
+  padding-top: clamp(110px, 13vw, 230px);
+  padding-bottom: clamp(24px, 3vw, 48px);
+}
+.chapter-light {
+  position: absolute;
+  z-index: -1;
+  left: 4%;
+  right: 18%;
+  top: 18%;
+  bottom: -30%;
+  background:
+    radial-gradient(ellipse 52% 46% at 38% 58%, #ff3b2a40 0%, #ff3b2a14 42%, transparent 72%),
+    radial-gradient(ellipse 30% 70% at 70% 30%, #e8afbf10, transparent 70%);
+  opacity: 0;
+  transform: translate3d(-4%, 6%, 0) scale(0.92);
+  transition:
+    opacity 1400ms var(--ease-out),
+    transform 2400ms var(--ease-out);
+  pointer-events: none;
+}
+.chapter-card.is-live .chapter-light {
+  opacity: 1;
+  transform: none;
+}
+.chapter-name {
+  font:
+    400 clamp(64px, 12.4vw, 228px) / 0.84 var(--font-display),
+    Impact,
+    sans-serif;
+  text-transform: uppercase;
+  letter-spacing: -0.015em;
+  color: var(--pink);
+  margin-left: -0.03em;
+}
+.chapter-meta {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+  margin-top: clamp(20px, 2.4vw, 36px);
+  padding-top: 14px;
+  border-top: 1px solid #e8afbf3d;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #d8c4c4;
+}
+.chapter-order {
+  color: var(--pink);
+}
+.chapter-back {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  color: var(--muted);
+  transition: color 160ms ease;
+}
+.chapter-back .arrow {
+  width: 16px;
+  height: 16px;
+}
+
+/* ——— The three-shot exposure. Static by default (no script, reduced motion):
+   three whole frames side by side. Directed, it becomes a pinned stage. ——— */
+.shots {
+  --bw: 86vw;
+  --bh: 76svh;
+  position: relative;
+}
+.shots-stage {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  padding: 10px var(--gutter) 40px;
+}
+.shot {
+  position: relative;
+  width: min(28vw, calc(42svh * var(--ar)));
+  aspect-ratio: var(--ar);
+}
+.shot-gate {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.shot-film {
+  position: absolute;
+  inset: 0;
+}
+.shot-flash,
+.shots-light,
+.shots-rail,
+.shots-note {
+  display: none;
+}
+.shot-label {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 10px);
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #d8c4c4;
+}
+
+.scroll-directed .shots {
+  height: 270svh;
+}
+.scroll-directed .shots-stage {
+  position: sticky;
+  top: 0;
+  display: block;
+  height: 100svh;
+  padding: 0;
+  overflow: hidden;
+}
+.scroll-directed .shot {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  width: min(var(--bw), calc(var(--bh) * var(--ar)));
+  translate: -50% -50%;
+  will-change: transform, opacity;
+}
+.scroll-directed .shot-gate {
+  transform: scale(1, 0);
+  will-change: transform;
+}
+.scroll-directed .shot-film {
+  will-change: transform;
+}
+.scroll-directed .shot-flash {
+  display: block;
+  position: absolute;
+  inset: -16% -10%;
+  background: radial-gradient(
+    ellipse 50% 50% at 50% 50%,
+    #fffaf6 0%,
+    #ffd8c8 16%,
+    #ff6a4ab3 40%,
+    #ff3b2a33 62%,
+    transparent 76%
+  );
+  mix-blend-mode: screen;
+  opacity: 0;
+  pointer-events: none;
+}
+.scroll-directed .shot-label {
+  top: auto;
+  bottom: calc(100% + 10px);
+  opacity: var(--label, 0);
+}
+.scroll-directed .shots-light {
+  display: block;
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 55% at 50% 52%, #ff3b2a29 0%, #ff3b2a0d 45%, transparent 75%);
+  opacity: var(--glow, 0);
+  pointer-events: none;
+}
+.scroll-directed .shots-rail {
+  display: flex;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: max(20px, env(safe-area-inset-bottom));
+  justify-content: space-between;
+  gap: 20px;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #d8c4c4;
+}
+.scroll-directed .shots-rail [data-shot-count] {
+  color: var(--pink);
+}
+.scroll-directed .shots-note {
+  display: block;
+  position: absolute;
+  right: calc(var(--gutter) + 2vw);
+  bottom: 70px;
+  color: var(--pink);
+  font-size: clamp(22px, 2vw, 32px);
+  transform: rotate(-8deg);
+  opacity: var(--note, 0);
+}
+
+/* ——— The whole night: justified rows, every frame at its own aspect ratio. ——— */
+.artist-archive {
+  padding-top: clamp(40px, 5vw, 90px);
+  padding-bottom: clamp(110px, 13vw, 220px);
+}
+.artist-archive-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 14px;
+  margin-bottom: clamp(18px, 2vw, 30px);
+  border-top: 1px solid #e8afbf3d;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #d8c4c4;
+}
+.artist-archive-head > span:last-child {
+  color: var(--pink);
+}
+.justified {
+  --row: clamp(200px, 24vw, 380px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(10px, 1.1vw, 18px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.justified::after {
+  content: "";
+  flex-grow: 1000000;
+}
+.frame {
+  position: relative;
+  flex-grow: calc(var(--ar) * 100);
+  flex-basis: calc(var(--ar) * var(--row));
+  aspect-ratio: var(--ar);
+}
+.frame .photo-button {
+  position: absolute;
+  inset: 0;
+}
+
+/* Each frame develops as it arrives: overexposed, then true. */
+.frame.develop-ready {
+  opacity: 0;
+  transition: opacity 700ms var(--ease-out);
+  transition-delay: calc(var(--d) * 90ms);
+}
+.frame.develop-ready .photo-button {
+  filter: brightness(2.3) saturate(0.35);
+  transition: filter 1300ms var(--ease-out);
+  transition-delay: calc(var(--d) * 90ms);
+}
+.frame.develop-ready.is-in {
+  opacity: 1;
+}
+.frame.develop-ready.is-in .photo-button {
+  filter: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chapter-back:hover {
+    color: var(--pink);
+  }
+  .scroll-directed .shot-film {
+    cursor: zoom-in;
+  }
+}
+
+@media (max-width: 1000px) {
+  .justified {
+    --row: clamp(170px, 34vw, 300px);
+  }
+}
+
+@media (max-width: 700px) {
+  .chapter-card {
+    padding-top: 96px;
+    padding-bottom: 32px;
+  }
+  .chapter-name {
+    font-size: clamp(52px, 17vw, 96px);
+    line-height: 0.88;
+  }
+  .chapter-meta {
+    grid-template-columns: auto 1fr;
+    gap: 6px 16px;
+    font-size: 8px;
+    letter-spacing: 0.5px;
+  }
+  .chapter-back {
+    grid-column: 1 / -1;
+    min-height: 40px;
+  }
+  .shots {
+    --bw: 92vw;
+    --bh: 64svh;
+  }
+  .shot {
+    width: min(42vw, calc(32svh * var(--ar)));
+  }
+  .scroll-directed .shots {
+    height: 230svh;
+  }
+  .scroll-directed .shots-rail {
+    font-size: 8px;
+    letter-spacing: 0.5px;
+  }
+  .scroll-directed .shots-note {
+    bottom: 56px;
+    font-size: 20px;
+  }
+  .artist-archive-head {
+    font-size: 8px;
+  }
+  .justified {
+    --row: 42vw;
+    gap: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chapter-light {
+    transition: opacity 400ms ease;
+    transform: none;
+  }
+  .frame.develop-ready .photo-button {
+    filter: none;
+  }
+}

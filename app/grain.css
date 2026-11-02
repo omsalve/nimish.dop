@@ -1,0 +1,49 @@
+/*
+ * The material system. Film grain lives in the ground, the type, and the paper;
+ * photographs never carry it. Torn-paper tiles (scripts/generate-torn-edges.cjs)
+ * remain for the splash, which tears open onto the poster.
+ */
+
+/* Ink printed with grain in it: the grain is blended into the glyphs themselves. */
+.film-type {
+  background-image: url("/film-grain.webp"), linear-gradient(currentColor, currentColor);
+  background-size: 256px 256px, 100% 100%;
+  background-blend-mode: soft-light;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: film-type 0.42s steps(1) infinite;
+}
+@keyframes film-type {
+  0% {
+    background-position: 0 0, 0 0;
+  }
+  33% {
+    background-position: -71px 43px, 0 0;
+  }
+  66% {
+    background-position: 59px -96px, 0 0;
+  }
+}
+.film-paper {
+  background-image: url("/film-grain.webp");
+  background-size: 256px 256px;
+  background-blend-mode: soft-light;
+}
+
+[class*="tear-rim-"] {
+  background-repeat: repeat-x;
+  background-size: var(--tear-w) var(--tear-h);
+}
+.tear-rim-top-2 {
+  background-image: url("/torn/rim-top-2.svg");
+}
+.tear-rim-bottom-2 {
+  background-image: url("/torn/rim-bottom-2.svg");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .film-type {
+    animation: none;
+  }
+}

@@ -1,0 +1,262 @@
+/* Soundcheck: every frame counted in on a contact-sheet mosaic, then the sheet tears. */
+.splash {
+  display: none;
+}
+html.splash-on .splash {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  pointer-events: auto;
+}
+html.splash-on:not(.splash-done) body {
+  overflow: hidden;
+}
+html.splash-on.splash-done .splash {
+  pointer-events: none;
+}
+.splash-sheet {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+.splash-sheet-bottom {
+  visibility: hidden;
+}
+.splash-content {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background-color: var(--charcoal);
+  background-image: url("/film-grain.webp");
+  background-size: 256px 256px;
+  background-blend-mode: overlay;
+}
+.splash-mosaic {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.splash-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 48% at 50% 52%, #191a18e0 0%, #191a18a6 45%, transparent 80%),
+    linear-gradient(180deg, #191a18cc, transparent 22%, transparent 76%, #191a18e6);
+}
+.splash-topline,
+.splash-bottomline {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #d8c4c4;
+}
+.splash-topline {
+  top: max(28px, env(safe-area-inset-top));
+  align-items: center;
+}
+.splash-brand {
+  font:
+    27px/1 var(--font-display),
+    Impact,
+    sans-serif;
+  color: var(--pink);
+  letter-spacing: -0.4px;
+}
+.splash-brand > span {
+  color: var(--paper);
+}
+.splash-bottomline {
+  bottom: max(34px, calc(env(safe-area-inset-bottom) + 20px));
+}
+.splash-counter {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15em;
+  color: var(--pink);
+}
+.splash-glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(90vw, 1100px);
+  height: min(60vh, 560px);
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center, #ff3b2a40 0%, #ff3b2a14 38%, transparent 68%);
+  animation: splash-breathe 2.6s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+.splash-figure {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 0.6em;
+}
+.splash-count {
+  position: relative;
+  display: flex;
+  font:
+    400 clamp(140px, 27vw, 440px) / 0.8 var(--font-display),
+    Impact,
+    sans-serif;
+  letter-spacing: -0.02em;
+}
+.splash-count > span {
+  display: inline-block;
+  width: 0.5em;
+  text-align: center;
+}
+.splash-of {
+  position: relative;
+  margin-bottom: 0.4em;
+  font-size: clamp(12px, 1.2vw, 18px);
+  letter-spacing: 2px;
+  color: var(--paper);
+}
+.splash-meter {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: max(22px, calc(env(safe-area-inset-bottom) + 10px));
+  height: 2px;
+  background: #e8afbf26;
+}
+.splash-meter > span {
+  display: block;
+  height: 100%;
+  background: var(--pink);
+  transform: scaleX(0);
+  transform-origin: left center;
+  box-shadow: 0 0 12px #ff3b2a99;
+}
+.splash-rim {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: var(--tear-h);
+  margin-top: calc(var(--tear-h) / -2);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* The tear: the sheet splits along one ragged line and both halves are pulled away. */
+.splash.is-leaving .splash-sheet-bottom,
+.splash.is-leaving .splash-rim {
+  visibility: visible;
+}
+.splash.is-leaving .splash-sheet-top .splash-content {
+  -webkit-mask:
+    linear-gradient(#000 0 0) 0 0 / 100% calc(50% - var(--tear-h) / 2 + 1px) no-repeat,
+    url("/torn/mask-bottom-2.svg") 0 50% / var(--tear-w) var(--tear-h) repeat-x;
+  mask:
+    linear-gradient(#000 0 0) 0 0 / 100% calc(50% - var(--tear-h) / 2 + 1px) no-repeat,
+    url("/torn/mask-bottom-2.svg") 0 50% / var(--tear-w) var(--tear-h) repeat-x;
+}
+.splash.is-leaving .splash-sheet-bottom .splash-content {
+  -webkit-mask:
+    url("/torn/mask-top-2.svg") 0 50% / var(--tear-w) var(--tear-h) repeat-x,
+    linear-gradient(#000 0 0) 0 100% / 100% calc(50% - var(--tear-h) / 2 + 1px) no-repeat;
+  mask:
+    url("/torn/mask-top-2.svg") 0 50% / var(--tear-w) var(--tear-h) repeat-x,
+    linear-gradient(#000 0 0) 0 100% / 100% calc(50% - var(--tear-h) / 2 + 1px) no-repeat;
+}
+.splash.is-leaving .splash-sheet-top {
+  animation: tear-away-up 640ms var(--ease-rip) 40ms both;
+}
+.splash.is-leaving .splash-sheet-bottom {
+  animation: tear-away-down 640ms var(--ease-rip) 40ms both;
+}
+.splash.is-leaving .splash-glow {
+  animation: splash-flash 260ms ease-out both;
+}
+@keyframes tear-away-up {
+  from {
+    transform: none;
+  }
+  to {
+    transform: translate3d(0, -62%, 0) rotate(-4deg);
+  }
+}
+@keyframes tear-away-down {
+  from {
+    transform: none;
+  }
+  to {
+    transform: translate3d(0, 62%, 0) rotate(3deg);
+  }
+}
+@keyframes splash-breathe {
+  from {
+    opacity: 0.65;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes splash-flash {
+  0% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 1;
+    filter: brightness(1.8);
+  }
+  100% {
+    opacity: 0.8;
+  }
+}
+
+/* The boot script's hard cap: if the page is slow to wake, the sheet fades anyway. */
+html.splash-forced .splash {
+  animation: splash-fade 240ms ease forwards;
+  pointer-events: none;
+}
+
+/* Reduced motion: no tear, no strobe. The sheet simply fades. */
+html.splash-calm .splash.is-leaving .splash-sheet-top,
+html.splash-calm .splash.is-leaving .splash-sheet-bottom {
+  animation: splash-fade 300ms ease both;
+}
+html.splash-calm .splash.is-leaving .splash-sheet-bottom,
+html.splash-calm .splash.is-leaving .splash-rim {
+  visibility: hidden;
+}
+html.splash-calm .splash.is-leaving .splash-content {
+  -webkit-mask: none;
+  mask: none;
+}
+html.splash-calm .splash-glow {
+  animation: none;
+}
+@keyframes splash-fade {
+  to {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .splash-topline,
+  .splash-bottomline {
+    font-size: 7px;
+    letter-spacing: 0.5px;
+  }
+  .splash-bottomline > span:last-child {
+    display: none;
+  }
+  .splash-brand {
+    font-size: 22px;
+  }
+  .splash-count {
+    font-size: 34vw;
+  }
+}
