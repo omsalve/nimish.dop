@@ -1,11 +1,13 @@
+// Billing order for the ticket and the archive: the first five are fixed, the
+// rest follow in any order. Frame numbers (N° 001…) follow this order too.
 export const artists = [
-  { id: "ayushman", name: "Ayushman" },
+  { id: "himesh-reshammiya", name: "Himesh Reshammiya" },
+  { id: "ayushman", name: "Ayushmann Khurrana" },
+  { id: "shilpa-rao", name: "Shilpa Rao" },
+  { id: "seedhe-maut", name: "Seedhe Maut" },
+  { id: "mass-appeal", name: "Mass Appeal" },
+  { id: "javed-ali", name: "Javed Ali" },
   { id: "chaar-diwari", name: "Chaar Diwari" },
   { id: "gajendar-verma", name: "Gajendar Verma" },
-  { id: "himesh-reshammiya", name: "Himesh Reshammiya" },
-  { id: "javed-ali", name: "Javed Ali" },
-  { id: "mass-appeal", name: "Mass Appeal" },
   { id: "roopkumar-rathod", name: "Roopkumar Rathod" },
-  { id: "seedhe-maut", name: "Seedhe Maut" },
-  { id: "shilpa-rao", name: "Shilpa Rao" },
 ];

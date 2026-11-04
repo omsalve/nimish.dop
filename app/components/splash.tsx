@@ -147,7 +147,7 @@ export default function Splash() {
         if (!context) return;
         context.clearRect(cell.x, cell.y, cell.w, cell.h);
         if (!image) {
-          context.strokeStyle = "rgba(232,175,191,0.07)";
+          context.strokeStyle = "rgba(242,242,242,0.07)";
           context.strokeRect(cell.x + 0.5, cell.y + 0.5, cell.w - 1, cell.h - 1);
           return;
         }
@@ -170,7 +170,7 @@ export default function Splash() {
         );
         // Each frame flashes on at full exposure, then settles under the counter.
         const settle = calm ? 1 : Math.min(1, Math.max(0, age));
-        context.fillStyle = `rgba(25,26,24,${(0.64 * settle).toFixed(3)})`;
+        context.fillStyle = `rgba(17,17,17,${(0.64 * settle).toFixed(3)})`;
         context.fillRect(cell.x, cell.y, cell.w, cell.h);
       });
     }

@@ -1,9 +1,8 @@
 import { artists } from "../lib/artists";
 import { photographs } from "../lib/collection";
+import { ContactForm } from "./contact-form";
+import { SocialLinks } from "./social-links";
 import { Arrow, Asterisk } from "./symbols";
-
-// Sample address until the real inbox is confirmed (see README).
-export const CONTACT_EMAIL = "hello@nimish.photo";
 
 export default function Closing() {
   return (
@@ -24,25 +23,28 @@ export default function Closing() {
             Send the date, the city and the artist. I’ll bring the camera to
             the front.
           </p>
-          <a className="closing-mail film-paper" href={`mailto:${CONTACT_EMAIL}`}>
-            <span>{CONTACT_EMAIL}</span>
-            <Arrow />
-          </a>
+          <ContactForm />
         </div>
-        <dl className="closing-facts">
-          <div>
-            <dt>IN THE ARCHIVE</dt>
-            <dd>{photographs.length} FRAMES</dd>
+        <div className="closing-side">
+          <dl className="closing-facts">
+            <div>
+              <dt>IN THE ARCHIVE</dt>
+              <dd>{photographs.length} FRAMES</dd>
+            </div>
+            <div>
+              <dt>ON THE TICKET</dt>
+              <dd>{artists.length} ARTISTS</dd>
+            </div>
+            <div>
+              <dt>BASED IN</dt>
+              <dd>INDIA. FOLLOWING THE MUSIC.</dd>
+            </div>
+          </dl>
+          <div className="closing-elsewhere">
+            <span>OR FIND ME HERE</span>
+            <SocialLinks />
           </div>
-          <div>
-            <dt>ON THE TICKET</dt>
-            <dd>{artists.length} ARTISTS</dd>
-          </div>
-          <div>
-            <dt>BASED IN</dt>
-            <dd>INDIA. FOLLOWING THE MUSIC.</dd>
-          </div>
-        </dl>
+        </div>
       </div>
       <div className="closing-bottom page-gutter">
         <span>

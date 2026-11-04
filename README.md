@@ -1,6 +1,6 @@
-# NIMISH. — Loud Nights. Still Frames.
+# NIMISH. — I Shoot Concerts.
 
-A concert photography portfolio built with Next.js 16, React 19, CSS, and a dependency-free WebGL2 set piece. One charcoal ground under a moving layer of film grain, pink ink with the grain printed into it, a perforated concert ticket, and all 101 photographs shown whole. The design system is recorded in `DESIGN.md`, and product facts in `PRODUCT.md`.
+A concert photography portfolio built with Next.js 16, React 19, CSS, and a dependency-free WebGL2 set piece. One pure black ground, white ink with film grain printed into it, a perforated concert ticket, and all 101 photographs shown whole. The design system is recorded in `DESIGN.md`, and product facts in `PRODUCT.md`.
 
 ## Run locally
 
@@ -13,10 +13,12 @@ Open http://localhost:3000. For a production build, run `npm run build` followed
 
 ## Make it yours
 
-- Update the ticket artist names in `app/lib/artists.ts`.
+- Update the ticket artist names and their order in `app/lib/artists.ts`. The ticket, the chapters and the frame numbers all follow that order.
 - The gallery is generated from `app/lib/cloudinary-photos.json`; keep accurate alt text and artist IDs for every frame.
 - Choose each artist's three exposure frames, the hero slideshow, and the handwritten asides in `app/lib/curation.ts`. The keepsake print is in `app/lib/cloudinary-featured.json`.
-- **Replace the sample contact email** (`hello@nimish.photo`) in `app/components/closing.tsx`. The ticket's contact strip uses the same constant.
+- **Replace the sample contact email** (`hello@nimish.photo`) in `app/lib/contact.ts`. It is shown under the booking form as the direct line.
+- **Replace the social links** (Instagram, Behance, WhatsApp number) in `app/lib/socials.ts`.
+- **Connect the booking form** to your inbox: see "Contact form" below.
 - Set `NEXT_PUBLIC_SITE_URL` to your deployed URL for social sharing images. Vercel's production domain is detected automatically.
 
 The original Unsplash demonstration assets remain in `public/images/` but are not displayed; their attribution remains in `public/images/manifest.json`. Anton and IBM Plex Mono are self-hosted, with their SIL Open Font Licenses in `public/fonts/`.
@@ -41,16 +43,31 @@ The preparation script consumes `.artifacts/cloudinary-inventory.json`; the gall
 
 The Free plan currently has **25 shared credits** for storage, bandwidth, and transformations combined. A credit is 1 GB of storage, 1 GB of image bandwidth, or 1,000 transformations. Originals and generated variants use storage; delivered images use bandwidth. Watch the Cloudinary dashboard as traffic grows. See [plan limits](https://cloudinary.com/pricing/compare-plans), [credit accounting](https://cloudinary.com/documentation/billing_and_plans), and [image optimization](https://cloudinary.com/documentation/image_optimization).
 
+## Contact form
+
+The booking form in the close (`app/components/contact-form.tsx`) posts to a Server Action (`app/actions/contact.ts`), which sends the enquiry to your inbox through [Resend](https://resend.com)'s free plan (3,000 emails a month, 100 a day). There is no SDK; it is one `fetch` with the key kept on the server. Each email has the visitor's address as Reply-To, so you answer with your mail app's Reply.
+
+Environment variables (in `.env.local` locally, and in your host's project settings):
+
+| Variable | Required | Value |
+| --- | --- | --- |
+| `RESEND_API_KEY` | yes | An API key from Resend, "Sending access" is enough. |
+| `CONTACT_TO_EMAIL` | yes | Where enquiries go. Until you verify a domain, this must be the address you signed up to Resend with. Comma-separate for several. |
+| `CONTACT_FROM_EMAIL` | no | Sender, e.g. `NIMISH. <bookings@yourdomain.com>` once a domain is verified. Defaults to `onboarding@resend.dev`. |
+
+Without the first two, the form still validates but shows "That didn't go through" with the direct email address, and logs the missing variable on the server. Spam protection is a hidden honeypot field and a minimum fill time; bots get a "sent" receipt and nothing is delivered.
+
 ## How the page works
 
 **Splash (`app/components/splash.tsx`).** An inline boot script (`app/lib/boot.ts`) starts downloading a ~25 KB preview of all 101 frames while the HTML is still parsing. The splash counts them in on a contact-sheet mosaic, then tears open onto the hero. It never runs past 3 seconds: the boot script enforces a hard cap that does not depend on React hydrating. The same previews then serve as instant placeholders under every photo, as the opening shot of the viewer, and as the Rig's textures, so full-quality images can load just ahead of the scroll without any slot ever showing blank. Return visits in the same session get a short version.
 
 **Hero.** The poster composition is unchanged. Behind the type, a slideshow brings in each frame as an exposure: a light leak sweeps across and the photo develops out of it. The slideshow pauses offscreen, and its pause button sits in the bottom rail. Reduced motion starts it paused.
 
-**The Rig (`app/components/rig.tsx`, `app/lib/rig-gl.ts`).** Directly after the ticket, every frame hangs on a circular lighting truss in counter-rotating tiers, with moving-head beams and haze. Scrolling runs a "light check" and dollies in; drag spins it; click opens a frame; arrow buttons and Open Frame work from the keyboard. It is plain WebGL2 in one transparent canvas:
+**The Rig (`app/components/rig.tsx`, `app/lib/rig-gl.ts`).** Directly after the hero (the ticket follows it), every frame hangs on a circular lighting truss in counter-rotating tiers, with moving-head beams and haze. Scrolling runs a "light check" and dollies in; drag spins it; click opens a frame; arrow buttons and Open Frame work from the keyboard. It is plain WebGL2 in one transparent canvas:
 
 - it renders only while on screen;
 - the pixel ratio is capped, and resolution steps down automatically if frame time climbs;
+- the scene is built only after the splash has torn and the poster has landed (or on first scroll), so it never competes with the opening;
 - textures are the splash previews;
 - browsers without WebGL2 get a strip of every frame instead.
 

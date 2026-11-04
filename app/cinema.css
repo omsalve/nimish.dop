@@ -1,9 +1,9 @@
 /* The poster and the ticket: the loved opening, now printed in worn ink. */
 :root {
-  --charcoal: #191a18;
-  --pink: #e8afbf;
-  --paper: #dbd4c8;
-  --muted: #a9a59c;
+  --ground: #000000;
+  --ink: #f2f2f2;
+  --paper: #d5d5d5;
+  --muted: #a5a5a5;
   --rule: #ffffff25;
   --concert-columns: 77px minmax(0, 1fr) 142px 18px;
   --concert-gap: 16px;
@@ -21,7 +21,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  color: var(--pink);
+  color: var(--ink);
 }
 .cinema-header::after {
   content: "";
@@ -30,7 +30,7 @@
   left: var(--gutter);
   right: var(--gutter);
   height: 1px;
-  background: #e8afbf38;
+  background: #f2f2f238;
 }
 .cinema-brand {
   display: flex;
@@ -55,12 +55,12 @@
   gap: 10px;
   font-size: 9px;
   letter-spacing: 0.6px;
-  color: #d8c4c4;
+  color: #c9c9c9;
 }
 .cinema-header-note .status-dot {
   width: 5px;
   height: 5px;
-  box-shadow: 0 0 14px #e8afbf65;
+  box-shadow: 0 0 14px #f2f2f265;
 }
 .cinema-header nav {
   display: flex;
@@ -81,7 +81,7 @@
   height: 16px;
 }
 .cinema-header nav .cinema-contact-nav {
-  border: 1px solid #e8afbf70;
+  border: 1px solid #f2f2f270;
   padding: 0 16px;
 }
 
@@ -106,18 +106,18 @@
   background:
     linear-gradient(
       90deg,
-      #111210ed 0%,
-      #131410a6 22%,
-      #13141022 49%,
-      #13141000 70%
+      #000000ed 0%,
+      #000000a6 22%,
+      #00000022 49%,
+      #00000000 70%
     ),
     linear-gradient(
       180deg,
-      #0e1110d4 0%,
-      #11120f25 28%,
-      #15161300 46%,
-      #12131045 69%,
-      #111310e8 100%
+      #000000d4 0%,
+      #00000025 28%,
+      #00000000 46%,
+      #00000045 69%,
+      #000000e8 100%
     );
 }
 .cinema-backdrop::after {
@@ -127,7 +127,7 @@
   background: radial-gradient(
     ellipse at 57% 40%,
     transparent 28%,
-    #0c0f0c73 100%
+    #00000073 100%
   );
   pointer-events: none;
 }
@@ -141,10 +141,10 @@
   justify-content: space-between;
   font-size: 8px;
   letter-spacing: 1px;
-  color: #ddcbca;
+  color: #d0d0d0;
 }
 .cinema-kicker > span:last-child {
-  color: #bda8a9;
+  color: #aeaeae;
 }
 .cinema-viewfinder {
   position: absolute;
@@ -157,7 +157,7 @@
   position: absolute;
   width: 12px;
   height: 12px;
-  border-color: var(--pink);
+  border-color: var(--ink);
   border-style: solid;
 }
 .cinema-viewfinder > span:nth-child(1) {
@@ -193,13 +193,13 @@
   align-items: center;
   font-size: 8px;
   letter-spacing: 1.1px;
-  color: #c6b9af;
+  color: #bcbcbc;
 }
 .cinema-edition::before {
   content: "";
   width: 21px;
   height: 1px;
-  background: var(--pink);
+  background: var(--ink);
 }
 .cinema-copy h2 {
   font:
@@ -211,12 +211,12 @@
 }
 .cinema-copy h2 > span:last-child {
   color: transparent;
-  -webkit-text-stroke: 1px var(--pink);
+  -webkit-text-stroke: 1px var(--ink);
 }
 .cinema-description {
   max-width: 256px;
   margin-top: 22px;
-  color: #cbbfb6;
+  color: #c1c1c1;
   font-size: 10px;
   line-height: 1.9;
 }
@@ -227,7 +227,7 @@
   gap: 22px;
   min-height: 46px;
   width: 208px;
-  border-bottom: 1px solid #e8afbf7d;
+  border-bottom: 1px solid #f2f2f27d;
   font-size: 9px;
   letter-spacing: 0.8px;
   margin-top: 19px;
@@ -235,6 +235,20 @@
 .cinema-cta .arrow {
   width: 23px;
   height: 23px;
+}
+/* The CTA and the three social buttons share one baseline; they wrap on narrow copy. */
+.cinema-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px 22px;
+  margin-top: 19px;
+}
+.cinema-actions .cinema-cta {
+  margin-top: 0;
+}
+.cinema-socials .social-link {
+  background: #00000040;
 }
 .cinema-contact-print {
   position: absolute;
@@ -264,7 +278,7 @@
   padding: 11px 1px 12px;
   font-size: 6px;
   letter-spacing: 0.5px;
-  color: #262620;
+  color: #252525;
 }
 .cinema-print-label {
   position: absolute;
@@ -292,12 +306,12 @@
   gap: 7px;
   width: 106px;
   height: 106px;
-  background: var(--pink);
-  color: var(--charcoal);
+  background: var(--ink);
+  color: var(--ground);
   border-radius: 50%;
   box-shadow:
-    inset 0 0 0 4px var(--pink),
-    inset 0 0 0 5px #191a18a6,
+    inset 0 0 0 4px var(--ink),
+    inset 0 0 0 5px #000000a6,
     0 7px 20px #0003;
   transform: rotate(-13deg);
   font-size: 7px;
@@ -312,7 +326,7 @@
   right: calc(var(--gutter) + 23px);
   top: 59%;
   z-index: 4;
-  color: var(--pink);
+  color: var(--ink);
   font-size: 26px;
   transform: rotate(-10deg);
   text-shadow: 0 2px 12px #000;
@@ -350,20 +364,20 @@
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  border-top: 1px solid #e8afbf40;
+  border-top: 1px solid #f2f2f240;
   font-size: 7px;
   letter-spacing: 0.7px;
-  color: #c8b6ad;
+  color: #bababa;
 }
 .cinema-bottom-year {
-  color: #a58b88;
+  color: #929292;
   margin-left: 12px;
 }
 .cinema-bottom a {
   display: flex;
   align-items: center;
   gap: 20px;
-  color: var(--pink);
+  color: var(--ink);
   min-height: 44px;
 }
 .cinema-bottom .arrow {
@@ -378,7 +392,7 @@
   writing-mode: vertical-rl;
   font-size: 7px;
   letter-spacing: 1.2px;
-  color: #cbb2a9;
+  color: #b8b8b8;
 }
 
 @keyframes poster-title-arrive {
@@ -428,7 +442,7 @@
 }
 .archive-heading > p > span:last-child {
   color: transparent;
-  -webkit-text-stroke: 1px var(--pink);
+  -webkit-text-stroke: 1px var(--ink);
 }
 .archive-heading > div {
   display: grid;
@@ -460,10 +474,10 @@
 .ticket-stub {
   background: linear-gradient(
     90deg,
-    #1a1a1607,
+    #1a1a1a07,
     transparent 25%,
     transparent 89%,
-    #1a1a160a
+    #1a1a1a0a
   );
 }
 .ticket-main {
@@ -581,7 +595,7 @@
     color: var(--paper);
   }
   .cinema-contact-nav:hover {
-    background: #e8afbf14;
+    background: #f2f2f214;
   }
   .cinema-contact-print {
     transition: transform 250ms var(--ease-out);
@@ -709,14 +723,14 @@
   }
   .cinema-shade {
     background:
-      linear-gradient(90deg, #121310dd, #12131065 48%, #12131000 80%),
+      linear-gradient(90deg, #000000dd, #00000065 48%, #00000000 80%),
       linear-gradient(
         180deg,
-        #111310cf,
-        #11131000 30%,
-        #11131008 50%,
-        #111310bf 86%,
-        #111310fa
+        #000000cf,
+        #00000000 30%,
+        #00000008 50%,
+        #000000bf 86%,
+        #000000fa
       );
   }
   .cinema-kicker {
@@ -752,8 +766,11 @@
     line-height: 1.9;
     margin-top: 19px;
   }
-  .cinema-cta {
+  .cinema-actions {
     margin-top: 17px;
+    gap: 12px;
+  }
+  .cinema-cta {
     width: 186px;
     font-size: 8px;
     min-height: 44px;
@@ -1030,8 +1047,8 @@
   z-index: 3;
   inset: -20% -40%;
   background:
-    radial-gradient(ellipse 22% 60% at 30% 50%, #ffd9cc 0%, #ff6a4a99 30%, transparent 70%),
-    radial-gradient(ellipse 30% 70% at 62% 46%, #e8afbfb3 0%, #ff3b2a40 45%, transparent 75%);
+    radial-gradient(ellipse 22% 60% at 30% 50%, #e2e2e2 0%, #ffffff5c 30%, transparent 70%),
+    radial-gradient(ellipse 30% 70% at 62% 46%, #f2f2f2b3 0%, #ffffff23 45%, transparent 75%);
   mix-blend-mode: screen;
   opacity: 0;
   pointer-events: none;
@@ -1078,7 +1095,7 @@
 }
 
 /* The poster sits on the same ground as everything else: the photograph fades
-   into the grain rather than ending on an edge. */
+   into the black rather than ending on an edge. */
 .cinema-poster {
   background: transparent;
 }
@@ -1111,20 +1128,20 @@
   height: 44px;
   margin-left: -10px;
   background: transparent;
-  color: var(--pink);
+  color: var(--ink);
 }
 .hero-reel-toggle svg {
   width: 26px;
   height: 26px;
   padding: 6px;
-  border: 1px solid #e8afbf80;
+  border: 1px solid #f2f2f280;
   border-radius: 50%;
 }
 .hero-reel-label {
-  color: #a58b88;
+  color: #929292;
 }
 .hero-reel-title {
-  color: var(--pink);
+  color: var(--ink);
   letter-spacing: 1px;
 }
 .hero-reel-ticks {
@@ -1134,11 +1151,11 @@
 .hero-reel-ticks > span {
   width: 12px;
   height: 2px;
-  background: #e8afbf40;
+  background: #f2f2f240;
   transition: background 300ms ease;
 }
 .hero-reel-ticks > span.is-on {
-  background: var(--pink);
+  background: var(--ink);
 }
 
 /* Paper pieces on the poster carry the same grain as the ground. */
@@ -1149,7 +1166,7 @@
   background-blend-mode: soft-light;
 }
 .cinema-stamp {
-  background-color: var(--pink);
+  background-color: var(--ink);
 }
 .cinema-contact-print {
   background-color: var(--paper);
@@ -1250,23 +1267,23 @@ html.splash-on:not(.splash-done)
   inset: 0;
   opacity: 0;
   pointer-events: none;
-  background: linear-gradient(180deg, #191a18 0%, #191a18cc 60%, transparent 100%);
+  background: linear-gradient(180deg, #000000 0%, #000000cc 60%, transparent 100%);
 }
 .archive-section {
   position: relative;
 }
 .artist-ticket .artist-collection-link:focus-visible {
-  outline: 2px solid var(--charcoal);
+  outline: 2px solid var(--ground);
   outline-offset: 3px;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .artist-ticket .artist-collection-link:hover {
-    background: #20211f12;
+    background: #21212112;
   }
   .hero-reel-toggle:hover svg {
-    background: var(--pink);
-    color: var(--charcoal);
+    background: var(--ink);
+    color: var(--ground);
   }
 }
 
@@ -1332,7 +1349,7 @@ html.splash-on:not(.splash-done)
   .cinema-description {
     margin-top: 14px;
   }
-  .cinema-cta {
+  .cinema-actions {
     margin-top: 10px;
   }
 }

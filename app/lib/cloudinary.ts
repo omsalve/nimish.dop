@@ -6,22 +6,33 @@ const UPLOAD = "/image/upload/";
 
 // Large enough for 1440p and retina laptops; 3840 masters cost bandwidth, not detail.
 const MAX_WIDTH = 2560;
+// The hero is a cover crop pushed in past the viewport, so on retina screens and
+// phones it is genuinely drawn wider than 2560 device pixels.
+const HERO_MAX_WIDTH = 3840;
 
 export function isCloudinaryImage(src: ImageProps["src"]): src is string {
   return typeof src === "string" && cloudinaryUpload.test(src);
 }
 
-export function cloudinaryLoader({ src, width, quality }: ImageLoaderProps) {
+function deliver({ src, width, quality }: ImageLoaderProps, maxWidth: number) {
   const url = new URL(src);
   const qualitySetting = quality ? `q_${quality}` : "q_auto:best";
 
   // Limit dimensions without upscaling; let Cloudinary negotiate the image format.
   url.pathname = url.pathname.replace(
     UPLOAD,
-    `${UPLOAD}c_limit,w_${Math.min(width, MAX_WIDTH)}/${qualitySetting}/f_auto/`,
+    `${UPLOAD}c_limit,w_${Math.min(width, maxWidth)}/${qualitySetting}/f_auto/`,
   );
 
   return url.toString();
+}
+
+export function cloudinaryLoader(props: ImageLoaderProps) {
+  return deliver(props, MAX_WIDTH);
+}
+
+export function heroLoader(props: ImageLoaderProps) {
+  return deliver(props, HERO_MAX_WIDTH);
 }
 
 /**

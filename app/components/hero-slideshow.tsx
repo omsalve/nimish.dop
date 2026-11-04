@@ -1,28 +1,43 @@
 "use client";
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import Image from "./portfolio-image";
+import Image from "next/image";
 import { FlapText } from "./flap-text";
+import { heroLoader } from "../lib/cloudinary";
 import { concerts, photographs } from "../lib/collection";
 import { slideshow } from "../lib/featured";
 
 const HOLD = 6200;
 const EXPOSE = 1500;
 
+// Each frame covers the poster and is pushed in to 113% (hero-push), so on a tall
+// screen it is drawn far wider than the viewport. Poster heights follow
+// .cinema-poster in cinema.css.
+function heroSizes(aspect: number) {
+  const ratio = aspect.toFixed(3);
+  return [
+    `(max-width: 700px) calc(max(100vw, clamp(840px, 100vh, 1000px) * ${ratio}) * 1.13)`,
+    `calc(max(100vw, clamp(900px, 100vh, 1180px) * ${ratio}) * 1.13)`,
+  ].join(", ");
+}
+
 // A tiny shared store: the slides live in the backdrop, the controls in the
-// poster's bottom rail, and both follow the same reel.
-type Reel = { active: number; playing: boolean };
-let reel: Reel = { active: 0, playing: true };
+// poster's bottom rail, and both follow the same reel. `reach` is the furthest
+// frame worth fetching: full-resolution frames are large, so the reel loads one
+// ahead of what it shows instead of all of them at once.
+type Reel = { active: number; playing: boolean; reach: number };
+let reel: Reel = { active: 0, playing: true, reach: 1 };
 const listeners = new Set<() => void>();
 function setReel(next: Partial<Reel>) {
   reel = { ...reel, ...next };
+  reel.reach = Math.max(reel.reach, reel.active + 1);
   listeners.forEach((listener) => listener());
 }
 function subscribe(listener: () => void) {
   listeners.add(listener);
   return () => listeners.delete(listener);
 }
-const serverReel: Reel = { active: 0, playing: true };
+const serverReel: Reel = { active: 0, playing: true, reach: 1 };
 function useReel() {
   return useSyncExternalStore(subscribe, () => reel, () => serverReel);
 }
@@ -30,7 +45,7 @@ function useReel() {
 export function HeroSlideshow() {
   const root = useRef<HTMLDivElement>(null);
   const [revealed, setRevealed] = useState(false);
-  const { active, playing } = useReel();
+  const { active, playing, reach } = useReel();
   const shown = useRef(0);
 
   useEffect(() => {
@@ -124,12 +139,13 @@ export function HeroSlideshow() {
           }
         >
           <div className="hero-slide-photo">
-            {(index === 0 || revealed) && (
+            {(index === 0 || (revealed && index <= reach)) && (
               <Image
                 src={slide.src}
                 alt=""
                 fill
-                sizes="100vw"
+                loader={heroLoader}
+                sizes={heroSizes(slide.aspect)}
                 preload={index === 0}
                 fetchPriority={index === 0 ? "high" : "low"}
                 className="hero-image"

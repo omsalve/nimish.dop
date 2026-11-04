@@ -1,14 +1,14 @@
 ---
 name: NIMISH.
-description: Loud nights. Still frames. A concert archive printed in pink ink on a grain-alive charcoal ground.
+description: I shoot concerts. A concert archive printed in white ink on a pure black ground.
 colors:
-  charcoal: "#191a18"
-  pink: "#e8afbf"
-  pink-dark: "#c8889c"
-  paper: "#dbd4c8"
-  muted: "#a9a59c"
-  caption: "#d8c4c4"
-  stage-red: "#ff3b2a"
+  ground: "#000000"
+  ink: "#f2f2f2"
+  ink-dim: "#9d9d9d"
+  paper: "#d5d5d5"
+  muted: "#a5a5a5"
+  caption: "#c9c9c9"
+  stage-light: "#ffffff"
 typography:
   display:
     fontFamily: "Anton, Impact, sans-serif"
@@ -42,44 +42,44 @@ spacing:
   chapter-top: "clamp(110px, 13vw, 230px)"
 components:
   ticket:
-    backgroundColor: "{colors.pink}"
-    textColor: "{colors.charcoal}"
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.ground}"
     rounded: "{rounded.none}"
   button-primary:
-    backgroundColor: "{colors.pink}"
-    textColor: "{colors.charcoal}"
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.ground}"
     rounded: "{rounded.none}"
     height: "48px"
     padding: "0 14px"
   button-ghost:
-    backgroundColor: "#191a18cc"
-    textColor: "{colors.pink}"
+    backgroundColor: "#111111cc"
+    textColor: "{colors.ink}"
     rounded: "{rounded.none}"
     height: "48px"
   stamp:
-    backgroundColor: "{colors.pink}"
-    textColor: "{colors.charcoal}"
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.ground}"
     rounded: "{rounded.stamp}"
     size: "106px"
   booking-stub:
-    backgroundColor: "{colors.pink}"
-    textColor: "{colors.charcoal}"
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.ground}"
     height: "50px"
 ---
 
 ## Overview
 
-A concert photographer's archive that looks like the night it came from: one charcoal ground under a single, constantly moving layer of film grain, pink ink with the grain printed into it, and stage light as the only other colour. The photographs are the proof. They are always shown whole, never tinted, grained, or cropped into ornament. The mood comes from everything around them.
+A concert photographer's archive that looks like the night it came from: one pure black ground with no texture, white ink with film grain printed into it, and white stage light. The interface is strictly black and white; the photographs are the only colour on the page. The photographs are the proof. They are always shown whole, never tinted, grained, or cropped into ornament. The mood comes from everything around them.
 
-The page runs as one continuous scroll: splash → poster hero → ticket → the Rig → nine artist chapters → close. Every section is transparent over the same ground, so the page never changes material between sections.
+The page runs as one continuous scroll: splash → poster hero → the Rig → ticket → nine artist chapters → close (with the booking form). Every section is transparent over the same ground, so the page never changes material between sections.
 
 ## Colors
 
-- **Charcoal `#191a18`** is the only ground. Sections never set their own background; the body paints it, and `body::before` lays one fixed, animated grain layer (`/film-grain.webp`, `mix-blend-mode: overlay`) over it.
-- **Pink `#e8afbf`** is the ink: display type, labels that matter, the ticket, stamps, and primary buttons.
-- **Paper `#dbd4c8`** is for printed paper pieces (contact print, tape tone) and the dot in `NIMISH.`.
-- **Stage red `#ff3b2a`** is light only: haze, beams, the glow behind the live chapter name, the shutter flash. It never colours text or fills a surface. The hottest red belongs to the one element in focus.
-- Secondary text is warm-tinted (`#d8c4c4`, `#a9a59c`), never neutral grey.
+- **Black `#000000`** is the only ground: pure black with no grain or noise on it (user decision, 2026-11-04). Sections never set their own background; the body paints it. Gradients that fade into the ground (hero shade, Rig edges, splash vignette) fade to `#000`.
+- **White `#f2f2f2`** is the ink, kept just below pure white so the grain printed into type still shows: display type, labels that matter, the ticket, stamps, and primary buttons.
+- **Paper `#d5d5d5`** is for printed paper pieces (contact print, tape tone) and the dot in `NIMISH.`.
+- **Stage light `#ffffff`** is light only: haze, beams, the glow behind the live chapter name, the shutter flash. It never colours text or fills a surface. The brightest light belongs to the one element in focus.
+- Secondary text is neutral grey (`#c9c9c9`, `#a5a5a5`). Nothing in the interface carries a hue.
 
 ## Typography
 
@@ -104,19 +104,21 @@ Hard rectangles throughout, with no radius. Exceptions come from real objects: c
 
 ## Components
 
-- **Ticket:** the pink perforated artist index. It is loved and fixed; change content only.
+- **Ticket:** the white perforated artist index. It is loved and fixed; change content only.
 - **Poster hero:** the slideshow behind the type, where each frame arrives as an exposure (a light leak sweeps across and the photo develops from overexposed). The reel has a pause control and a split-flap caption.
-- **Three-shot exposure:** a shutter gate opens by scaling while the film inside counter-scales, so the photo is revealed, never distorted. A white-to-red flash fires as it opens, and the previous frame falls back. Gates: horizontal slit, vertical slit, then the full aperture.
-- **The Rig:** WebGL2, with every frame on a circular truss in counter-rotating tiers, plus moving-head beams, red floor haze, and a crowd with raised phones. Drag to spin, click to open, keyboard previous/next/open. Its canvas is transparent, so the page's own ground shows through.
+- **Three-shot exposure:** a shutter gate opens by scaling while the film inside counter-scales, so the photo is revealed, never distorted. A white flash fires as it opens, and the previous frame falls back. Gates: horizontal slit, vertical slit, then the full aperture.
+- **The Rig:** WebGL2, with every frame on a circular truss in counter-rotating tiers, plus moving-head beams, floor haze, and a crowd with raised phones. Drag to spin, click to open, keyboard previous/next/open. Its canvas is transparent, so the page's own ground shows through.
 - **Lightbox:** native `<dialog>`. It opens with a flight from the clicked crop to the whole frame, then cuts hard between frames.
-- **Booking stub:** a fixed pink tear-off ticket. It hides during the splash, while the Rig is playing, and at the close.
+- **Booking stub:** a fixed white tear-off ticket. It hides during the splash, while the Rig is playing, and at the close.
+- **Booking form:** in the close. Fields are white ink on the ground with a single rule beneath; errors are ink, never red. The send button is the perforated white stub; a sent enquiry turns into a stamped receipt.
+- **Social buttons:** Instagram, Behance and WhatsApp as 46px square ink-ruled icon buttons (Simple Icons glyphs), inverted on hover. They sit beside the hero CTA and under the facts in the close.
 
 ## Do's and Don'ts
 
-- **Do** show every photograph whole, at its own aspect ratio, untouched by grain, tint, or overlays once it has settled.
+- **Do** show every photograph whole, at its own aspect ratio, untouched by grain, tint, or overlays once it has settled. That includes the hero slideshow.
 - **Do** keep every section transparent over the one ground.
 - **Do** make every motion read as light or a camera: exposure, shutter, flash, develop.
-- **Don't** add a second ground colour, a section background, or a pink full-section field.
+- **Don't** add a second ground colour, a section background, or a white full-section field.
 - **Don't** use speckle or dot textures as grain. Grain is dense and fine, like film stock.
-- **Don't** use stage red as ink.
+- **Don't** use stage light as ink, or bring colour into the interface.
 - **Don't** let any splash or loader run past 3 seconds. The boot script enforces a hard cap.

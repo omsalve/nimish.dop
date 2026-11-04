@@ -1,6 +1,5 @@
 import { artists } from "../lib/artists";
 import { Arrow, Asterisk } from "./symbols";
-import { CONTACT_EMAIL } from "./closing";
 
 export default function Archive() {
   return (
@@ -97,7 +96,7 @@ export default function Archive() {
             <span>Based in India. Following the music everywhere.</span>
           </p>
         </div>
-        <a href={`mailto:${CONTACT_EMAIL}`} className="contact-link">
+        <a href="#contact" className="contact-link">
           GOT A LOUD ONE? LET’S TALK <Arrow />
         </a>
       </div>

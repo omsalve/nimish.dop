@@ -58,15 +58,17 @@ export const chapterLeads: Record<string, Omit<Pick, "artistId">[]> = {
   ],
 };
 
-// Behind the hero type: hot, wide frames from across the archive.
+// Behind the hero type: hot, wide frames from across the archive. The first five
+// play in this order; the rest follow in any order.
 export const heroSlides: Pick[] = [
   { artistId: "himesh-reshammiya", file: "DSCF0707.jpg", focus: "58% 41%", focusMobile: "37% 48%" },
+  { artistId: "ayushman", file: "DSCF0739.jpg", focus: "52% 38%", focusMobile: "50% 45%" },
+  { artistId: "shilpa-rao", file: "DSCF0615.jpg", focus: "50% 42%", focusMobile: "55% 45%" },
   { artistId: "seedhe-maut", file: "SHL08989.jpg", focus: "60% 42%", focusMobile: "52% 45%" },
+  { artistId: "mass-appeal", file: "DSC09665-Edit.jpg", focus: "50% 32%", focusMobile: "42% 35%" },
   { artistId: "chaar-diwari", file: "SHL08514.jpg", focus: "55% 40%", focusMobile: "48% 42%" },
   { artistId: "javed-ali", file: "DSCF9314.jpg", focus: "62% 40%", focusMobile: "70% 42%" },
   { artistId: "gajendar-verma", file: "DSCF5722.jpg", focus: "55% 50%", focusMobile: "60% 50%" },
-  { artistId: "mass-appeal", file: "DSC09665-Edit.jpg", focus: "50% 32%", focusMobile: "42% 35%" },
-  { artistId: "shilpa-rao", file: "DSCF0615.jpg", focus: "50% 42%", focusMobile: "55% 45%" },
 ];
 
 // Handwritten asides pinned to each chapter's wall, in the site's own voice.

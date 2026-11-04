@@ -97,8 +97,8 @@ function variant(seed) {
     );
   }
 
-  const defs = `<defs><linearGradient id="core" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#f3eee6"/><stop offset=".55" stop-color="#e2dbd0"/><stop offset="1" stop-color="#bdb3a5"/></linearGradient><filter id="soft" x="-5%" y="-60%" width="110%" height="220%"><feGaussianBlur stdDeviation="2.6"/></filter><filter id="tooth" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9 .35" numOctaves="2" seed="${seed}" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .25  0 0 0 0 .22  0 0 0 0 .2  0 0 0 -1.5 1.05"/><feComposite in2="SourceGraphic" operator="in"/></filter></defs>`;
-  const rimBody = `<path d="${shadowPath}" fill="#050404" fill-opacity=".62" filter="url(#soft)"/><path d="${rimPath}" fill="url(#core)"/><path d="${rimPath}" fill="#000" filter="url(#tooth)" opacity=".5"/><g fill="none" stroke="#f1ebe2" stroke-linecap="round">${fibres.join("")}</g>`;
+  const defs = `<defs><linearGradient id="core" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#efefef"/><stop offset=".55" stop-color="#dcdcdc"/><stop offset="1" stop-color="#b4b4b4"/></linearGradient><filter id="soft" x="-5%" y="-60%" width="110%" height="220%"><feGaussianBlur stdDeviation="2.6"/></filter><filter id="tooth" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9 .35" numOctaves="2" seed="${seed}" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .22  0 0 0 0 .22  0 0 0 0 .22  0 0 0 -1.5 1.05"/><feComposite in2="SourceGraphic" operator="in"/></filter></defs>`;
+  const rimBody = `<path d="${shadowPath}" fill="#040404" fill-opacity=".62" filter="url(#soft)"/><path d="${rimPath}" fill="url(#core)"/><path d="${rimPath}" fill="#000" filter="url(#tooth)" opacity=".5"/><g fill="none" stroke="#ececec" stroke-linecap="round">${fibres.join("")}</g>`;
   const maskBody = `<path d="${maskPath}"/>`;
   return { defs, rimBody, maskBody };
 }
@@ -169,7 +169,7 @@ const svg = (inner, flipped) =>
   }
   fs.writeFileSync(
     path.join(__dirname, "..", "public", "crowd.svg"),
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${CW}" height="${CH}" viewBox="0 0 ${CW} ${CH}" preserveAspectRatio="xMidYMax slice"><defs><filter id="g" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="6"/></filter></defs><g fill="#1c0808" color="#1c0808">${back.join("")}</g><rect y="${CH - 30}" width="${CW}" height="30" fill="#040303"/><g fill="#040303" color="#040303">${front.join("")}</g><g fill="#f4c3cf" opacity=".55" filter="url(#g)">${screens.join("")}</g><g fill="#f7d4dc">${screens.join("")}</g></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${CW}" height="${CH}" viewBox="0 0 ${CW} ${CH}" preserveAspectRatio="xMidYMax slice"><defs><filter id="g" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="6"/></filter></defs><g fill="#0f0f0f" color="#0f0f0f">${back.join("")}</g><rect y="${CH - 30}" width="${CW}" height="30" fill="#030303"/><g fill="#030303" color="#030303">${front.join("")}</g><g fill="#d2d2d2" opacity=".55" filter="url(#g)">${screens.join("")}</g><g fill="#dedede">${screens.join("")}</g></svg>`,
   );
 }
 

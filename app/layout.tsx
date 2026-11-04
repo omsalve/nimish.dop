@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   icons: { icon: "/icon.svg" },
 };
 export const viewport: Viewport = {
-  themeColor: "#191a18",
+  themeColor: "#000000",
   colorScheme: "dark",
   width: "device-width",
   initialScale: 1,
@@ -64,11 +64,11 @@ export const viewport: Viewport = {
 
 // The direction this build answers to. Kept in the shipped markup on purpose.
 const contract = `<!--
-THESIS: A live archive where every photograph is an exposure: shown whole, opened through a shutter, on one grain-alive ground. It refuses cropped collage grids and the fade-up section stack.
-OWN-WORLD: One charcoal ground under a single moving layer of film grain; pink ink with grain printed into it; pink ticket paper and stamps; stage red exists only as light, haze, and the shutter flash.
+THESIS: A live archive where every photograph is an exposure: shown whole, opened through a shutter, on one pure black ground. It refuses cropped collage grids and the fade-up section stack.
+OWN-WORLD: One pure black ground, no texture; white ink with grain printed into it; white ticket paper and stamps; stage light exists only as light, haze, and the shutter flash.
 STORY: A booker sees the range across nine artists, opens any of the 101 frames full screen, and writes to Nimish.
 FIRST VIEWPORT: A splash mosaic counts all 101 frames in, then tears open onto the poster: giant grainy NIMISH. over an exposure-crossfade slideshow, copy left, keepsake print right, LET'S TALK top right.
-FORM: Brief-pinned concert poster with the user's corrections of 2026-11-03, seed 88e3f9fe. Raises: red only on the element in focus; hard cuts between frames; split-flap counters. Signature: The Rig, directly after the ticket.
+FORM: Brief-pinned concert poster with the user's corrections of 2026-11-03, seed 88e3f9fe. Raises: the hottest light only on the element in focus; hard cuts between frames; split-flap counters. Signature: The Rig, directly after the poster; the ticket follows it.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
 -->`;
 

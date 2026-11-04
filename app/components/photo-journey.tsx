@@ -70,7 +70,11 @@ function flyIn(
   animation.finished.finally(() => flight.remove());
 }
 
-export default function PhotoJourney() {
+/**
+ * The Rig, then the ticket (passed in so it stays a server component), then the
+ * nine chapters. All three share one viewer, so they live under one owner.
+ */
+export default function PhotoJourney({ ticket }: { ticket: React.ReactNode }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const stage = useRef<HTMLDivElement>(null);
   const openingPhoto = useRef<HTMLElement | null>(null);
@@ -132,6 +136,8 @@ export default function PhotoJourney() {
   return (
     <div className="photo-journey" id="photographs">
       <Rig onOpen={open} />
+
+      {ticket}
 
       {collections.map((collection) => (
         <Chapter collection={collection} onOpen={open} key={collection.id} />

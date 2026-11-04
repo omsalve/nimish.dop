@@ -47,34 +47,56 @@ export function Rig({ onOpen }: { onOpen: OpenPhoto }) {
       if (!scrollFrame && visible) scrollFrame = requestAnimationFrame(progress);
     };
 
+    let building = false;
+    let settleTimer = 0;
+    async function build() {
+      if (building || disposed || !surface) return;
+      building = true;
+      window.clearTimeout(settleTimer);
+      window.removeEventListener("nimish:reveal", afterReveal);
+      window.removeEventListener("scroll", build);
+      photographs.forEach((_, index) => requestFrame(index));
+      try {
+        const { createRig } = await import("../lib/rig-gl");
+        if (disposed) return;
+        const rig = createRig({
+          canvas: surface,
+          frames: photographs.map(({ width, height }) => ({ width, height })),
+          image: loadedFrame,
+          reducedMotion: reduced,
+          onFront: (index) => setFront(index),
+          onHover: (index) => setHovered(index),
+        });
+        if (!rig) {
+          setMode("fallback");
+          return;
+        }
+        engine.current = rig;
+        setMode("live");
+        progress();
+        if (visible) rig.start();
+      } catch {
+        setMode("fallback");
+      }
+    }
+    // The Rig sits directly under the poster, so it is "near" on first paint.
+    // Let the splash tear and the poster land before compiling shaders and
+    // uploading 101 textures; the first scroll builds it at once.
+    function afterReveal() {
+      settleTimer = window.setTimeout(build, 1200);
+      window.addEventListener("scroll", build, { once: true, passive: true });
+    }
+    const html = document.documentElement;
+    const splashCovering = () =>
+      html.classList.contains("splash-on") && !html.classList.contains("splash-done");
+
     // Build the GL scene only as the section approaches; start/stop with visibility.
     const near = new IntersectionObserver(
-      async ([entry]) => {
+      ([entry]) => {
         if (!entry.isIntersecting || engine.current) return;
         near.disconnect();
-        photographs.forEach((_, index) => requestFrame(index));
-        try {
-          const { createRig } = await import("../lib/rig-gl");
-          if (disposed) return;
-          const rig = createRig({
-            canvas: surface,
-            frames: photographs.map(({ width, height }) => ({ width, height })),
-            image: loadedFrame,
-            reducedMotion: reduced,
-            onFront: (index) => setFront(index),
-            onHover: (index) => setHovered(index),
-          });
-          if (!rig) {
-            setMode("fallback");
-            return;
-          }
-          engine.current = rig;
-          setMode("live");
-          progress();
-          if (visible) rig.start();
-        } catch {
-          setMode("fallback");
-        }
+        if (splashCovering()) window.addEventListener("nimish:reveal", afterReveal, { once: true });
+        else afterReveal();
       },
       { rootMargin: "120% 0px" },
     );
@@ -105,6 +127,9 @@ export function Rig({ onOpen }: { onOpen: OpenPhoto }) {
 
     return () => {
       disposed = true;
+      window.clearTimeout(settleTimer);
+      window.removeEventListener("nimish:reveal", afterReveal);
+      window.removeEventListener("scroll", build);
       near.disconnect();
       onscreen.disconnect();
       cancelAnimationFrame(scrollFrame);

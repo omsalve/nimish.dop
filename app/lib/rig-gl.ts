@@ -88,13 +88,13 @@ void main(){
     // A slim paper border makes each panel read as a print hung on the truss.
     vec2 edge = min(vUv, 1.0 - vUv) * uSize;
     float border = step(min(edge.x, edge.y), 0.035);
-    vec3 photo = uHasTex > 0.5 ? texture(uTex, vUv).rgb : vec3(0.07, 0.065, 0.06);
-    color = mix(photo, vec3(0.86, 0.82, 0.77), border);
+    vec3 photo = uHasTex > 0.5 ? texture(uTex, vUv).rgb : vec3(0.065);
+    color = mix(photo, vec3(0.83), border);
     float lit = mix(0.16, 1.0, smoothstep(-0.05, 0.8, facing));
     color *= lit * mix(0.35, 1.0, uPower);
   } else {
     // The back of the print: dull paper catching a little spill.
-    color = vec3(0.12, 0.105, 0.1) * mix(0.5, 1.0, uPower);
+    color = vec3(0.107) * mix(0.5, 1.0, uPower);
   }
   vec3 spill = vec3(0.0);
   for (int i = 0; i < 6; i++) {
@@ -103,7 +103,7 @@ void main(){
     spill += uHitColor[i] * exp(-dot(d, d) / (uHits[i].w * uHits[i].w));
   }
   color += spill * (gl_FrontFacing ? 0.28 : 0.5);
-  color += vec3(0.95, 0.55, 0.62) * uHover * 0.12;
+  color += vec3(0.67) * uHover * 0.12;
   // Atmospheric depth: the far side of the ring fades into the page's own ground.
   float depth = smoothstep(14.0, 34.0, distance(uEye, vWorld));
   float alpha = 1.0 - depth * 0.86;
@@ -168,16 +168,16 @@ void main(){
   float b = texture(uNoise, p * 2.1 - vec2(uTime * 0.013, -uTime * 0.006)).r;
   float smoke = a * 0.65 + b * 0.35;
   if (uFront > 0.5) {
-    // Low smoke rolling over the bottom tier, lit red from the stage.
+    // Low smoke rolling over the bottom tier, lit from the stage.
     float band = smoothstep(0.42, 0.0, vUv.y);
     float alpha = band * smoothstep(0.28, 0.85, smoke) * 0.55 * mix(0.4, 1.0, uPower);
-    outColor = vec4(vec3(0.42, 0.06, 0.05) * alpha, alpha);
+    outColor = vec4(vec3(0.2) * alpha, alpha);
     return;
   }
   float floorGlow = smoothstep(0.75, 0.0, vUv.y) * (0.55 + 0.45 * smoke);
   float centre = exp(-pow((vUv.x - 0.5) * 2.2, 2.0)) * smoothstep(0.9, 0.15, vUv.y);
-  vec3 color = vec3(0.3, 0.03, 0.025) * floorGlow * smoke * mix(0.25, 1.0, uPower);
-  color += vec3(0.18, 0.03, 0.045) * centre * smoke * 0.6 * uPower;
+  vec3 color = vec3(0.14) * floorGlow * smoke * mix(0.25, 1.0, uPower);
+  color += vec3(0.08) * centre * smoke * 0.6 * uPower;
   // Pure light: added to whatever the page shows behind the canvas.
   outColor = vec4(color, 0.0);
 }`;
@@ -196,7 +196,7 @@ uniform float uPower;
 out vec4 outColor;
 void main(){
   float fade = (1.0 - smoothstep(16.0, 36.0, vDepth) * 0.85) * mix(0.45, 0.85, uPower);
-  outColor = vec4(vec3(0.66, 0.58, 0.6) * fade, fade);
+  outColor = vec4(vec3(0.6) * fade, fade);
 }`;
 
 function perspective(fovy: number, aspect: number, near: number, far: number) {
@@ -438,12 +438,12 @@ export function createRig(options: RigOptions) {
 
   // Moving heads on the truss plus two floor washes behind the ring.
   const beams = [
-    { a: -0.72, color: [1, 0.2, 0.13] as Vec3, floor: false, phase: 0.2, speed: 0.21 },
-    { a: -0.28, color: [1, 0.86, 0.8] as Vec3, floor: false, phase: 1.7, speed: 0.17 },
-    { a: 0.22, color: [0.95, 0.42, 0.55] as Vec3, floor: false, phase: 3.1, speed: 0.19 },
-    { a: 0.7, color: [1, 0.24, 0.16] as Vec3, floor: false, phase: 4.4, speed: 0.23 },
-    { a: Math.PI - 0.5, color: [1, 0.18, 0.12] as Vec3, floor: true, phase: 0.9, speed: 0.13 },
-    { a: Math.PI + 0.55, color: [0.92, 0.5, 0.6] as Vec3, floor: true, phase: 2.6, speed: 0.11 },
+    { a: -0.72, color: [0.53, 0.53, 0.53] as Vec3, floor: false, phase: 0.2, speed: 0.21 },
+    { a: -0.28, color: [0.89, 0.89, 0.89] as Vec3, floor: false, phase: 1.7, speed: 0.17 },
+    { a: 0.22, color: [0.6, 0.6, 0.6] as Vec3, floor: false, phase: 3.1, speed: 0.19 },
+    { a: 0.7, color: [0.54, 0.54, 0.54] as Vec3, floor: false, phase: 4.4, speed: 0.23 },
+    { a: Math.PI - 0.5, color: [0.52, 0.52, 0.52] as Vec3, floor: true, phase: 0.9, speed: 0.13 },
+    { a: Math.PI + 0.55, color: [0.63, 0.63, 0.63] as Vec3, floor: true, phase: 2.6, speed: 0.11 },
   ];
 
   let width = 1;

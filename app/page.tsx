@@ -5,6 +5,7 @@ import Closing from "./components/closing";
 import { HeroReelControls, HeroSlideshow } from "./components/hero-slideshow";
 import PageMotion from "./components/page-motion";
 import PhotoJourney from "./components/photo-journey";
+import { SocialLinks } from "./components/social-links";
 import Splash from "./components/splash";
 import { Arrow, Asterisk } from "./components/symbols";
 import { keepsakePhotograph } from "./lib/featured";
@@ -79,10 +80,13 @@ export default function Home() {
                 The split second. The sweat. The silence after the last song.
                 Photographs you can almost hear.
               </p>
-              <a className="cinema-cta" href="#archive">
-                <span>FIND YOUR NIGHT</span>
-                <Arrow direction="down" />
-              </a>
+              <div className="cinema-actions">
+                <a className="cinema-cta" href="#archive">
+                  <span>FIND YOUR NIGHT</span>
+                  <Arrow direction="down" />
+                </a>
+                <SocialLinks className="cinema-socials" />
+              </div>
             </div>
             <figure className="cinema-contact-print">
               <span className="cinema-print-label">
@@ -118,7 +122,7 @@ export default function Home() {
                 A COLLECTION OF LOUD MEMORIES{" "}
                 <span className="cinema-bottom-year">/ LIVE ARCHIVE</span>
               </span>
-              <a href="#archive">
+              <a href="#encore">
                 SCROLL INTO THE NOISE <Arrow direction="down" />
               </a>
             </div>
@@ -132,8 +136,8 @@ export default function Home() {
             />
           </section>
         </div>
-        <Archive />
-        <PhotoJourney />
+        {/* Hero → the Rig → the ticket → nine chapters. */}
+        <PhotoJourney ticket={<Archive />} />
       </main>
       <Closing />
       <BookingStub />

@@ -27,10 +27,7 @@ html.splash-on.splash-done .splash {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  background-color: var(--charcoal);
-  background-image: url("/film-grain.webp");
-  background-size: 256px 256px;
-  background-blend-mode: overlay;
+  background-color: var(--ground);
 }
 .splash-mosaic {
   position: absolute;
@@ -42,8 +39,8 @@ html.splash-on.splash-done .splash {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 60% 48% at 50% 52%, #191a18e0 0%, #191a18a6 45%, transparent 80%),
-    linear-gradient(180deg, #191a18cc, transparent 22%, transparent 76%, #191a18e6);
+    radial-gradient(ellipse 60% 48% at 50% 52%, #000000e0 0%, #000000a6 45%, transparent 80%),
+    linear-gradient(180deg, #000000cc, transparent 22%, transparent 76%, #000000e6);
 }
 .splash-topline,
 .splash-bottomline {
@@ -55,7 +52,7 @@ html.splash-on.splash-done .splash {
   gap: 20px;
   font-size: 9px;
   letter-spacing: 1px;
-  color: #d8c4c4;
+  color: #c9c9c9;
 }
 .splash-topline {
   top: max(28px, env(safe-area-inset-top));
@@ -66,7 +63,7 @@ html.splash-on.splash-done .splash {
     27px/1 var(--font-display),
     Impact,
     sans-serif;
-  color: var(--pink);
+  color: var(--ink);
   letter-spacing: -0.4px;
 }
 .splash-brand > span {
@@ -82,7 +79,7 @@ html.splash-on.splash-done .splash {
   align-items: center;
   justify-content: center;
   gap: 0.15em;
-  color: var(--pink);
+  color: var(--ink);
 }
 .splash-glow {
   position: absolute;
@@ -91,7 +88,7 @@ html.splash-on.splash-done .splash {
   width: min(90vw, 1100px);
   height: min(60vh, 560px);
   transform: translate(-50%, -50%);
-  background: radial-gradient(ellipse at center, #ff3b2a40 0%, #ff3b2a14 38%, transparent 68%);
+  background: radial-gradient(ellipse at center, #ffffff23 0%, #ffffff0b 38%, transparent 68%);
   animation: splash-breathe 2.6s ease-in-out infinite alternate;
   pointer-events: none;
 }
@@ -128,15 +125,15 @@ html.splash-on.splash-done .splash {
   right: var(--gutter);
   bottom: max(22px, calc(env(safe-area-inset-bottom) + 10px));
   height: 2px;
-  background: #e8afbf26;
+  background: #f2f2f226;
 }
 .splash-meter > span {
   display: block;
   height: 100%;
-  background: var(--pink);
+  background: var(--ink);
   transform: scaleX(0);
   transform-origin: left center;
-  box-shadow: 0 0 12px #ff3b2a99;
+  box-shadow: 0 0 12px #ffffff54;
 }
 .splash-rim {
   position: absolute;

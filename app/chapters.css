@@ -8,7 +8,7 @@
   position: relative;
 }
 
-/* Title card. Red stage light belongs only to the chapter that has the stage. */
+/* Title card. Stage light belongs only to the chapter that has the stage. */
 .chapter-card {
   position: relative;
   isolation: isolate;
@@ -23,8 +23,8 @@
   top: 18%;
   bottom: -30%;
   background:
-    radial-gradient(ellipse 52% 46% at 38% 58%, #ff3b2a40 0%, #ff3b2a14 42%, transparent 72%),
-    radial-gradient(ellipse 30% 70% at 70% 30%, #e8afbf10, transparent 70%);
+    radial-gradient(ellipse 52% 46% at 38% 58%, #ffffff23 0%, #ffffff0b 42%, transparent 72%),
+    radial-gradient(ellipse 30% 70% at 70% 30%, #f2f2f210, transparent 70%);
   opacity: 0;
   transform: translate3d(-4%, 6%, 0) scale(0.92);
   transition:
@@ -43,7 +43,7 @@
     sans-serif;
   text-transform: uppercase;
   letter-spacing: -0.015em;
-  color: var(--pink);
+  color: var(--ink);
   margin-left: -0.03em;
 }
 .chapter-meta {
@@ -53,13 +53,13 @@
   gap: 24px;
   margin-top: clamp(20px, 2.4vw, 36px);
   padding-top: 14px;
-  border-top: 1px solid #e8afbf3d;
+  border-top: 1px solid #f2f2f23d;
   font-size: 10px;
   letter-spacing: 1px;
-  color: #d8c4c4;
+  color: #c9c9c9;
 }
 .chapter-order {
-  color: var(--pink);
+  color: var(--ink);
 }
 .chapter-back {
   display: flex;
@@ -116,7 +116,7 @@
   top: calc(100% + 10px);
   font-size: 9px;
   letter-spacing: 1px;
-  color: #d8c4c4;
+  color: #c9c9c9;
 }
 
 .scroll-directed .shots {
@@ -151,10 +151,10 @@
   inset: -16% -10%;
   background: radial-gradient(
     ellipse 50% 50% at 50% 50%,
-    #fffaf6 0%,
-    #ffd8c8 16%,
-    #ff6a4ab3 40%,
-    #ff3b2a33 62%,
+    #fbfbfb 0%,
+    #e1e1e1 16%,
+    #ffffff6b 40%,
+    #ffffff1c 62%,
     transparent 76%
   );
   mix-blend-mode: screen;
@@ -170,7 +170,7 @@
   display: block;
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 60% 55% at 50% 52%, #ff3b2a29 0%, #ff3b2a0d 45%, transparent 75%);
+  background: radial-gradient(ellipse 60% 55% at 50% 52%, #ffffff17 0%, #ffffff07 45%, transparent 75%);
   opacity: var(--glow, 0);
   pointer-events: none;
 }
@@ -184,17 +184,17 @@
   gap: 20px;
   font-size: 10px;
   letter-spacing: 1px;
-  color: #d8c4c4;
+  color: #c9c9c9;
 }
 .scroll-directed .shots-rail [data-shot-count] {
-  color: var(--pink);
+  color: var(--ink);
 }
 .scroll-directed .shots-note {
   display: block;
   position: absolute;
   right: calc(var(--gutter) + 2vw);
   bottom: 70px;
-  color: var(--pink);
+  color: var(--ink);
   font-size: clamp(22px, 2vw, 32px);
   transform: rotate(-8deg);
   opacity: var(--note, 0);
@@ -211,13 +211,13 @@
   gap: 20px;
   padding-top: 14px;
   margin-bottom: clamp(18px, 2vw, 30px);
-  border-top: 1px solid #e8afbf3d;
+  border-top: 1px solid #f2f2f23d;
   font-size: 10px;
   letter-spacing: 1px;
-  color: #d8c4c4;
+  color: #c9c9c9;
 }
 .artist-archive-head > span:last-child {
-  color: var(--pink);
+  color: var(--ink);
 }
 .justified {
   --row: clamp(200px, 24vw, 380px);
@@ -263,7 +263,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .chapter-back:hover {
-    color: var(--pink);
+    color: var(--ink);
   }
   .scroll-directed .shot-film {
     cursor: zoom-in;

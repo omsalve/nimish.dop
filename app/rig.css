@@ -18,7 +18,7 @@
   right: 0;
   top: 0;
   height: clamp(200px, 34svh, 340px);
-  background: linear-gradient(180deg, #191a18f0 0%, #191a18b3 45%, transparent 100%);
+  background: linear-gradient(180deg, #000000f0 0%, #000000b3 45%, transparent 100%);
   pointer-events: none;
 }
 .rig-canvas {
@@ -57,7 +57,7 @@
     Impact,
     sans-serif;
   text-transform: uppercase;
-  color: var(--pink);
+  color: var(--ink);
   letter-spacing: -0.01em;
 }
 .rig-head p {
@@ -65,7 +65,7 @@
   padding-top: 8px;
   font-size: 11px;
   line-height: 1.8;
-  color: #e3d6d0;
+  color: #d9d9d9;
   text-shadow: 0 2px 16px #000;
 }
 .rig-bar {
@@ -80,7 +80,7 @@
   gap: 24px;
   padding-top: 16px;
   padding-bottom: max(18px, env(safe-area-inset-bottom));
-  background: linear-gradient(0deg, #191a18f2, #191a18b3 60%, transparent);
+  background: linear-gradient(0deg, #000000f2, #000000b3 60%, transparent);
 }
 .rig-caption {
   display: grid;
@@ -88,7 +88,7 @@
   min-width: 0;
   font-size: 9px;
   letter-spacing: 1px;
-  color: #b3a29d;
+  color: #a6a6a6;
 }
 .rig-caption-title {
   font:
@@ -96,7 +96,7 @@
     Impact,
     sans-serif;
   letter-spacing: 0.02em;
-  color: var(--pink);
+  color: var(--ink);
   white-space: pre;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -114,9 +114,9 @@
   min-width: 48px;
   height: 48px;
   padding: 0 14px;
-  border: 1px solid #e8afbf59;
-  background: #191a18cc;
-  color: var(--pink);
+  border: 1px solid #f2f2f259;
+  background: #000000cc;
+  color: var(--ink);
   font-size: 10px;
   letter-spacing: 1px;
   white-space: nowrap;
@@ -126,12 +126,12 @@
   height: 18px;
 }
 .rig-controls .rig-open {
-  background-color: var(--pink);
+  background-color: var(--ink);
   background-image: url("/film-grain.webp");
   background-size: 256px 256px;
   background-blend-mode: soft-light;
-  color: var(--charcoal);
-  border-color: var(--pink);
+  color: var(--ground);
+  border-color: var(--ink);
 }
 .rig-fallback {
   position: absolute;
@@ -150,7 +150,7 @@
 .rig-fallback button {
   width: 150px;
   height: 200px;
-  background: center / cover no-repeat #151413;
+  background: center / cover no-repeat #0d0d0d;
 }
 .rig-fallback ~ .rig-crowd {
   display: none;
@@ -163,8 +163,8 @@
       color 160ms ease;
   }
   .rig-controls button:hover {
-    background: var(--pink);
-    color: var(--charcoal);
+    background: var(--ink);
+    color: var(--ground);
   }
   .rig-controls .rig-open:hover {
     background-color: var(--paper);

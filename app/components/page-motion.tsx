@@ -54,7 +54,7 @@ export default function PageMotion() {
       observer.observe(element);
     });
 
-    // The red light follows whichever chapter has the stage.
+    // The stage light follows whichever chapter has the stage.
     const cards = document.querySelectorAll<HTMLElement>(".chapter-card");
     const lights = new IntersectionObserver(
       (entries) => {

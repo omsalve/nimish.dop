@@ -20,6 +20,7 @@ export const slideshow = heroSlides.map((slide) => {
     src: photo.src,
     alt: photo.alt,
     number: photo.number,
+    aspect: photo.width / photo.height,
     focus: slide.focus,
     focusMobile: slide.focusMobile ?? slide.focus,
   };

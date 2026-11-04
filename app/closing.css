@@ -2,7 +2,7 @@
 .closing {
   position: relative;
   padding-top: clamp(90px, 11vw, 190px);
-  border-top: 1px solid #e8afbf2e;
+  border-top: 1px solid #f2f2f22e;
 }
 .closing-poster {
   position: relative;
@@ -22,11 +22,11 @@
     sans-serif;
   text-transform: uppercase;
   letter-spacing: -0.02em;
-  color: var(--pink);
+  color: var(--ink);
 }
 .closing-outline {
   color: transparent;
-  -webkit-text-stroke: 2px var(--pink);
+  -webkit-text-stroke: 2px var(--ink);
 }
 .closing-body {
   grid-area: body;
@@ -34,29 +34,124 @@
   align-content: start;
   gap: 26px;
 }
-.closing-body p {
+.closing-body > p {
   max-width: 44ch;
   font-size: 13px;
   line-height: 1.75;
-  color: #e3d6d0;
+  color: #d9d9d9;
 }
-.closing-mail {
+/* The booking form: white ink on the ground, fields ruled like a ticket stub. */
+.enquiry {
+  display: grid;
+  gap: 30px;
+}
+.enquiry-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 26px 28px;
+}
+.enquiry-field {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  min-width: 0;
+  grid-column: span 2;
+}
+.enquiry-field-name,
+.enquiry-field-email {
+  grid-column: span 3;
+}
+.enquiry-field-message {
+  grid-column: 1 / -1;
+}
+.enquiry-field label {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #bdbdbd;
+}
+.enquiry-field input,
+.enquiry-field textarea {
+  width: 100%;
+  min-height: 48px;
+  margin: 0;
+  padding: 10px 0 12px;
+  border: 0;
+  border-bottom: 1px solid #f2f2f259;
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+  font:
+    400 15px / 1.5 var(--font-mono),
+    monospace;
+  letter-spacing: 0.01em;
+  outline: none;
+  appearance: none;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+.enquiry-field textarea {
+  min-height: 136px;
+  resize: vertical;
+}
+.enquiry-field :is(input, textarea)::placeholder {
+  color: #6b6b6b;
+  opacity: 1;
+}
+.enquiry-field :is(input, textarea):focus-visible {
+  border-bottom-color: var(--ink);
+  box-shadow: inset 0 -1px 0 var(--ink);
+}
+.enquiry-field [aria-invalid="true"] {
+  border-bottom: 1px dashed var(--ink);
+}
+.enquiry-field input:-webkit-autofill {
+  -webkit-text-fill-color: var(--ink);
+  caret-color: var(--ink);
+  box-shadow: inset 0 0 0 100px var(--ground);
+}
+.enquiry-field input:-webkit-autofill:focus-visible {
+  box-shadow:
+    inset 0 -1px 0 var(--ink),
+    inset 0 0 0 100px var(--ground);
+}
+.enquiry-error {
+  padding-top: 6px;
+  font-size: 10px;
+  letter-spacing: 0.3px;
+  color: var(--ink);
+}
+.enquiry-error::before {
+  content: "↳ ";
+}
+.enquiry-trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.enquiry-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px 30px;
+}
+.enquiry-send {
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  width: fit-content;
-  max-width: 100%;
+  gap: 40px;
+  min-width: 240px;
   min-height: 66px;
   padding: 0 22px 0 26px;
-  background-color: var(--pink);
-  color: var(--charcoal);
+  background-color: var(--ink);
+  color: var(--ground);
   font:
-    400 clamp(22px, 2.6vw, 40px) / 1 var(--font-display),
+    400 clamp(24px, 2.4vw, 36px) / 1 var(--font-display),
     Impact,
     sans-serif;
   letter-spacing: 0.02em;
-  overflow-wrap: anywhere;
   /* Perforated like the ticket it came from. */
   -webkit-mask:
     radial-gradient(circle 7px at 0 50%, #0000 96%, #000) left / 51% 100% no-repeat,
@@ -65,30 +160,128 @@
     radial-gradient(circle 7px at 0 50%, #0000 96%, #000) left / 51% 100% no-repeat,
     radial-gradient(circle 7px at 100% 50%, #0000 96%, #000) right / 51% 100% no-repeat;
 }
-.closing-mail .arrow {
+.enquiry-send:disabled {
+  cursor: progress;
+  background-color: var(--paper);
+}
+.enquiry-send .arrow {
   width: 26px;
   height: 26px;
 }
-.closing-facts {
+.enquiry-note {
+  max-width: 38ch;
+  font-size: 10px;
+  line-height: 1.8;
+  color: #a9a9a9;
+}
+.enquiry-note a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+
+/* Sent: the form gives way to a stamped receipt. */
+.enquiry-sent {
+  position: relative;
+  display: grid;
+  justify-items: start;
+  gap: 18px;
+  padding-top: 30px;
+  border-top: 2px solid var(--ink);
+}
+.enquiry-sent h3 {
+  font:
+    400 clamp(56px, 7vw, 112px) / 0.9 var(--font-display),
+    Impact,
+    sans-serif;
+  text-transform: uppercase;
+  color: var(--ink);
+  outline: none;
+}
+.enquiry-sent p {
+  max-width: 44ch;
+  font-size: 13px;
+  line-height: 1.75;
+  color: #d9d9d9;
+  overflow-wrap: anywhere;
+}
+.enquiry-sent p strong {
+  font-weight: 500;
+  color: var(--ink);
+}
+.enquiry-sent-stamp {
+  position: absolute;
+  top: 34px;
+  right: 0;
+  padding: 8px 14px;
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  transform: rotate(-9deg);
+  animation: enquiry-stamp 520ms var(--ease-expo) 120ms both;
+}
+@keyframes enquiry-stamp {
+  from {
+    opacity: 0;
+    transform: rotate(-24deg) scale(1.8);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(-9deg);
+  }
+}
+.enquiry-again {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 46px;
+  margin-top: 6px;
+  padding: 0 18px;
+  border: 1px solid #f2f2f270;
+  background: transparent;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+.enquiry-again .arrow {
+  width: 16px;
+  height: 16px;
+}
+
+.closing-side {
   grid-area: facts;
   display: grid;
   align-content: start;
-  border-top: 2px solid var(--pink);
+  gap: 44px;
+}
+.closing-elsewhere {
+  display: grid;
+  gap: 14px;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #c9c9c9;
+}
+.closing-facts {
+  display: grid;
+  align-content: start;
+  border-top: 2px solid var(--ink);
 }
 .closing-facts > div {
   display: flex;
   justify-content: space-between;
   gap: 16px;
   padding: 14px 0;
-  border-bottom: 1px dashed #e8afbf55;
+  border-bottom: 1px dashed #f2f2f255;
   font-size: 10px;
   letter-spacing: 1px;
-  color: #d8c4c4;
+  color: #c9c9c9;
 }
 .closing-facts dd {
   text-align: right;
   font-weight: 500;
-  color: var(--pink);
+  color: var(--ink);
 }
 .closing-stamp {
   position: absolute;
@@ -102,11 +295,11 @@
   width: 118px;
   height: 118px;
   border-radius: 50%;
-  background-color: var(--pink);
-  color: var(--charcoal);
+  background-color: var(--ink);
+  color: var(--ground);
   box-shadow:
-    inset 0 0 0 4px var(--pink),
-    inset 0 0 0 5px #191a18a6,
+    inset 0 0 0 4px var(--ink),
+    inset 0 0 0 5px #000000a6,
     0 10px 24px -8px #000a;
   font-size: 7px;
   letter-spacing: 1.5px;
@@ -124,10 +317,10 @@
   gap: 20px;
   min-height: 72px;
   padding-bottom: env(safe-area-inset-bottom);
-  border-top: 1px solid #e8afbf2e;
+  border-top: 1px solid #f2f2f22e;
   font-size: 9px;
   letter-spacing: 1px;
-  color: #d8c4c4;
+  color: #c9c9c9;
 }
 .closing-bottom > span > span {
   color: var(--paper);
@@ -137,7 +330,7 @@
   align-items: center;
   gap: 14px;
   min-height: 44px;
-  color: var(--pink);
+  color: var(--ink);
 }
 .closing-bottom .arrow {
   width: 16px;
@@ -155,11 +348,11 @@
   gap: 14px;
   height: 50px;
   padding: 0 18px 0 30px;
-  background-color: var(--pink);
+  background-color: var(--ink);
   background-image: url("/film-grain.webp");
   background-size: 256px 256px;
   background-blend-mode: soft-light;
-  color: var(--charcoal);
+  color: var(--ground);
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 1.2px;
@@ -184,7 +377,7 @@
   left: 15px;
   top: 8px;
   bottom: 8px;
-  border-left: 2px dashed #191a1866;
+  border-left: 2px dashed #00000066;
 }
 .booking-stub .arrow {
   width: 18px;
@@ -195,11 +388,20 @@ html.splash-on:not(.splash-done) .booking-stub {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .closing-mail {
+  .enquiry-send {
     transition: background-color 180ms ease;
   }
-  .closing-mail:hover {
+  .enquiry-send:not(:disabled):hover {
     background-color: var(--paper);
+  }
+  .enquiry-again {
+    transition:
+      background-color 160ms ease,
+      color 160ms ease;
+  }
+  .enquiry-again:hover {
+    background-color: var(--ink);
+    color: var(--ground);
   }
   .booking-stub.is-shown:hover {
     transform: rotate(0deg) translate3d(0, -3px, 0);
@@ -223,14 +425,32 @@ html.splash-on:not(.splash-done) .booking-stub {
   .closing-outline {
     -webkit-text-stroke-width: 1.5px;
   }
-  .closing-body p {
+  .closing-body > p {
     font-size: 12px;
   }
-  .closing-mail {
+  .enquiry-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+  }
+  .enquiry-field,
+  .enquiry-field-name,
+  .enquiry-field-email {
+    grid-column: 1 / -1;
+  }
+  /* 16px stops iOS from zooming into the field. */
+  .enquiry-field input,
+  .enquiry-field textarea {
+    font-size: 16px;
+  }
+  .enquiry-send {
     width: 100%;
-    font-size: 22px;
-    min-height: 58px;
+    font-size: 24px;
+    min-height: 60px;
     padding: 0 16px 0 20px;
+  }
+  .enquiry-sent-stamp {
+    position: static;
+    order: -1;
   }
   .closing-stamp {
     width: 86px;
@@ -252,6 +472,9 @@ html.splash-on:not(.splash-done) .booking-stub {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .enquiry-sent-stamp {
+    animation: none;
+  }
   .booking-stub {
     transition: opacity 200ms ease;
     transform: rotate(-3deg);
