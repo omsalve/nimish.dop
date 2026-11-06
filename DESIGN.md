@@ -14,11 +14,11 @@ typography:
     fontFamily: "Anton, Impact, sans-serif"
     fontSize: "clamp(64px, 12.4vw, 228px)"
     fontWeight: 400
-    lineHeight: 0.84
+    lineHeight: 0.93
     letterSpacing: "-0.015em"
   poster:
     fontFamily: "Anton, Impact, sans-serif"
-    fontSize: "28.2vw"
+    fontSize: "calc((100cqw - 2 * var(--gutter)) * 0.3083)"
     fontWeight: 400
     lineHeight: 0.92
     letterSpacing: "-0.045em"
@@ -83,7 +83,7 @@ The page runs as one continuous scroll: splash → poster hero → the Rig → t
 
 ## Typography
 
-- **Anton** for every display line: the giant poster wordmark, chapter names, the Rig heading, the close. It is always uppercase, with tight leading (0.84–0.94).
+- **Anton** for every display line: the giant poster wordmark, chapter names, the Rig heading, the close. It is always uppercase, with tight leading (0.92–0.94). Its capitals stand 0.86em tall, so anything below 0.9 fuses two lines together.
 - **IBM Plex Mono** for labels, captions, counters, and body copy, tracked out (0.5–1.2px) in uppercase for labels.
 - Grain lives inside display type: `.film-type` clips `/film-grain.webp` over `currentColor` with `soft-light`, animated in steps. Outlined words (`STILL FRAMES.`, `LIFE.`, `LET’S TALK.`) stay pure strokes and never take the grain fill.
 - Counters change like a departure board (`FlapText`): characters flip and land left to right in fixed cells.
@@ -93,6 +93,9 @@ The page runs as one continuous scroll: splash → poster hero → the Rig → t
 - Full-bleed sections with a single `--gutter`. Chapters follow a fixed grammar: title card → three-shot exposure (pinned, about 2.7 viewports) → the artist's whole archive.
 - The archive is a justified gallery: each frame keeps its true aspect ratio (`flex-grow` and `flex-basis` proportional to `--ar`, plus `aspect-ratio`). Rows fill the measure, and the last row does not stretch.
 - Mobile keeps the same order. The shot stage uses a 92vw × 64svh box, and the gallery's row height becomes 42vw.
+- The poster wordmark fills gutter to gutter, so its height follows the width. Everything above it (copy, print, stamp, note) is placed against its top edge, `--band-end`, never by a share of the poster alone; the poster grows (`--fit`) when a wide, short window cannot hold both. Add new poster pieces the same way.
+- Phones on their side (`orientation: landscape` and `max-height: 500px`) get their own composition: copy and print share the first view, the Rig keeps its height, and the lightbox moves its caption to a side rail so the photograph gets the full height.
+- Small mono labels on the poster and around the chapters scale with `--fs` on screens 1800px and wider. The gutter clears the notch through `--safe-x`.
 
 ## Elevation & Depth
 

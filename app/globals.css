@@ -9,13 +9,28 @@
   --rule: #ffffff25;
   /* Stage light is never ink: only haze, glow, and beams. */
   --stage-light: #ffffff;
-  --gutter: clamp(22px, 3.8vw, 76px);
+  /* viewport-fit=cover: on a phone held sideways the gutter clears the notch. */
+  --safe-x: max(env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
+  --gutter: max(clamp(22px, 3.8vw, 76px), var(--safe-x));
+  /* Scales the small mono labels on big screens; they stay put everywhere else. */
+  --fs: 1;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --ease-rip: cubic-bezier(0.65, 0, 0.2, 1);
   --tear-w: 1000px;
   --tear-h: 88px;
+}
+
+@media (min-width: 1800px) {
+  :root {
+    --fs: 1.25;
+  }
+}
+@media (min-width: 2400px) {
+  :root {
+    --fs: 1.6;
+  }
 }
 
 @theme inline {
@@ -731,7 +746,7 @@ svg {
 
 @media (max-width: 700px) {
   :root {
-    --gutter: 22px;
+    --gutter: max(22px, var(--safe-x));
     --tear-w: 620px;
     --tear-h: 55px;
   }
@@ -863,7 +878,7 @@ svg {
   .journey-intro {
     padding-top: 43px;
     padding-bottom: 74px;
-    font-size: 7px;
+    font-size: 8px;
     letter-spacing: 0.2px;
   }
   .journey-intro > span:last-child {
@@ -892,11 +907,11 @@ svg {
     padding-bottom: max(12px, env(safe-area-inset-bottom));
   }
   .lightbox[open] {
-    grid-template-rows: 44px minmax(0, 1fr) 112px;
+    grid-template-rows: 44px minmax(0, 1fr) 118px;
     gap: 10px;
   }
   .lightbox-topline {
-    font-size: 7px;
+    font-size: 8px;
     letter-spacing: 0.5px;
   }
   .lightbox-bottom {
@@ -910,6 +925,59 @@ svg {
     margin-top: 10px;
     justify-content: space-between;
     gap: 15px;
+  }
+}
+
+/* Phones turn sideways to look at a photograph, so it gets the height: the frame
+   takes the whole left of the screen and the caption and controls move to a rail. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .lightbox {
+    padding: 8px max(14px, env(safe-area-inset-right)) 8px max(14px, env(safe-area-inset-left));
+  }
+  .lightbox[open] {
+    grid-template-columns: minmax(0, 1fr) clamp(150px, 24vw, 210px);
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 8px 16px;
+  }
+  .lightbox-stage {
+    grid-column: 1;
+    grid-row: 1 / -1;
+  }
+  .lightbox-topline {
+    grid-column: 2;
+    grid-row: 1;
+    justify-content: flex-end;
+  }
+  .lightbox-brand {
+    display: none;
+  }
+  .lightbox-bottom {
+    grid-column: 2;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 0;
+    border-top: 0;
+  }
+  .lightbox-artist {
+    font-size: 22px;
+  }
+  .lightbox-controls {
+    margin-top: 0;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .lightbox-controls button {
+    width: 44px;
+    height: 44px;
+  }
+  .lightbox-count {
+    font-size: 9px;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
   }
 }
 

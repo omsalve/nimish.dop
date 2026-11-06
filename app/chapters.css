@@ -36,9 +36,10 @@
   opacity: 1;
   transform: none;
 }
+/* Anton's capitals stand 0.86em tall, so anything under 0.9 fuses two-line names. */
 .chapter-name {
   font:
-    400 clamp(64px, 12.4vw, 228px) / 0.84 var(--font-display),
+    400 clamp(64px, 12.4vw, 228px) / 0.93 var(--font-display),
     Impact,
     sans-serif;
   text-transform: uppercase;
@@ -54,7 +55,7 @@
   margin-top: clamp(20px, 2.4vw, 36px);
   padding-top: 14px;
   border-top: 1px solid #f2f2f23d;
-  font-size: 10px;
+  font-size: calc(10px * var(--fs));
   letter-spacing: 1px;
   color: #c9c9c9;
 }
@@ -77,17 +78,21 @@
 /* ——— The three-shot exposure. Static by default (no script, reduced motion):
    three whole frames side by side. Directed, it becomes a pinned stage. ——— */
 .shots {
+  /* The height limit leaves the rail, the note and the stub a strip of their own. */
   --bw: 86vw;
-  --bh: 76svh;
+  --bh: min(76svh, calc(104svh - 256px));
+  /* What the fixed booking stub takes out of the bottom right corner. */
+  --stub-room: calc(max(18px, env(safe-area-inset-right)) + 176px);
   position: relative;
 }
+/* Row gap: each frame's label hangs below it, so rows need room for it. */
 .shots-stage {
   position: relative;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 18px;
+  gap: 38px 18px;
   padding: 10px var(--gutter) 40px;
 }
 .shot {
@@ -114,7 +119,7 @@
   position: absolute;
   left: 0;
   top: calc(100% + 10px);
-  font-size: 9px;
+  font-size: calc(9px * var(--fs));
   letter-spacing: 1px;
   color: #c9c9c9;
 }
@@ -174,15 +179,19 @@
   opacity: var(--glow, 0);
   pointer-events: none;
 }
+/* The stub stays on screen through the sequence, so the rail ends where it begins
+   and the note sits above it. */
 .scroll-directed .shots-rail {
   display: flex;
+  flex-wrap: wrap;
   position: absolute;
   left: 0;
   right: 0;
   bottom: max(20px, env(safe-area-inset-bottom));
   justify-content: space-between;
-  gap: 20px;
-  font-size: 10px;
+  gap: 2px 20px;
+  padding-right: var(--stub-room);
+  font-size: calc(10px * var(--fs));
   letter-spacing: 1px;
   color: #c9c9c9;
 }
@@ -193,9 +202,12 @@
   display: block;
   position: absolute;
   right: calc(var(--gutter) + 2vw);
-  bottom: 70px;
+  bottom: 94px;
+  max-width: calc(100% - 2 * var(--gutter));
+  margin: 0;
   color: var(--ink);
   font-size: clamp(22px, 2vw, 32px);
+  text-align: right;
   transform: rotate(-8deg);
   opacity: var(--note, 0);
 }
@@ -212,7 +224,7 @@
   padding-top: 14px;
   margin-bottom: clamp(18px, 2vw, 30px);
   border-top: 1px solid #f2f2f23d;
-  font-size: 10px;
+  font-size: calc(10px * var(--fs));
   letter-spacing: 1px;
   color: #c9c9c9;
 }
@@ -283,21 +295,21 @@
   }
   .chapter-name {
     font-size: clamp(52px, 17vw, 96px);
-    line-height: 0.88;
+    line-height: 0.93;
   }
   .chapter-meta {
     grid-template-columns: auto 1fr;
     gap: 6px 16px;
-    font-size: 8px;
+    font-size: 9px;
     letter-spacing: 0.5px;
   }
   .chapter-back {
     grid-column: 1 / -1;
-    min-height: 40px;
   }
   .shots {
     --bw: 92vw;
-    --bh: 64svh;
+    --bh: min(64svh, calc(104svh - 240px));
+    --stub-room: calc(max(18px, env(safe-area-inset-right)) + 150px);
   }
   .shot {
     width: min(42vw, calc(32svh * var(--ar)));
@@ -310,15 +322,36 @@
     letter-spacing: 0.5px;
   }
   .scroll-directed .shots-note {
-    bottom: 56px;
+    bottom: 90px;
     font-size: 20px;
   }
   .artist-archive-head {
-    font-size: 8px;
+    font-size: 9px;
   }
   .justified {
     --row: 42vw;
     gap: 8px;
+  }
+}
+
+/* Phones on their side: the frame takes the height and the note gives way. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .shots {
+    --bw: 80vw;
+    --bh: calc(100svh - 104px);
+  }
+  .scroll-directed .shots {
+    height: 230svh;
+  }
+  .scroll-directed .shot {
+    top: 46%;
+  }
+  .scroll-directed .shots-note {
+    display: none;
+  }
+  .chapter-card {
+    padding-top: 72px;
+    padding-bottom: 20px;
   }
 }
 

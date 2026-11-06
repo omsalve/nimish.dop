@@ -232,7 +232,7 @@ export function Rig({ onOpen }: { onOpen: OpenPhoto }) {
         )}
         <header className="rig-head page-gutter">
           <h2 id="rig-title" className="film-type">
-            Every frame.
+            Every frame.{" "}
             <br />
             One rig.
           </h2>

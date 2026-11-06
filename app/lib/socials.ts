@@ -16,7 +16,7 @@ export const socials = [
   {
     id: "behance",
     label: "Behance",
-    href: "https://www.behance.net/your-handle",
+    href: "https://www.behance.net/NimishK_",
   },
   {
     id: "whatsapp",

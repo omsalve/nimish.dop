@@ -53,7 +53,7 @@
 }
 .rig-head h2 {
   font:
-    400 clamp(46px, 6.6vw, 118px) / 0.86 var(--font-display),
+    400 clamp(46px, 6.6vw, 118px) / 0.93 var(--font-display),
     Impact,
     sans-serif;
   text-transform: uppercase;
@@ -63,7 +63,7 @@
 .rig-head p {
   max-width: 32ch;
   padding-top: 8px;
-  font-size: 11px;
+  font-size: calc(11px * var(--fs));
   line-height: 1.8;
   color: #d9d9d9;
   text-shadow: 0 2px 16px #000;
@@ -86,7 +86,7 @@
   display: grid;
   gap: 4px;
   min-width: 0;
-  font-size: 9px;
+  font-size: calc(9px * var(--fs));
   letter-spacing: 1px;
   color: #a6a6a6;
 }
@@ -117,7 +117,7 @@
   border: 1px solid #f2f2f259;
   background: #000000cc;
   color: var(--ink);
-  font-size: 10px;
+  font-size: calc(10px * var(--fs));
   letter-spacing: 1px;
   white-space: nowrap;
 }
@@ -171,16 +171,26 @@
   }
 }
 
+/* Stacked, the copy and the caption sit over the photographs, which can be as bright
+   as the ink. The copy gets a plate of the ground; the caption a taller fade. */
 @media (max-width: 900px) {
   .rig-head {
     display: block;
   }
   .rig-head p {
+    width: fit-content;
     max-width: 36ch;
+    margin-top: 10px;
+    margin-left: -8px;
+    padding: 6px 8px 7px;
+    background: #000000b8;
     font-size: 10px;
+    text-shadow: none;
   }
   .rig-bar {
     display: block;
+    padding-top: 44px;
+    background: linear-gradient(0deg, #000000f2, #000000d9 72%, transparent);
   }
   .rig-controls {
     margin-top: 12px;
@@ -199,17 +209,73 @@
     font-size: clamp(42px, 13vw, 64px);
   }
   .rig-head p {
-    font-size: 9px;
-    margin-top: 6px;
+    font-size: 10px;
+    line-height: 1.65;
   }
   .rig-controls button {
     height: 44px;
     min-width: 44px;
-    font-size: 8px;
+    font-size: 9px;
     padding: 0 10px;
   }
   .rig-toggle {
     order: 5;
     flex-basis: 100%;
+  }
+}
+
+/* Phones on their side: one line of heading, one line of controls, and the rest of
+   the height for the rig itself. Dragging explains itself; the copy gives way. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .rig-section {
+    height: 210svh;
+  }
+  .rig-stage::before {
+    height: 96px;
+  }
+  .rig-head {
+    top: 12px;
+  }
+  .rig-head h2 {
+    font-size: 30px;
+    line-height: 1;
+  }
+  .rig-head h2 br {
+    display: none;
+  }
+  .rig-head p {
+    display: none;
+  }
+  .rig-bar {
+    display: flex;
+    gap: 14px;
+    padding-top: 26px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
+  .rig-caption-title {
+    font-size: 18px;
+  }
+  .rig-controls {
+    margin-top: 0;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+  }
+  .rig-controls button {
+    height: 44px;
+    min-width: 44px;
+    padding: 0 10px;
+    font-size: 9px;
+  }
+  .rig-controls .rig-open {
+    flex: none;
+  }
+  .rig-toggle {
+    order: 0;
+    flex-basis: auto;
+  }
+}
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 620px) {
+  .rig-caption-title {
+    font-size: 15px;
   }
 }

@@ -36,6 +36,7 @@
   display: flex;
   align-items: center;
   gap: 9px;
+  min-height: 44px;
   font:
     27px/1 var(--font-display),
     Impact,
@@ -53,7 +54,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 9px;
+  font-size: calc(9px * var(--fs));
   letter-spacing: 0.6px;
   color: #c9c9c9;
 }
@@ -72,7 +73,7 @@
   gap: 12px;
   align-items: center;
   min-height: 44px;
-  font-size: 9px;
+  font-size: calc(9px * var(--fs));
   letter-spacing: 0.5px;
   white-space: nowrap;
 }
@@ -85,13 +86,38 @@
   padding: 0 16px;
 }
 
+/* The wordmark fills the gutters, so its height follows the width while the
+   poster's follows the window. Everything above it is therefore placed against
+   its top edge (--band-end), never by a share of the poster alone, and the
+   poster grows (--fit) when a wide, short window cannot hold both. */
 .cinema-poster {
+  --rail: 64px;
+  --title-fit: 0.3083;
+  --title-size: calc((100cqw - 2 * var(--gutter)) * var(--title-fit));
+  --title-ink: calc(var(--title-size) * 0.86);
+  --title-floor: calc(var(--rail) + 6px);
+  --band-top: 166px;
+  --band-end: calc(100% - var(--title-floor) - var(--title-ink));
+  --copy-size: clamp(42px, min(5cqw, 7.8svh), 94px);
+  --copy-gap: 20px;
+  --copy-box: calc(var(--copy-size) * 2.08 + 84px * var(--fs) + 3 * var(--copy-gap) + 46px);
+  --print-w: clamp(
+    158px,
+    min(14vw, 20svh, calc((var(--copy-box) - 78px) / 1.333)),
+    calc(230px * var(--fs))
+  );
+  --print-h: calc(var(--print-w) * 1.333 + 46px);
+  --print-top: min(24%, calc(var(--band-end) - var(--print-h) - 22px));
+  --stamp: calc(106px * var(--fs));
+  --fit: calc(
+    var(--band-top) + var(--copy-box) + 20px + var(--title-ink) + var(--title-floor)
+  );
   isolation: isolate;
   position: relative;
   overflow: hidden;
-  min-height: 900px;
+  min-height: var(--fit);
   height: 100svh;
-  max-height: 1180px;
+  max-height: max(1180px, var(--fit), 62cqw);
   background: transparent;
 }
 .cinema-backdrop {
@@ -139,17 +165,20 @@
   right: var(--gutter);
   display: flex;
   justify-content: space-between;
-  font-size: 8px;
+  gap: 20px;
+  font-size: calc(8px * var(--fs));
   letter-spacing: 1px;
   color: #d0d0d0;
 }
 .cinema-kicker > span:last-child {
   color: #aeaeae;
 }
+/* Frames the band between the kicker and the wordmark, so a corner never lands on
+   the copy's rule or disappears behind the letters. */
 .cinema-viewfinder {
   position: absolute;
   z-index: -1;
-  inset: 158px var(--gutter) 76px;
+  inset: 146px var(--gutter) calc(var(--title-floor) + var(--title-ink) + 12px);
   opacity: 0.35;
   pointer-events: none;
 }
@@ -182,16 +211,17 @@
 }
 .cinema-copy {
   position: absolute;
-  top: 23%;
+  top: min(23%, calc(var(--band-end) - var(--copy-box) - 20px));
   left: var(--gutter);
   z-index: 3;
-  width: 34%;
+  /* Wide enough that the CTA and the social buttons always share one row. */
+  width: max(34%, 400px);
 }
 .cinema-edition {
   display: flex;
   gap: 10px;
   align-items: center;
-  font-size: 8px;
+  font-size: calc(8px * var(--fs));
   letter-spacing: 1.1px;
   color: #bcbcbc;
 }
@@ -203,10 +233,10 @@
 }
 .cinema-copy h2 {
   font:
-    400 clamp(45px, 5vw, 94px) / 1.04 var(--font-display),
+    400 var(--copy-size) / 1.04 var(--font-display),
     Impact,
     sans-serif;
-  margin-top: 20px;
+  margin-top: var(--copy-gap);
   letter-spacing: -0.015em;
 }
 .cinema-copy h2 > span:last-child {
@@ -214,10 +244,10 @@
   -webkit-text-stroke: 1px var(--ink);
 }
 .cinema-description {
-  max-width: 256px;
-  margin-top: 22px;
+  max-width: calc(256px * var(--fs));
+  margin-top: var(--copy-gap);
   color: #c1c1c1;
-  font-size: 10px;
+  font-size: calc(10px * var(--fs));
   line-height: 1.9;
 }
 .cinema-cta {
@@ -228,7 +258,7 @@
   min-height: 46px;
   width: 208px;
   border-bottom: 1px solid #f2f2f27d;
-  font-size: 9px;
+  font-size: calc(9px * var(--fs));
   letter-spacing: 0.8px;
   margin-top: 19px;
 }
@@ -242,7 +272,7 @@
   flex-wrap: wrap;
   align-items: flex-end;
   gap: 12px 22px;
-  margin-top: 19px;
+  margin-top: var(--copy-gap);
 }
 .cinema-actions .cinema-cta {
   margin-top: 0;
@@ -252,9 +282,9 @@
 }
 .cinema-contact-print {
   position: absolute;
-  width: clamp(158px, 14vw, 230px);
+  width: var(--print-w);
   right: calc(var(--gutter) + 28px);
-  top: 24%;
+  top: var(--print-top);
   padding: 7px 7px 0;
   background: var(--paper);
   transform: rotate(7deg);
@@ -276,15 +306,16 @@
   justify-content: space-between;
   gap: 8px;
   padding: 11px 1px 12px;
-  font-size: 6px;
+  font-size: calc(6px * var(--fs));
   letter-spacing: 0.5px;
+  white-space: nowrap;
   color: #252525;
 }
 .cinema-print-label {
   position: absolute;
   top: -39px;
   left: 0;
-  font-size: 7px;
+  font-size: calc(7px * var(--fs));
   letter-spacing: 0.4px;
   color: var(--paper);
   white-space: nowrap;
@@ -294,18 +325,19 @@
   mix-blend-mode: normal;
   opacity: 0.7;
 }
+/* Stamped across the print's left edge, high enough to leave its caption readable. */
 .cinema-stamp {
   position: absolute;
-  right: calc(var(--gutter) + 185px);
-  top: 48%;
+  right: calc(var(--gutter) + 12px + var(--print-w));
+  top: calc(var(--print-top) + var(--print-h) - var(--stamp) - 54px);
   z-index: 5;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 7px;
-  width: 106px;
-  height: 106px;
+  width: var(--stamp);
+  height: var(--stamp);
   background: var(--ink);
   color: var(--ground);
   border-radius: 50%;
@@ -314,20 +346,20 @@
     inset 0 0 0 5px #000000a6,
     0 7px 20px #0003;
   transform: rotate(-13deg);
-  font-size: 7px;
+  font-size: calc(7px * var(--fs));
   letter-spacing: 1.5px;
 }
 .cinema-stamp .asterisk {
-  width: 28px;
-  height: 28px;
+  width: calc(28px * var(--fs));
+  height: calc(28px * var(--fs));
 }
 .cinema-handwritten {
   position: absolute;
   right: calc(var(--gutter) + 23px);
-  top: 59%;
+  top: min(59%, calc(var(--band-end) - 76px));
   z-index: 4;
   color: var(--ink);
-  font-size: 26px;
+  font-size: calc(26px * var(--fs));
   transform: rotate(-10deg);
   text-shadow: 0 2px 12px #000;
 }
@@ -335,10 +367,11 @@
   position: absolute;
   left: calc(var(--gutter) - 0.012em);
   right: var(--gutter);
-  bottom: 49px;
+  /* 0.035em is the gap between Anton's baseline and the line box. */
+  bottom: calc(var(--title-floor) - 0.035em);
   z-index: 3;
   font:
-    400 28.2vw/0.92 var(--font-display),
+    400 var(--title-size) / 0.92 var(--font-display),
     Impact,
     sans-serif;
   letter-spacing: -0.045em;
@@ -359,13 +392,13 @@
   left: var(--gutter);
   right: var(--gutter);
   z-index: 4;
-  height: 64px;
+  height: var(--rail);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
   border-top: 1px solid #f2f2f240;
-  font-size: 7px;
+  font-size: calc(7px * var(--fs));
   letter-spacing: 0.7px;
   color: #bababa;
 }
@@ -387,10 +420,10 @@
 .cinema-frame-mark {
   position: absolute;
   right: 18px;
-  top: 50%;
+  top: min(50%, calc(var(--band-end) - 170px * var(--fs)));
   z-index: 3;
   writing-mode: vertical-rl;
-  font-size: 7px;
+  font-size: calc(7px * var(--fs));
   letter-spacing: 1.2px;
   color: #b8b8b8;
 }
@@ -614,14 +647,14 @@
     font-size: 8px;
   }
   .cinema-poster {
-    min-height: 830px;
+    --copy-size: clamp(42px, min(5.2cqw, 7.8svh), 57px);
+    --print-w: clamp(128px, min(16vw, 22svh, calc((var(--copy-box) - 78px) / 1.333)), 230px);
+    --print-top: min(25%, calc(var(--band-end) - var(--print-h) - 22px));
+    --stamp: 86px;
   }
   .cinema-copy {
-    top: 24%;
-    width: 38%;
-  }
-  .cinema-copy h2 {
-    font-size: 5.2vw;
+    top: min(24%, calc(var(--band-end) - var(--copy-box) - 20px));
+    width: max(38%, 400px);
   }
   .cinema-description {
     max-width: 235px;
@@ -629,14 +662,9 @@
   }
   .cinema-contact-print {
     right: calc(var(--gutter) + 15px);
-    width: 16vw;
-    top: 25%;
   }
   .cinema-stamp {
-    width: 86px;
-    height: 86px;
-    right: calc(var(--gutter) + 120px);
-    top: 47%;
+    right: calc(var(--gutter) - 1px + var(--print-w));
     font-size: 6px;
   }
   .cinema-stamp .asterisk {
@@ -644,11 +672,8 @@
     height: 23px;
   }
   .cinema-handwritten {
-    top: 57%;
+    top: min(57%, calc(var(--band-end) - 76px));
     font-size: 22px;
-  }
-  .cinema-main-title {
-    bottom: 57px;
   }
   .archive-heading {
     margin-bottom: 42px;
@@ -704,7 +729,7 @@
     gap: 17px;
   }
   .cinema-header nav a {
-    font-size: 8px;
+    font-size: 9px;
     gap: 6px;
     letter-spacing: 0.2px;
   }
@@ -717,6 +742,15 @@
     border: 0;
   }
   .cinema-poster {
+    --rail: 60px;
+    --title-fit: 0.3209;
+    --print-w: 115px;
+    --print-h: calc(var(--print-w) * 1.333 + 40px);
+    --print-top: min(53%, calc(var(--band-end) - var(--print-h) - 14px));
+    --stamp: 72px;
+    --copy-size: clamp(44px, 11.5vw, 68px);
+    /* Where the copy ends: the note on its left must start below this. */
+    --copy-end: calc(362px + var(--copy-size) * 2.08);
     height: 100svh;
     min-height: 840px;
     max-height: 1000px;
@@ -735,35 +769,36 @@
   }
   .cinema-kicker {
     top: 105px;
-    font-size: 7px;
+    font-size: 8px;
     letter-spacing: 0.6px;
   }
   .cinema-kicker > span:last-child {
     display: none;
   }
   .cinema-viewfinder {
-    inset: 138px var(--gutter) 72px;
+    top: 138px;
   }
   .cinema-copy {
     top: 178px;
     width: 76%;
   }
   .cinema-edition {
-    font-size: 6px;
-    letter-spacing: 0.7px;
+    font-size: 8px;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
   }
   .cinema-edition::before {
     width: 15px;
   }
   .cinema-copy h2 {
-    font-size: clamp(44px, 11.5vw, 68px);
+    font-size: var(--copy-size);
     margin-top: 19px;
   }
   .cinema-description {
-    width: 210px;
-    max-width: 72%;
-    font-size: 9px;
-    line-height: 1.9;
+    width: 250px;
+    max-width: 100%;
+    font-size: 11px;
+    line-height: 1.75;
     margin-top: 19px;
   }
   .cinema-actions {
@@ -772,25 +807,23 @@
   }
   .cinema-cta {
     width: 186px;
-    font-size: 8px;
+    font-size: 9px;
     min-height: 44px;
   }
   .cinema-contact-print {
-    width: 115px;
     right: 31px;
-    top: 53%;
     padding: 5px 5px 0;
     transform: rotate(8deg);
   }
   .cinema-print-label {
     top: -32px;
-    font-size: 5px;
+    font-size: 7px;
     letter-spacing: 0.1px;
     transform: rotate(-8deg);
   }
   .cinema-contact-print figcaption {
-    font-size: 4px;
-    letter-spacing: 0.1px;
+    font-size: 6px;
+    letter-spacing: 0;
     gap: 4px;
     padding: 8px 1px 9px;
   }
@@ -800,37 +833,28 @@
     height: 23px;
   }
   .cinema-stamp {
-    top: 68%;
-    right: 120px;
-    width: 72px;
-    height: 72px;
+    right: calc(31px + var(--print-w) - 8px);
     gap: 4px;
-    font-size: 5px;
-    letter-spacing: 0.7px;
+    font-size: 6px;
+    letter-spacing: 0.4px;
   }
   .cinema-stamp .asterisk {
     width: 21px;
     height: 21px;
   }
   .cinema-handwritten {
-    top: 61%;
+    top: max(var(--copy-end), min(61%, calc(var(--band-end) - 76px)));
     right: auto;
     left: var(--gutter);
     font-size: 25px;
-  }
-  .cinema-main-title {
-    bottom: 63px;
-    font-size: 28.2vw;
-    left: calc(var(--gutter) - 0.012em);
   }
   .cinema-main-title > span {
     transform: scaleX(1.21);
   }
   .cinema-bottom {
-    height: 60px;
-    font-size: 6px;
+    font-size: 8px;
     letter-spacing: 0.3px;
-    gap: 16px;
+    gap: 12px;
   }
   .cinema-bottom > span {
     max-width: 140px;
@@ -849,14 +873,15 @@
   }
   .cinema-frame-mark {
     right: 7px;
-    top: 36%;
-    font-size: 5px;
+    top: 22%;
+    font-size: 6px;
+    letter-spacing: 0.8px;
   }
   .archive-section {
     padding-top: 64px;
   }
   .section-eyebrow {
-    font-size: 7px;
+    font-size: 8px;
     margin-bottom: 24px;
   }
   .archive-heading {
@@ -879,14 +904,14 @@
   }
   .archive-heading > div > span {
     display: block;
-    font-size: 6px;
-    line-height: 1.8;
-    letter-spacing: 0.4px;
-    margin-bottom: 13px;
+    font-size: 8px;
+    line-height: 1.6;
+    letter-spacing: 0.2px;
+    margin-bottom: 11px;
   }
   .archive-heading > div p {
-    font-size: 8px;
-    line-height: 1.8;
+    font-size: 9px;
+    line-height: 1.7;
   }
   .archive-heading .arrow {
     display: none;
@@ -944,12 +969,22 @@
     font-size: 9px;
   }
   .journey-intro {
-    font-size: 7px;
+    font-size: 8px;
     padding-top: 45px;
     padding-bottom: 75px;
   }
   .journey-intro svg {
     top: 62px;
+  }
+}
+
+/* Below this the social buttons would run into the print's label: they stack under the CTA. */
+@media (max-width: 560px) {
+  .cinema-poster {
+    --copy-end: calc(418px + var(--copy-size) * 2.08);
+  }
+  .cinema-actions {
+    max-width: 200px;
   }
 }
 
@@ -961,34 +996,43 @@
     font-size: 22px;
   }
   .cinema-poster {
+    --print-w: 102px;
+    --print-top: min(57.5%, calc(var(--band-end) - var(--print-h) - 14px));
+    --stamp: 63px;
+    --copy-size: 42px;
     min-height: 800px;
   }
   .cinema-copy {
     top: 173px;
     width: 85%;
   }
-  .cinema-copy h2 {
-    font-size: 42px;
-  }
   .cinema-description {
-    max-width: 68%;
-    font-size: 9px;
+    font-size: 10px;
   }
   .cinema-contact-print {
-    width: 102px;
     right: 28px;
-    top: 57.5%;
+  }
+  .cinema-contact-print figcaption {
+    font-size: 5px;
+  }
+  .cinema-print-label {
+    font-size: 6px;
   }
   .cinema-stamp {
-    right: 106px;
-    top: 70%;
-    width: 63px;
-    height: 63px;
-    font-size: 4px;
+    right: calc(28px + var(--print-w) - 14px);
+    font-size: 5px;
   }
   .cinema-handwritten {
-    top: 65%;
+    top: max(var(--copy-end), min(65%, calc(var(--band-end) - 76px)));
     font-size: 22px;
+  }
+  /* The rail runs out of width here: the scroll cue folds onto two lines. */
+  .cinema-bottom {
+    font-size: 7px;
+  }
+  .cinema-bottom a {
+    max-width: 92px;
+    line-height: 1.35;
   }
   .concert-title {
     font-size: 18px;
@@ -1257,9 +1301,11 @@ html.splash-on:not(.splash-done)
   }
 }
 
-/* The poster sinks into the dark as you scroll past it. */
+/* The poster sinks into the dark as you scroll past it. The scene is also the
+   query container: 100cqw is the page's true width, scrollbar excluded. */
 .poster-scene {
   position: relative;
+  container-type: inline-size;
 }
 .hero-handoff-dimmer {
   position: absolute;
@@ -1308,8 +1354,8 @@ html.splash-on:not(.splash-done)
     display: none;
   }
   .hero-reel-title {
-    font-size: 7px;
-    letter-spacing: 0.4px;
+    font-size: inherit;
+    letter-spacing: 0.3px;
   }
 }
 
@@ -1337,19 +1383,82 @@ html.splash-on:not(.splash-done)
   }
 }
 
-/* Short desktop screens: keep the copy block clear of the giant title. */
-@media (min-width: 701px) and (max-height: 960px) {
+/* Short windows: tighter copy, so the wordmark stays as high in the first view as it can. */
+@media (min-width: 701px) and (max-height: 1000px) {
+  .cinema-poster {
+    --copy-gap: 13px;
+  }
+}
+
+/* Landscape-shaped windows have no room under the print, so the note moves beside the
+   stamp. Below 840px that spot belongs to the social buttons, and the note gives way. */
+@media (min-width: 701px) and (min-aspect-ratio: 1/1) {
+  .cinema-handwritten {
+    right: calc(var(--gutter) + 44px + var(--print-w) + var(--stamp));
+    top: calc(var(--band-end) - 92px * var(--fs));
+  }
+}
+@media (min-width: 701px) and (max-width: 840px) and (min-aspect-ratio: 1/1) {
+  .cinema-handwritten {
+    display: none;
+  }
+}
+
+/* Phones on their side. The poster cannot fit one screen, so the copy and the print
+   share the first view and the wordmark follows on the first scroll. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .cinema-header {
+    height: 64px;
+  }
+  .cinema-poster {
+    --rail: 52px;
+    --band-top: 78px;
+    --copy-size: 38px;
+    --copy-gap: 10px;
+    --print-w: 118px;
+    --print-h: calc(var(--print-w) * 1.333 + 40px);
+    --print-top: 84px;
+    --stamp: 66px;
+    min-height: var(--fit);
+    max-height: none;
+  }
+  .cinema-kicker,
+  .cinema-viewfinder,
+  .cinema-print-label,
+  .cinema-handwritten,
+  .cinema-frame-mark {
+    display: none;
+  }
   .cinema-copy {
-    top: 18%;
+    top: var(--band-top);
+    width: 400px;
   }
   .cinema-copy h2 {
-    font-size: clamp(40px, 4.1vw, 78px);
-    margin-top: 14px;
+    font-size: var(--copy-size);
+    margin-top: var(--copy-gap);
   }
   .cinema-description {
-    margin-top: 14px;
+    width: auto;
+    max-width: 300px;
+    margin-top: var(--copy-gap);
+    font-size: 10px;
+    line-height: 1.7;
   }
   .cinema-actions {
-    margin-top: 10px;
+    max-width: none;
+    margin-top: var(--copy-gap);
+  }
+  .cinema-contact-print {
+    right: calc(var(--gutter) + 10px);
+  }
+  .cinema-stamp {
+    right: calc(var(--gutter) - 8px + var(--print-w));
+    gap: 3px;
+    font-size: 5px;
+    letter-spacing: 0.5px;
+  }
+  .cinema-stamp .asterisk {
+    width: 18px;
+    height: 18px;
   }
 }
