@@ -113,6 +113,7 @@ Hard rectangles throughout, with no radius. Exceptions come from real objects: c
 - **The Rig:** WebGL2, with every frame on a circular truss in counter-rotating tiers, plus moving-head beams, floor haze, and a crowd with raised phones. Drag to spin, click to open, keyboard previous/next/open. Its canvas is transparent, so the page's own ground shows through.
 - **Lightbox:** native `<dialog>`. It opens with a flight from the clicked crop to the whole frame, then cuts hard between frames.
 - **Booking stub:** a fixed white tear-off ticket. It hides during the splash, while the Rig is playing, and at the close.
+- **Back stub:** the booking stub mirrored, fixed top left, returning to the ticket. It shows once the ticket has scrolled off and hides at the close, so it only appears in the chapters.
 - **Booking form:** in the close. Fields are white ink on the ground with a single rule beneath; errors are ink, never red. The send button is the perforated white stub; a sent enquiry turns into a stamped receipt.
 - **Social buttons:** Instagram, Behance and WhatsApp as 46px square ink-ruled icon buttons (Simple Icons glyphs), inverted on hover. They sit beside the hero CTA and under the facts in the close.
 

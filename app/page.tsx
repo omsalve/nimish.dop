@@ -1,5 +1,6 @@
 import Image from "./components/portfolio-image";
 import Archive from "./components/archive";
+import BackStub from "./components/back-stub";
 import BookingStub from "./components/booking-stub";
 import Closing from "./components/closing";
 import { HeroReelControls, HeroSlideshow } from "./components/hero-slideshow";
@@ -140,6 +141,7 @@ export default function Home() {
         <PhotoJourney ticket={<Archive />} />
       </main>
       <Closing />
+      <BackStub />
       <BookingStub />
     </>
   );

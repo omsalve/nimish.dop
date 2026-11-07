@@ -345,6 +345,8 @@
 
 /* The stub: a tear-off ticket that follows the visitor between hero and close. */
 .booking-stub {
+  --away: 160%;
+  --perf: 15px;
   position: fixed;
   z-index: 40;
   right: max(18px, env(safe-area-inset-right));
@@ -364,12 +366,12 @@
   letter-spacing: 1.2px;
   box-shadow: 0 14px 30px -10px #000c;
   -webkit-mask:
-    radial-gradient(circle 6px at 15px 0, #0000 96%, #000) top / 100% 51% no-repeat,
-    radial-gradient(circle 6px at 15px 100%, #0000 96%, #000) bottom / 100% 51% no-repeat;
+    radial-gradient(circle 6px at var(--perf) 0, #0000 96%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle 6px at var(--perf) 100%, #0000 96%, #000) bottom / 100% 51% no-repeat;
   mask:
-    radial-gradient(circle 6px at 15px 0, #0000 96%, #000) top / 100% 51% no-repeat,
-    radial-gradient(circle 6px at 15px 100%, #0000 96%, #000) bottom / 100% 51% no-repeat;
-  transform: translate3d(0, 160%, 0) rotate(-3deg);
+    radial-gradient(circle 6px at var(--perf) 0, #0000 96%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle 6px at var(--perf) 100%, #0000 96%, #000) bottom / 100% 51% no-repeat;
+  transform: translate3d(0, var(--away), 0) rotate(-3deg);
   transition: transform 520ms var(--ease-expo);
 }
 .booking-stub:not(.is-shown) {
@@ -380,7 +382,7 @@
 }
 .booking-stub-perf {
   position: absolute;
-  left: 15px;
+  left: var(--perf);
   top: 8px;
   bottom: 8px;
   border-left: 2px dashed #00000066;
@@ -391,6 +393,17 @@
 }
 html.splash-on:not(.splash-done) .booking-stub {
   display: none;
+}
+/* The way back: the same stub mirrored. The bottom left belongs to the shots rail,
+   so it takes the top left, which the chapters keep clear. */
+.back-stub {
+  --away: -160%;
+  --perf: calc(100% - 15px);
+  top: max(12px, env(safe-area-inset-top));
+  right: auto;
+  bottom: auto;
+  left: max(18px, env(safe-area-inset-left));
+  padding: 0 30px 0 18px;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -484,6 +497,9 @@ html.splash-on:not(.splash-done) .booking-stub {
     height: 44px;
     font-size: 9px;
     padding: 0 14px 0 28px;
+  }
+  .back-stub {
+    padding: 0 28px 0 14px;
   }
 }
 

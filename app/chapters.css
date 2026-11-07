@@ -346,6 +346,11 @@
   .scroll-directed .shot {
     top: 46%;
   }
+  /* The frame rises level with the back stub, so its label moves to the far corner. */
+  .scroll-directed .shot-label {
+    left: auto;
+    right: 0;
+  }
   .scroll-directed .shots-note {
     display: none;
   }
