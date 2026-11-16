@@ -1,20 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { concerts, photographs } from "../lib/collection";
+import { collections, concerts, photographs } from "../lib/collection";
 import { previewUrl } from "../lib/cloudinary";
 import { loadedFrame, requestFrame } from "../lib/frames";
 import { useReducedMotion } from "../lib/use-reduced-motion";
 import type { Rig as RigEngine } from "../lib/rig-gl";
 import type { OpenPhoto } from "./chapters";
-import { FlapText } from "./flap-text";
 import { Arrow } from "./symbols";
 
 const TOTAL = photographs.length;
-const caption = (index: number) => {
-  const photo = photographs[index];
-  return `${photo.number} ${concerts[photo.concert].name.toUpperCase()}`;
-};
 
 export function Rig({ onOpen }: { onOpen: OpenPhoto }) {
   const section = useRef<HTMLElement>(null);
@@ -242,9 +237,38 @@ export function Rig({ onOpen }: { onOpen: OpenPhoto }) {
           </p>
         </header>
         <div className="rig-bar page-gutter">
-          <div className="rig-caption">
-            <span>{hovered !== null ? "UNDER THE CURSOR" : "ON THE FRONT"}</span>
-            <FlapText text={caption(shown)} className="rig-caption-title" />
+          <div className="rig-map">
+            <p className="rig-map-label">
+              <span className="rig-map-count">
+                {photographs[shown].number}
+                <span> / {String(TOTAL).padStart(3, "0")}</span>
+              </span>
+              <span className="rig-map-artist">
+                {concerts[photographs[shown].concert].name.toUpperCase()}
+              </span>
+            </p>
+            {/* Pointer shortcut only; the arrow buttons cover keyboard stepping. */}
+            <div className="rig-ticks" aria-hidden="true">
+              {collections.map((collection) => (
+                <span
+                  key={collection.id}
+                  className="rig-tick-group"
+                  style={{ "--n": collection.indexes.length } as React.CSSProperties}
+                >
+                  {collection.indexes.map((index) => (
+                    <i
+                      key={index}
+                      data-front={index === front || undefined}
+                      data-hover={index === hovered || undefined}
+                      onClick={() => {
+                        setFront(index);
+                        engine.current?.focus(index);
+                      }}
+                    />
+                  ))}
+                </span>
+              ))}
+            </div>
           </div>
           <div className="rig-controls">
             <button type="button" onClick={() => step(-1)} aria-label="Bring the previous frame to the front">

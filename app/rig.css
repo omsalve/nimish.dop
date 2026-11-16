@@ -82,24 +82,83 @@
   padding-bottom: max(18px, env(safe-area-inset-bottom));
   background: linear-gradient(0deg, #000000f2, #000000b3 60%, transparent);
 }
-.rig-caption {
+/* Truss map: one tick per frame, grouped by artist; the front frame stands tall. */
+.rig-map {
+  flex: 1 1 auto;
   display: grid;
-  gap: 4px;
+  gap: 10px;
   min-width: 0;
+  max-width: 560px;
+}
+.rig-map-label {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  min-width: 0;
+  margin: 0;
   font-size: calc(9px * var(--fs));
   letter-spacing: 1px;
   color: #a6a6a6;
 }
-.rig-caption-title {
+.rig-map-count {
+  flex: none;
   font:
-    400 clamp(20px, 2.1vw, 32px) / 1.05 var(--font-display),
+    400 clamp(20px, 2.1vw, 32px) / 1 var(--font-display),
     Impact,
     sans-serif;
   letter-spacing: 0.02em;
   color: var(--ink);
-  white-space: pre;
+  font-variant-numeric: tabular-nums;
+}
+.rig-map-count span {
+  color: #ffffff59;
+}
+.rig-map-artist {
   overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
+}
+.rig-ticks {
+  display: flex;
+  gap: 6px;
+  height: 18px;
+}
+.rig-tick-group {
+  display: flex;
+  flex: var(--n, 1) 1 0;
+  min-width: 0;
+}
+.rig-ticks i {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 2px;
+  cursor: pointer;
+}
+.rig-ticks i::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 1px;
+  height: 7px;
+  background: #ffffff4d;
+  transform: translateX(-50%);
+}
+.rig-ticks i[data-hover]::after {
+  height: 12px;
+  background: #ffffffb3;
+}
+.rig-ticks i[data-front]::after {
+  width: 2px;
+  height: 18px;
+  background: var(--ink);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .rig-ticks i::after {
+    transition:
+      height 160ms ease,
+      background 160ms ease;
+  }
 }
 .rig-controls {
   display: flex;
@@ -222,6 +281,9 @@
     order: 5;
     flex-basis: 100%;
   }
+  .rig-map {
+    display: none;
+  }
 }
 
 /* Phones on their side: one line of heading, one line of controls, and the rest of
@@ -252,8 +314,11 @@
     padding-top: 26px;
     padding-bottom: max(8px, env(safe-area-inset-bottom));
   }
-  .rig-caption-title {
-    font-size: 18px;
+  .rig-bar {
+    justify-content: flex-end;
+  }
+  .rig-map {
+    display: none;
   }
   .rig-controls {
     margin-top: 0;
@@ -272,10 +337,5 @@
   .rig-toggle {
     order: 0;
     flex-basis: auto;
-  }
-}
-@media (orientation: landscape) and (max-height: 500px) and (max-width: 620px) {
-  .rig-caption-title {
-    font-size: 15px;
   }
 }
