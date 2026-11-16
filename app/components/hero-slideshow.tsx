@@ -8,11 +8,12 @@ import { concerts, photographs } from "../lib/collection";
 import { slideshow } from "../lib/featured";
 
 const HOLD = 6200;
-const EXPOSE = 1500;
+const CUT = 1400;
 
-// Each frame covers the poster and is pushed in to 113% (hero-push), so on a tall
-// screen it is drawn far wider than the viewport. Poster heights follow
-// .cinema-poster in cinema.css.
+// Each frame is laid out at 113% of the poster (.hero-slide-film) and eased back
+// by scaling down, never up, so the photograph is never stretched past the pixels
+// it was rasterised at. On a tall screen it is drawn far wider than the viewport.
+// Poster heights follow .cinema-poster in cinema.css.
 function heroSizes(aspect: number) {
   const ratio = aspect.toFixed(3);
   return [
@@ -57,7 +58,8 @@ export function HeroSlideshow() {
     return () => window.removeEventListener("nimish:reveal", reveal);
   }, []);
 
-  // Expose the active slide over the previous one, then retire the old frame.
+  // Wipe the active slide across the previous one, which slides back into the
+  // dark beneath it, then retire the old frame.
   useEffect(() => {
     const element = root.current;
     if (!element || active === shown.current) return;
@@ -65,21 +67,17 @@ export function HeroSlideshow() {
     const from = slides[shown.current];
     const to = slides[active];
     shown.current = active;
-    slides.forEach((slide) => slide.classList.remove("is-entering"));
-    // Restart the light leak for this exposure.
-    element.classList.remove("is-exposing");
+    slides.forEach((slide) => {
+      slide.classList.remove("is-entering", "is-leaving");
+      if (slide !== from && slide !== to) slide.classList.remove("is-active");
+    });
     void element.offsetWidth;
-    element.classList.add("is-exposing");
     to.classList.add("is-active", "is-entering");
-    to.style.zIndex = "2";
-    from.style.zIndex = "1";
+    from.classList.add("is-leaving");
     const timer = window.setTimeout(() => {
       to.classList.remove("is-entering");
-      to.style.zIndex = "";
-      from.style.zIndex = "";
-      from.classList.remove("is-active");
-      element.classList.remove("is-exposing");
-    }, EXPOSE + 40);
+      from.classList.remove("is-active", "is-leaving");
+    }, CUT + 40);
     return () => window.clearTimeout(timer);
   }, [active]);
 
@@ -139,22 +137,23 @@ export function HeroSlideshow() {
           }
         >
           <div className="hero-slide-photo">
-            {(index === 0 || (revealed && index <= reach)) && (
-              <Image
-                src={slide.src}
-                alt=""
-                fill
-                loader={heroLoader}
-                sizes={heroSizes(slide.aspect)}
-                preload={index === 0}
-                fetchPriority={index === 0 ? "high" : "low"}
-                className="hero-image"
-              />
-            )}
+            <div className="hero-slide-film">
+              {(index === 0 || (revealed && index <= reach)) && (
+                <Image
+                  src={slide.src}
+                  alt=""
+                  fill
+                  loader={heroLoader}
+                  sizes={heroSizes(slide.aspect)}
+                  preload={index === 0}
+                  fetchPriority={index === 0 ? "high" : "low"}
+                  className="hero-image"
+                />
+              )}
+            </div>
           </div>
         </div>
       ))}
-      <span className="hero-leak" />
     </div>
   );
 }

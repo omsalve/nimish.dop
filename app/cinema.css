@@ -1049,8 +1049,10 @@
   }
 }
 
-/* ——— The slideshow behind the type. Each frame arrives as an exposure: a wash of
-   stage light passes across, and the new photograph develops out of it. ——— */
+/* ——— The slideshow behind the type. Each frame is cut in like a film pulled
+   through the gate: the new photograph wipes across from the right with its
+   picture travelling a beat behind the edge, while the old frame slides back
+   into the dark beneath it. No flash, no dissolve. ——— */
 .hero-slides {
   position: absolute;
   inset: 0;
@@ -1065,42 +1067,71 @@
 .hero-slide.is-active {
   visibility: visible;
 }
+.hero-slide.is-entering {
+  z-index: 2;
+  animation: hero-wipe 1400ms var(--ease-expo) both;
+}
+.hero-slide.is-leaving {
+  z-index: 1;
+  animation: hero-recede 1400ms var(--ease-expo) both;
+}
 .hero-slide-photo {
   position: absolute;
   inset: 0;
   overflow: hidden;
 }
-.hero-slide-photo .hero-image {
+.hero-slide.is-entering .hero-slide-photo {
+  animation: hero-trail 1400ms var(--ease-expo) both;
+}
+.hero-slide.is-leaving .hero-slide-photo {
+  animation: hero-drift 1400ms var(--ease-expo) both;
+}
+/* Laid out at 113% so the slow push only ever scales down from full size. */
+.hero-slide-film {
+  position: absolute;
+  inset: -6.5%;
+}
+.hero-slide-film .hero-image {
   object-fit: cover;
   object-position: var(--focus);
-  scale: 1.04;
+  scale: 0.92;
 }
 .hero-slide.is-active .hero-image {
   animation: hero-push 9.5s linear both;
 }
-.hero-slide.is-entering {
-  animation: expose-in 1500ms var(--ease-expo) both;
+@keyframes hero-wipe {
+  from {
+    clip-path: inset(0 0 0 100%);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
 }
-.hero-slide.is-entering .hero-image {
-  animation:
-    hero-push 9.5s linear both,
-    develop 1500ms var(--ease-out) both;
+@keyframes hero-trail {
+  from {
+    transform: translate3d(18%, 0, 0);
+  }
+  to {
+    transform: none;
+  }
 }
-.hero-leak {
-  position: absolute;
-  z-index: 3;
-  inset: -20% -40%;
-  background:
-    radial-gradient(ellipse 22% 60% at 30% 50%, #e2e2e2 0%, #ffffff5c 30%, transparent 70%),
-    radial-gradient(ellipse 30% 70% at 62% 46%, #f2f2f2b3 0%, #ffffff23 45%, transparent 75%);
-  mix-blend-mode: screen;
-  opacity: 0;
-  pointer-events: none;
+@keyframes hero-drift {
+  from {
+    transform: none;
+  }
+  to {
+    transform: translate3d(-12%, 0, 0);
+  }
 }
-.hero-slides.is-exposing .hero-leak {
-  animation: leak-sweep 1500ms var(--ease-out) both;
+@keyframes hero-recede {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.25;
+  }
 }
-@keyframes expose-in {
+@keyframes hero-fade {
   from {
     opacity: 0;
   }
@@ -1108,33 +1139,13 @@
     opacity: 1;
   }
 }
-@keyframes develop {
-  from {
-    filter: brightness(2.1) contrast(0.8) saturate(0.6);
-  }
-  to {
-    filter: none;
-  }
-}
-@keyframes leak-sweep {
-  0% {
-    opacity: 0;
-    transform: translate3d(-35%, 0, 0);
-  }
-  30% {
-    opacity: 0.85;
-  }
-  100% {
-    opacity: 0;
-    transform: translate3d(30%, 0, 0);
-  }
-}
+/* 1.13 → 1.03 of the poster, expressed against the 113% film. */
 @keyframes hero-push {
   from {
-    scale: 1.13;
+    scale: 1;
   }
   to {
-    scale: 1.03;
+    scale: 0.912;
   }
 }
 
@@ -1343,7 +1354,7 @@ html.splash-on:not(.splash-done)
 }
 
 @media (max-width: 700px) {
-  .hero-slide-photo .hero-image {
+  .hero-slide-film .hero-image {
     object-position: var(--focus-mobile);
   }
   .hero-reel {
@@ -1361,14 +1372,13 @@ html.splash-on:not(.splash-done)
 
 @media (prefers-reduced-motion: reduce) {
   .hero-slide.is-active .hero-image,
-  .hero-slide.is-entering .hero-image {
+  .hero-slide.is-entering .hero-slide-photo,
+  .hero-slide.is-leaving .hero-slide-photo,
+  .hero-slide.is-leaving {
     animation: none;
   }
   .hero-slide.is-entering {
-    animation: expose-in 420ms ease both;
-  }
-  .hero-slides.is-exposing .hero-leak {
-    animation: none;
+    animation: hero-fade 420ms ease both;
   }
   .cinema-main-title,
   .cinema-copy,

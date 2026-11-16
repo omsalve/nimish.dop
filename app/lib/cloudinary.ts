@@ -14,14 +14,18 @@ export function isCloudinaryImage(src: ImageProps["src"]): src is string {
   return typeof src === "string" && cloudinaryUpload.test(src);
 }
 
-function deliver({ src, width, quality }: ImageLoaderProps, maxWidth: number) {
+function deliver(
+  { src, width, quality }: ImageLoaderProps,
+  maxWidth: number,
+  format = "f_auto",
+) {
   const url = new URL(src);
   const qualitySetting = quality ? `q_${quality}` : "q_auto:best";
 
-  // Limit dimensions without upscaling; let Cloudinary negotiate the image format.
+  // Limit dimensions without upscaling.
   url.pathname = url.pathname.replace(
     UPLOAD,
-    `${UPLOAD}c_limit,w_${Math.min(width, maxWidth)}/${qualitySetting}/f_auto/`,
+    `${UPLOAD}c_limit,w_${Math.min(width, maxWidth)}/${qualitySetting}/${format}/`,
   );
 
   return url.toString();
@@ -31,8 +35,11 @@ export function cloudinaryLoader(props: ImageLoaderProps) {
   return deliver(props, MAX_WIDTH);
 }
 
+// The hero is full-bleed stage light: saturated LED reds and blues against black.
+// f_auto picks WebP, which always halves colour resolution (4:2:0) and smears those
+// edges. Progressive JPEG at q_auto:best keeps full 4:4:4 colour for ~15% more bytes.
 export function heroLoader(props: ImageLoaderProps) {
-  return deliver(props, HERO_MAX_WIDTH);
+  return deliver(props, HERO_MAX_WIDTH, "f_jpg/fl_progressive");
 }
 
 /**
